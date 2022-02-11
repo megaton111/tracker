@@ -1,1 +1,77 @@
 html, body { height: 100% ; overflow: hidden !important ;}
+#app { 
+  display: flex; flex-direction: column ;
+  height : 100%; 
+  .header{
+    display: flex;
+    flex : 0 0 40px ; 
+    align-items:center;
+    justify-content: center ;
+    background-color: #D3DEDC;
+    h1 {
+      font-size:18px; 
+      color:#2C3333 ;
+    }
+    span {
+      display: inline-flex;
+      margin-left: 4px ;
+      font-size:11px ; 
+      vertical-align: middle ;
+      color:#717a7a ;
+    }
+  }
+  .container {
+    display: flex; gap: 20px ; flex-direction: column ;
+    padding:10px ; 
+    flex: 1; 
+    h2 {
+      font-size:14px; 
+      color:#2C3333 ; 
+    }
+  }
+  .section {
+    display: flex;
+    flex : 1; 
+    flex-direction: column ;
+    position: relative;
+    gap: 5px ; 
+    overflow: hidden ;
+    padding:5px ; 
+    &.enter {
+      select {
+        padding : 0 10px ; 
+        height : 36px ;
+      }
+      textarea {
+        flex : 1 ; 
+        min-height: 300px ; 
+        padding: 10px ; 
+      }
+      button {
+        flex : 0 0 40px ; 
+        background-color: #7C99AC;
+        border: 0 ; 
+        border-radius: 4px ;
+        color:#fff ;
+        font-size:14px; 
+        font-weight: 700 ;
+        cursor: pointer; 
+      }
+    }
+    &.result{
+      .lstWrap{
+        height: 100% ;
+        overflow-y:auto ; 
+        flex:1; 
+      }
+      ul {
+        display: flex;
+        flex-direction: column ;
+        min-height: min-content ;
+        li {
+          line-height: 1.5 ;
+        }
+      }
+    }
+  }
+}
