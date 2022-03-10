@@ -52,8 +52,10 @@
         loading : false ,
       }) ;
 
+      const APIKEY = 'LzhMkwK5XUNTkNg24cozUQ' ; 
+
       // 택배사 리스트 가져오기
-      let companyData = axios.get( 'https://info.sweettracker.co.kr/api/v1/companylist?t_key=2Etkfo4dCjwN2W779IT8ag') ; 
+      let companyData = axios.get( 'https://info.sweettracker.co.kr/api/v1/companylist?t_key='+APIKEY) ; 
       companyData.then((res)=>state.companyList = res.data.Company) ; 
 
       // 입력 정보 검사 후 조회 실행
@@ -74,7 +76,7 @@
 
       // 배송 데이터 가져오기
       const checkTrackInfo = () => {
-        axios.get( 'https://info.sweettracker.co.kr/api/v1/trackingInfo?t_key=2Etkfo4dCjwN2W779IT8ag&t_code='+state.companyCode+'&t_invoice='+state.trackList[0] )
+        axios.get( 'https://info.sweettracker.co.kr/api/v1/trackingInfo?t_key='+APIKEY+'&t_code='+state.companyCode+'&t_invoice='+state.trackList[0] )
         .then(( res ) => {
           state.trackList.shift() ; 
           trackInfoSet( res ) ; 
@@ -91,7 +93,6 @@
       // 배송 데이터 체크 및 출력
       const trackInfoSet = ( res ) => {
         let data = res.data ; 
-        console.log( '--------------->', res.data ) ; 
         // 운송장 문제가 없는 경우
         if( data.result && data.result == 'Y' ) {
           // 배송완료 or 배송중
