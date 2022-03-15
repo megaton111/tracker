@@ -17,7 +17,8 @@
     "vue3-datepicker": "^0.3.2",
     "vuetify": "^2.6.2",
     "vuex": "^4.0.2",
-    "vuex-persistedstate": "^4.1.0"
+    "vuex-persistedstate": "^4.1.0",
+    "xml-js": "^1.6.11"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
@@ -35,6 +36,7 @@
     "node-sass": "^6.0.1",
     "sass": "~1.32.0",
     "sass-loader": "^10.0.0",
+    "vue-jsonp": "^2.0.0",
     "vuetify-loader": "^1.7.0"
   },
   "eslintConfig": {

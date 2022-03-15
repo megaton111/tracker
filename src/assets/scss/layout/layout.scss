@@ -58,7 +58,10 @@ body {
     position: relative;
     gap: 5px ; 
     overflow: hidden ;
-    padding:5px ; 
+    padding: 20px; 
+    h1 {
+      font-size:14px;
+    }
     &.enter {
       select {
         padding : 0 10px ; 
@@ -66,7 +69,6 @@ body {
       }
       textarea {
         flex : 1 ; 
-        min-height: 300px ; 
         padding: 10px ; 
       }
       button {
@@ -93,6 +95,45 @@ body {
         li {
           line-height: 1.5 ;
         }
+      }
+    }
+  }
+
+  .personalCoustom{
+    display: flex;
+    flex-direction: column ;
+    flex : 1; 
+    button {
+      flex : 0 0 40px ; 
+      background-color: #7C99AC;
+      border: 0 ; 
+      border-radius: 4px ;
+      color:#fff ;
+      font-size:14px; 
+      font-weight: 700 ;
+      cursor: pointer; 
+    }
+    .section {
+      display: flex;
+      width: 100% ;
+      .row {
+        display: flex;
+        flex:1; 
+        flex-direction: row;
+        width: 100% ;
+        gap:10px; 
+      }
+      .col {
+        display: flex;
+        flex-direction: column ;
+        gap: 5px ; 
+        flex : 1; 
+        textarea {
+          width: 100% ;
+        }
+      }
+      &.result {
+        flex-direction: column ;
       }
     }
   }
