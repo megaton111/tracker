@@ -31,6 +31,9 @@
   import loading from '../common/loading' ; 
   // import { jsonp } from 'vue-jsonp'
 
+  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
+  const URL = `${PROXY}/ext/rest/persEcmQry/retrievePersEcm`;
+
   export default {
     name : 'PersonalCustomsCode' ,
     components : {
@@ -62,7 +65,8 @@
       checkCode () {
         // console.log( 'check code ininin' , this.name[0] , this.number[0]) ; 
         
-        axios.get( `/ext/rest/persEcmQry/retrievePersEcm?crkyCn=o220p260j056x276q000c050u0&persEcm=${this.number[0]}&pltxNm=${this.name[0]}`)
+        // axios.get( `/ext/rest/persEcmQry/retrievePersEcm?crkyCn=o220p260j056x276q000c050u0&persEcm=${this.number[0]}&pltxNm=${this.name[0]}`)
+        axios.get( `${URL}?crkyCn=o220p260j056x276q000c050u0&persEcm=${this.number[0]}&pltxNm=${this.name[0]}`)
         .then(( res ) => {
           
           let xml = res.data
