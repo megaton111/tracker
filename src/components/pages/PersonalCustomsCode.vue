@@ -4,11 +4,17 @@
       <div class="row">
         <div class="col">
           <h1>수취인</h1>
-          <textarea v-model="nameList"></textarea>
+          <textarea v-model="nameList" placeholder="예) 수취인명을 한줄에 한개씩
+홍길동
+홍길동
+홍길동"></textarea>
         </div>
         <div class="col">
           <h1>개인통관고유번호</h1>
-          <textarea v-model="numberList"></textarea>
+          <textarea v-model="numberList" placeholder="예) 한줄에 하나의 정보 입력
+123456789
+123456789
+123456789"></textarea>
         </div>
       </div>
       <button type="button" @click="searchHandler">조회</button>
@@ -29,7 +35,6 @@
   import axios from 'axios';
   import convert from 'xml-js' ; 
   import loading from '../common/loading' ; 
-  // import { jsonp } from 'vue-jsonp'
 
   const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
   const URL = `${PROXY}/ext/rest/persEcmQry/retrievePersEcm`;
@@ -50,9 +55,6 @@
     methods : {
       
       searchHandler () {
-        console.log( 'searchHandler in' ) ;
-        // console.log( '--------->' , this.name ) ; 
-        // console.log( '--------->' , this.number ) ; 
         if( this.name.length < 1 || this.number.length < 1 || this.name.length !== this.number.length ) {
           alert( '입력한 이름, 번호 수량이 같아야합니다' ) ; 
         } else {
@@ -63,9 +65,6 @@
       } ,
 
       checkCode () {
-        // console.log( 'check code ininin' , this.name[0] , this.number[0]) ; 
-        
-        // axios.get( `/ext/rest/persEcmQry/retrievePersEcm?crkyCn=o220p260j056x276q000c050u0&persEcm=${this.number[0]}&pltxNm=${this.name[0]}`)
         axios.get( `${URL}?crkyCn=o220p260j056x276q000c050u0&persEcm=${this.number[0]}&pltxNm=${this.name[0]}`)
         .then(( res ) => {
           

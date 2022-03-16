@@ -9,24 +9,16 @@
 123123123123123
 123123123123123
 123123123123123">
-      
     </textarea>
     <button type="button" @click="deliveryCheckHandler">조회</button>
   </div> <!-- end of section -->
  
   <div class="section result">
-    <!-- <h2>결과</h2> -->
     <div v-if="alertText">{{ alertText }}</div>
-    <!-- <ul>
-      <li v-for="(item, idx) in result" :key="idx">
-        {{ item }}
-      </li>
-    </ul> -->
     <ul class="lstWrap">
       <li v-for="(item, idx) in deliveryResult" :key="idx"> {{ item }} </li>
     </ul>
   </div> <!-- end of section -->
-
   <loading  v-if="loading" />
 </template>
 
@@ -34,13 +26,18 @@
   import axios from 'axios';
   import { reactive, toRefs } from 'vue';
   import loading from '../common/loading' ; 
+
+  const APIKEY = 'LzhMkwK5XUNTkNg24cozUQ' ; 
+  const COMPANY_API = 'https://info.sweettracker.co.kr/api/v1/companylist?t_key='+APIKEY;
+
   export default {
     name : 'delivery' ,
+    
     components : {
       loading
     } ,
-    setup () {
 
+    setup () {
       const state = reactive({
         companyCode : '01' ,        // 택배사 코드(기본은 우체국택배)
         companyList : null ,        // 택배사 리스트
@@ -52,17 +49,13 @@
         loading : false ,
       }) ;
 
-      const APIKEY = 'LzhMkwK5XUNTkNg24cozUQ' ; 
-
       // 택배사 리스트 가져오기
-      let companyData = axios.get( 'https://info.sweettracker.co.kr/api/v1/companylist?t_key='+APIKEY) ; 
-      companyData.then((res)=>state.companyList = res.data.Company) ; 
+      axios.get( COMPANY_API ).then(res=>state.companyList = res.data.Company) ; 
 
-      // 입력 정보 검사 후 조회 실행
+      // 입력한 정보 값 체크
       const deliveryCheckHandler = () => {
         state.result = [] ; 
         state.deliveryResult = [] ;
-
         if( state.companyCode == '' ) {
           state.alertText = '택배사를 선택하세요' ; 
         } else if ( state.originTrackList == '' ) {
@@ -74,7 +67,7 @@
         }
       }
 
-      // 배송 데이터 가져오기
+      // 배송 정보 가져오기
       const checkTrackInfo = () => {
         axios.get( 'https://info.sweettracker.co.kr/api/v1/trackingInfo?t_key='+APIKEY+'&t_code='+state.companyCode+'&t_invoice='+state.trackList[0] )
         .then(( res ) => {
@@ -90,18 +83,17 @@
         }) ;
       }
 
-      // 배송 데이터 체크 및 출력
+      // 가져온 배송 정보 체크
       const trackInfoSet = ( res ) => {
         let data = res.data ; 
-        // 운송장 문제가 없는 경우
+        // 운송장 문제가 없는 경우 - 배송완료 or 배송중
         if( data.result && data.result == 'Y' ) {
-          // 배송완료 or 배송중
           data.complete ? state.result.push( data.lastDetail.timeString.split(' ')[0] ) : state.result.push( '배송중입니다.' ) ; 
         } else {
           state.result.push( '검색결과가 없습니다. 운송장번호와 택배사를 확인해주세요.' ) ; 
         }
       }
-
+      
       return { ...toRefs(state), deliveryCheckHandler, checkTrackInfo } ;
     } ,
   }

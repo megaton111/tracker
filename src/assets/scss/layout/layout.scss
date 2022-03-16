@@ -9,14 +9,20 @@ body {
   width: 800px ;
   .header{
     display: flex;
-    flex : 0 0 40px ; 
+    flex : 0 0 60px ; 
     padding:0 20px ; 
     align-items:center;
     // justify-content: center ;
     background-color: #D3DEDC;
     h1 {
-      font-size:18px; 
+      font-size:24px; 
+      font-weight: 400 ;
       color:#2C3333 ;
+      letter-spacing: -1px ;
+      &::first-letter {
+        font-size:30px ; 
+        font-weight: 700 ;
+      }
     }
     span {
       display: inline-flex;
@@ -30,15 +36,26 @@ body {
       margin-left: auto ;
       gap:10px;
       button, a {
+        display: inline-flex;
+        align-items: center ;
         background: none ;
         border : 0 ; 
-        font-size:12px ; 
+        font-size:16px ; 
+        font-weight: 500 ;
         cursor: pointer;
         letter-spacing: -1px ;
         color:#949b9b ;
         &.router-link-active{
           color:#2C3333 ;
+          font-weight: 700 ;
         }
+        // &:not(:last-child):after {
+        //   content : "" ; 
+        //   display: inline-flex;
+        //   width: 1px; height:100% ;
+        //   margin-left: 10px ;
+        //   background-color: rgba( 0, 0, 0, 0.5 ) ;
+        // }
       }
     }
   }
@@ -58,18 +75,25 @@ body {
     position: relative;
     gap: 5px ; 
     overflow: hidden ;
-    padding: 20px; 
+    padding: 15px 10px; 
     h1 {
-      font-size:14px;
+      font-size:16px;
+      letter-spacing: -.5px ;
     }
     &.enter {
       select {
         padding : 0 10px ; 
         height : 36px ;
+        border-radius: 0;
+        border: 1px solid #000;
       }
       textarea {
         flex : 1 ; 
         padding: 10px ; 
+        line-height:1.5; 
+        font-size:14px ; 
+        border-radius: 0;
+        border: 1px solid #000;
       }
       button {
         flex : 0 0 40px ; 
@@ -93,7 +117,10 @@ body {
         flex-direction: column ;
         min-height: min-content ;
         li {
+          font-size: 16px ;
           line-height: 1.5 ;
+          display: flex;
+          gap:10px; 
         }
       }
     }
