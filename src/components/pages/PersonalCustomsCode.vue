@@ -1,33 +1,44 @@
 <template>
-  <div class="personalCoustom">
-    <div class="section enter">
+
+  <div class="description">
+    수취인 이름과 개인통관고유번호가 일치한지 확인하는 기능입니다.<br />
+    여러 개 입력 시 줄바꿈하여 입력해주세요 (예시참고)
+  </div>
+  <div class="sectionWrap">
+
+    <section class="enter">
+      
+      <div class="row fix">
+        <h1>수취인</h1>
+      </div>
       <div class="row">
-        <div class="col">
-          <h1>수취인</h1>
           <textarea v-model="nameList" placeholder="예) 수취인명을 한줄에 한개씩
 홍길동
 홍길동
 홍길동"></textarea>
-        </div>
-        <div class="col">
-          <h1>개인통관고유번호</h1>
+      </div>
+      <div class="row fix">
+        <h1>개인통관고유번호</h1>
+      </div>
+      <div class="row">
           <textarea v-model="numberList" placeholder="예) 한줄에 하나의 정보 입력
 123456789
 123456789
 123456789"></textarea>
-        </div>
       </div>
-      <button type="button" @click="searchHandler">조회</button>
-    </div> <!-- end of section -->
-    <div class="section result">
+      <div class="row fix"><button type="button" @click="searchHandler">조회</button></div>
+      
+    </section>
+
+    <section class="result">
       <ul class="lstWrap">
         <li v-for="(item, idx) in resultList" :key="idx">
-          <span>{{ item.name }}</span>
-          <span>{{ item.check }}</span>
+          <span class="name">{{ item.name }}</span><span>{{ item.check }}</span>
         </li>
       </ul>
-    </div> <!-- end of section -->
-  </div> <!-- end of personalCoustom -->
+    </section>
+
+  </div> <!-- end of sectionWrap -->
   <loading  v-if="loading" />
 </template>
 

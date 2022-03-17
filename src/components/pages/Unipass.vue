@@ -1,8 +1,15 @@
 <template>
-  <div class="unipass">
-    <div class="section enter">
-      <div class="row">
-        <div class="col number"><input type="text" v-model="number"></div>
+
+  <div class="description">
+    통관 과정을 조회할 수 있는 기능입니다. <br />
+    운송장 번호를 입력하세요. 년도는 통관 진행 해당년도입니다.
+  </div>
+
+  <div class="sectionWrap">
+
+    <section class="enter">
+      <div class="row" style="--gap:4px;">
+        <div class="col number"><input type="text" v-model="number" placeholder="운송장 번호를 입력하세요"></div>
         <div class="col year">
           <select v-model="year">
             <option value="2022">2022</option>
@@ -11,8 +18,9 @@
         </div>
         <div class="col btn"><button type="button" @click="searchHandler">조회</button></div>
       </div>
-    </div> <!-- end of section -->
-    <div class="section result">
+    </section> <!-- end of section -->
+
+    <section class="result">
       <div class="status" v-if="status">현재 상태 : <strong>{{ status }}</strong></div>
       <ul class="lstWrap">
         <li v-for="(item, idx) in progress" :key="idx">
@@ -20,8 +28,10 @@
           <span>{{ item.cargTrcnRelaBsopTpcd._text }}</span>
         </li>
       </ul>
-    </div> <!-- end of section -->
-  </div> <!-- end of personalCoustom -->
+    </section> <!-- end of section -->
+
+  </div> <!-- end of sectionWrap -->
+
   <loading  v-if="loading" />
 </template>
 

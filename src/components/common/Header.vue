@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <h1>Tracker</h1>
+    <h1><router-link to="/">Tracker</router-link></h1>
     <nav>
       <router-link to="/Delivery">배송완료일 체크</router-link>
       <router-link to="/PersonalCustomsCode">개인통관고유부호 검증</router-link>

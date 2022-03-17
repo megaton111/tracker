@@ -1,27 +1,33 @@
 html, body { height: 100% ; overflow: hidden !important ;}
 body {
+  width: 100% ;
   display: flex;
   justify-content: center ;
 }
 #app { 
   display: flex; flex-direction: column ;
-  height : 100%; 
-  width: 800px ;
+  height : 100%; width: 100% ;
+  max-width: 1200px ;
   .header{
     display: flex;
     flex : 0 0 60px ; 
-    padding:0 20px ; 
+    padding:0 10px ; 
     align-items:center;
     // justify-content: center ;
-    background-color: #D3DEDC;
+    // background-color: #D3DEDC;
+    border-bottom: 2px solid #333 ; 
     h1 {
-      font-size:24px; 
+      font-size:22px; 
       font-weight: 400 ;
       color:#2C3333 ;
       letter-spacing: -1px ;
+      a {
+        color:#333 ; 
+      }
       &::first-letter {
         font-size:30px ; 
         font-weight: 700 ;
+        color:#1C658C; 
       }
     }
     span {
@@ -41,10 +47,11 @@ body {
         background: none ;
         border : 0 ; 
         font-size:16px ; 
-        font-weight: 500 ;
+        font-weight: 400 ;
         cursor: pointer;
         letter-spacing: -1px ;
-        color:#949b9b ;
+        color:#D1D1D1 ;
+        transition:all .3s ; 
         &.router-link-active{
           color:#2C3333 ;
           font-weight: 700 ;
@@ -60,34 +67,49 @@ body {
     }
   }
   .container {
-    display: flex; gap: 20px ; flex-direction: column ;
-    padding:10px ; 
+    display: flex; flex-direction: column ;
+    gap: 20px ; padding:20px 10px ; 
     flex: 1; 
     h2 {
       font-size:14px; 
       color:#2C3333 ; 
     }
-  }
-  .section {
-    display: flex;
-    flex : 1; 
-    flex-direction: column ;
-    position: relative;
-    gap: 5px ; 
-    overflow: hidden ;
-    padding: 15px 10px; 
-    h1 {
-      font-size:16px;
-      letter-spacing: -.5px ;
+    // 페이지 설명 
+    .description{
+      min-height: 100px ;
+      font-size:14px ; line-height: 1.4 ; 
     }
-    &.enter {
+  }
+
+  .sectionWrap {
+    display: flex; flex-direction: row ;
+    flex: 1;
+    gap: 20px ;
+
+    section {
+      position: relative;
+      display: flex;
+      flex : 1; 
+      flex-direction: column ;
+      gap: 5px ; 
+      overflow: hidden ;
+      input {
+        width: 100% ;
+        padding : 0 10px ; 
+        height : 36px ;
+        border-radius: 0;
+        font-size:14px ; 
+        border: 1px solid #000;
+      }
       select {
+        width: 100% ;
         padding : 0 10px ; 
         height : 36px ;
         border-radius: 0;
         border: 1px solid #000;
       }
       textarea {
+        width: 100% ;
         flex : 1 ; 
         padding: 10px ; 
         line-height:1.5; 
@@ -96,143 +118,72 @@ body {
         border: 1px solid #000;
       }
       button {
-        flex : 0 0 40px ; 
-        background-color: #7C99AC;
+        width: 100% ;
+        height : 36px ;
+        background-color: #1C658C;
         border: 0 ; 
-        border-radius: 4px ;
         color:#fff ;
         font-size:16px; 
         font-weight: 700 ;
         cursor: pointer; 
       }
-    }
-    &.result{
-      gap:20px; 
-      .status{
-        font-size:24px ; 
-        font-weight: 500 ;
+      h1 {
+        font-size:18px;
+        letter-spacing: -.5px ;
       }
-      .lstWrap{
-        height: 100% ;
-        overflow-y:auto ; 
-        flex:1; 
-      }
-      ul {
-        display: flex;
-        flex-direction: column ;
-        min-height: min-content ;
-        li {
-          font-size: 16px ;
-          display: flex;
-          gap:10px; 
-          line-height: 1.8 ; 
-          span {
-            flex : 1; 
-            &.date {
-              flex:0 0 200px ;
-              // flex-basis: 160px ;
-            }
-          }
-          
-        }
-      }
-    }
-  }
-
-  .personalCoustom{
-    display: flex;
-    flex-direction: column ;
-    flex : 1; 
-    button {
-      flex : 0 0 40px ; 
-      background-color: #7C99AC;
-      border: 0 ; 
-      border-radius: 4px ;
-      color:#fff ;
-      font-size:14px; 
-      font-weight: 700 ;
-      cursor: pointer; 
-    }
-    .section {
-      display: flex;
-      width: 100% ;
       .row {
+        width: 100%;
+        flex : 1 ;
         display: flex;
-        flex:1; 
-        flex-direction: row;
-        width: 100% ;
-        gap:10px; 
-      }
-      .col {
-        display: flex;
-        flex-direction: column ;
-        gap: 5px ; 
-        flex : 1; 
-        textarea {
-          width: 100% ;
-        }
-      }
-      &.result {
-        flex-direction: column ;
-      }
-    }
-  }
-
-  .unipass {
-    .row {
-      display: flex;
-      flex-direction: row ;
-      gap:4px ; 
-      .col {
-        flex : 1; 
+        gap: var(--gap, 0) ; 
         > * {
-          width: 100% ;
+          flex : 1 ; 
         }
-        &.number {
-          flex : 4 ; 
-          input {
-            font-size: 14px;
-            border: 1px solid #000;
-            border-radius: 0 ;
-          }
+        &.fix {
+          flex : 0 0 auto ;
         }
-        &.year {
-          flex : 2 ; 
-          select {
-            border: 1px solid #000;
-            padding: 0 10px;
-            font-size: 14px;
-          }
-        }
-        &.btn {
-          button {
-            height: 100% ;
+        .col {
+          &.number {
+            flex : 3 ;
           }
         }
       }
-    }
-
-    .section {
+      &.enter {}
       &.result {
-        gap:20px ; 
+        padding:20px ; 
+        background-color: #F5F5F5 ;
         .status{
           font-size:24px ; 
           font-weight: 500 ;
         }
         .lstWrap {
+          height: 100% ;
+          overflow-y:auto ; 
+          flex:1; 
+          display: flex;
+          flex-direction: column ;
+          min-height: min-content ;
           li {
+            font-size: 16px ;
             display: flex;
+            gap:10px; 
             line-height: 1.8 ; 
             span {
               flex : 1; 
               &.date {
-                flex:0 0 160px ;
+                flex:0 0 200px ;
                 // flex-basis: 160px ;
               }
+              &.name {
+                flex:0 0 100px ; 
+              }
             }
+            
           }
         }
       }
     }
+
   }
+
 }
