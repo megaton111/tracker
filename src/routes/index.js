@@ -1,6 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Delivery from "@/components/pages/Delivery.vue";
 import PersonalCustomsCode from "@/components/pages/PersonalCustomsCode.vue";
+import Unipass from "@/components/pages/Unipass.vue";
 
 const routes = [
   {
@@ -18,6 +19,11 @@ const routes = [
     path: "/PersonalCustomsCode",
     name: "PersonalCustomsCode",
     component: PersonalCustomsCode,
+  },
+  {
+    path: "/Unipass",
+    name: "Unipass",
+    component: Unipass,
   },
 ];
 
