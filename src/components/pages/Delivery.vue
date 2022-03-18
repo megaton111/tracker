@@ -28,12 +28,18 @@
       </div>
     </section>
 
-    <section class="result">
-      <div v-if="alertText">{{ alertText }}</div>
+
+    <section class="result" v-if="deliveryResult.length > 0 || single.status || alertText">
+      <div class="status" v-if="alertText">{{ alertText }}</div>
+
       <ul class="lstWrap" v-if="deliveryResult.length > 0">
         <li v-for="(item, idx) in deliveryResult" :key="idx"> {{ item }} </li>
       </ul>
-      <div class="status" v-if="single.status">현재 상태 : <strong>{{ single.status }}</strong></div>
+
+      <div class="status" v-if="single.status">
+        <strong>{{ single.status }}</strong>
+      </div>
+
       <ul class="lstWrap" v-if="single.progress.length > 0">
         <li v-for="(item, idx) in single.progress" :key="idx">
           <span class="date">{{ item.timeString }}</span>
@@ -94,8 +100,10 @@
 
         if( state.companyCode == '' ) {
           state.alertText = '택배사를 선택하세요' ; 
+          console.log( 'state.alertTex :', state.alertText ) ; 
         } else if ( state.originTrackList == '' ) {
           state.alertText = '운송장 번호를 입력하세요' ; 
+          console.log( 'state.alertTex :', state.alertText ) ; 
         } else {
           state.loading = true ; 
           
@@ -130,6 +138,7 @@
         console.log( '싱글 체크' ) ; 
         axios.get( 'https://info.sweettracker.co.kr/api/v1/trackingInfo?t_key='+APIKEY+'&t_code='+state.companyCode+'&t_invoice='+state.trackList[0] )
         .then(( res ) => {
+          state.alertText = '' ; 
           state.loading = false ; 
           state.single.status = res.data.lastDetail.kind ; 
           state.single.progress = res.data.trackingDetails ; 

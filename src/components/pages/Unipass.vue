@@ -20,9 +20,9 @@
       </div>
     </section> <!-- end of section -->
 
-    <section class="result">
+    <section class="result" v-if="status">
       <div class="status" v-if="status">현재 상태 : <strong>{{ status }}</strong></div>
-      <ul class="lstWrap">
+      <ul class="lstWrap" v-if="progress.length > 0">
         <li v-for="(item, idx) in progress" :key="idx">
           <span class="date">{{ dateFormat( item.prcsDttm._text , '####-##-##' ) }}</span>
           <span>{{ item.cargTrcnRelaBsopTpcd._text }}</span>

@@ -7,30 +7,37 @@
   <div class="sectionWrap">
 
     <section class="enter">
-      
-      <div class="row fix">
-        <h1>수취인</h1>
-      </div>
-      <div class="row">
-          <textarea v-model="nameList" placeholder="예) 수취인명을 한줄에 한개씩
+
+      <div class="row fix" style="--gap:10px">
+        <div class="col" style="--gap-col:5px">
+          <div class="row fix">
+            <h1>수취인</h1>
+          </div>
+          <div class="row">
+              <textarea resize="false" v-model="nameList" placeholder="예) 수취인명을 한줄에 한개씩
 홍길동
 홍길동
 홍길동"></textarea>
-      </div>
-      <div class="row fix">
-        <h1>개인통관고유번호</h1>
-      </div>
-      <div class="row">
-          <textarea v-model="numberList" placeholder="예) 한줄에 하나의 정보 입력
+          </div>
+        </div>
+        <div class="col" style="--gap-col:5px">
+          <div class="row fix">
+            <h1>개인통관고유번호</h1>
+          </div>
+          <div class="row">
+              <textarea resize="false" v-model="numberList" placeholder="예) 한줄에 하나의 정보 입력
 123456789
 123456789
 123456789"></textarea>
+          </div>
+        </div>
       </div>
+      
       <div class="row fix"><button type="button" @click="searchHandler">조회</button></div>
       
     </section>
 
-    <section class="result">
+    <section class="result" v-if="resultList.length > 0">
       <ul class="lstWrap">
         <li v-for="(item, idx) in resultList" :key="idx">
           <span class="name">{{ item.name }}</span><span>{{ item.check }}</span>
