@@ -40,7 +40,8 @@
   import convert from 'xml-js' ; 
   import loading from '../common/loading' ; 
 
-  const URL = '/ext/rest/cargCsclPrgsInfoQry/retrieveCargCsclPrgsInfo?crkyCn=k280o211a048o132e070b010d0&hblNo' ; 
+  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
+  const URL = `${PROXY}/ext/rest/cargCsclPrgsInfoQry/retrieveCargCsclPrgsInfo?crkyCn=k280o211a048o132e070b010d0&hblNo`;
 
   export default {
     name : 'PersonalCustomsCode' ,
@@ -70,9 +71,8 @@
           ,   jsonParse = JSON.parse( json )
           ; 
           
-          this.status = jsonParse.cargCsclPrgsInfoQryRtnVo.cargCsclPrgsInfoQryVo.csclPrgsStts._text
-          this.progress = jsonParse.cargCsclPrgsInfoQryRtnVo.cargCsclPrgsInfoDtlQryVo
-
+          this.status = jsonParse.cargCsclPrgsInfoQryRtnVo.cargCsclPrgsInfoQryVo.csclPrgsStts._text ;
+          this.progress = jsonParse.cargCsclPrgsInfoQryRtnVo.cargCsclPrgsInfoDtlQryVo ;
           this.loading = false;
           
         })

@@ -84,6 +84,8 @@
           ,   jsonParse = JSON.parse( json )
           ,   result = jsonParse.persEcmQryRtnVo.tCnt._text 
           ; 
+
+          console.log( 'jsonParse :', jsonParse ) ; 
           this.resultList.push({
             name : this.name[0] , 
             number : this.number[0] ,
