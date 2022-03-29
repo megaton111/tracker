@@ -73,6 +73,7 @@
     methods : {
       
       searchHandler () {
+
         if( this.name.length < 1 || this.number.length < 1 || this.name.length !== this.number.length ) {
           alert( '입력한 이름, 번호 수량이 같아야합니다' ) ; 
         } else {
@@ -92,7 +93,6 @@
           ,   result = jsonParse.persEcmQryRtnVo.tCnt._text 
           ; 
 
-          console.log( 'jsonParse :', jsonParse ) ; 
           this.resultList.push({
             name : this.name[0] , 
             number : this.number[0] ,
@@ -106,6 +106,8 @@
             this.checkCode() ; 
           } else {
             this.loading = false ; 
+            this.nameList = '' ; 
+            this.numberList = '' ; 
             console.log('검사끝') ; 
           }
         }) ;
@@ -114,11 +116,11 @@
     } ,
     computed : {
       name : {
-        get () { return this.nameList == '' ? [] : this.nameList.split('\n') ;  } ,
+        get () { return this.nameList == '' ? [] : this.nameList.split('\n').filter(i => i.length !== 0) ;  } ,
         set ( value ) { this.nameList = value ;  }
       } ,
       number : {
-        get () { return this.numberList == '' ? [] : this.numberList.split('\n') ;  } ,
+        get () { return this.numberList == '' ? [] : this.numberList.split('\n').filter(i => i.length !== 0) ;  } ,
         set ( value ) { this.numberList = value ;  }
       }
     }
