@@ -40,13 +40,48 @@
     <section class="result" v-if="resultList.length > 0">
       <ul class="lstWrap">
         <li v-for="(item, idx) in resultList" :key="idx">
-          <span class="name">{{ item.name }}</span><span>{{ item.check }}</span>
+          <span class="name">{{ item.name }}</span>
+          <span>{{ item.check }}</span>
+          <button v-if="item.check!='일치'" class="btnNotify" @click="showNotifyPopup( item.name, item.number )">안내문구생성</button>
         </li>
       </ul>
     </section>
 
   </div> <!-- end of sectionWrap -->
   <loading  v-if="loading" />
+  
+  <div class="popupWrap" v-if="showNotify">
+    <div class="popup">
+      <div class="top">개인통관고유번호 오류 안내</div>
+      <div class="content">
+        <div class="input">
+          <div class="item">
+            <span>구매한 상품명</span><input type="text" v-model="product">
+          </div>
+        </div>
+        <div class="textWrap" id="textWrap">
+  안녕하세요 {{ person }} 고객님 :) <br />
+  [{{product}}] 주문하신 쇼핑몰입니다~ <br />
+  다름이 아니라 저희측 현지 배송업체 확인결과 주문하신 '개인통관부호'가 잘못된것으로 판단되어 재확인차 연락드립니다. 아래의 정보 확인부탁드리며, 정확한 정보를 답장으로 전달주시면 감사하겠습니다~<br /><br />
+
+  - 수취인 : [ {{ person }} ]<br />
+  - 개인통관부호 : [ {{ pnumber }} ]<br />
+
+  개인통관부호는 수취인의 이름으로 발급된 [P+12자리 숫자] 번호여야 합니다! 감사합니다!<br />
+
+  개인통관부호는 아래의 링크에서 확인 / 발급이 가능하십니다.<br />
+  https://unipass.customs.go.kr/csp/persIndex.do
+        </div>
+      </div>
+      <div class="bottom">
+        <div class="btns">
+          <button type="button" @click="copyText">문구 복사</button>
+          <button type="button" @click="closePop">닫기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </template>
 
 <script>
@@ -68,6 +103,10 @@
         numberList : '' , 
         resultList : [] ,
         loading : false ,
+        showNotify : false , 
+        person : null , 
+        pnumber: null , 
+        product : '' , 
       }
     } , 
     methods : {
@@ -112,6 +151,29 @@
           }
         }) ;
 
+      } ,
+
+      showNotifyPopup ( name , num ) {
+        console.log( 'showNotify in' ) ; 
+        this.showNotify = true ; 
+        this.person = name ; 
+        this.pnumber = num ; 
+      } ,
+
+      closePop () {
+        this.showNotify = false ; 
+      } ,
+
+      copyText () {
+        console.log( 'copy text' ) ; 
+        let textWrap = document.querySelector('#textWrap') ; 
+        let r = document.createRange();
+
+        r.selectNode(textWrap);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(r);
+        document.execCommand('copy');
+        window.getSelection().removeAllRanges();
       }
     } ,
     computed : {
@@ -128,5 +190,4 @@
 </script>
 
 <style lang="scss" scoped>
-
 </style>
