@@ -6,6 +6,9 @@
       <router-link to="/PersonalCustomsCode">개인통관고유부호 검증</router-link>
       <router-link to="/Unipass">통관진행정보</router-link>
     </nav>
+    <!-- <nav>
+      <router-link to="/Message">자주 쓰는 메세지 복사</router-link>
+    </nav> -->
   </header>
 </template>
 <script>
