@@ -59,7 +59,7 @@
   import { reactive, toRefs } from 'vue';
   import loading from '../common/loading' ; 
 
-  const APIKEY = 'LzhMkwK5XUNTkNg24cozUQ' ; 
+  const APIKEY = 'L038PeyOLd9b7XdJLe7YCQ' ; 
   const COMPANY_API = 'https://info.sweettracker.co.kr/api/v1/companylist?t_key='+APIKEY;
 
   export default {

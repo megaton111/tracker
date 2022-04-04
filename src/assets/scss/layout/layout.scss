@@ -123,6 +123,7 @@ body {
 
       $rd : 0.3rem ; 
       $height  :40px ; 
+      $height-sm : 34px ; 
       input {
         width: 100% ;
         padding : 0 10px ; 
@@ -163,14 +164,12 @@ body {
       button {
         width: 100% ;
         height : $height ;
-        // background-color: #789395;
         background-color: #39AEA9;
         border: 0 ; 
         color:#fff ;
         font-size:16px; 
         font-weight: 600 ;
         cursor: pointer; 
-
         border-radius: $rd;
         box-shadow: #0000000a 0rem 0.125rem 0.625rem 0rem ;
         &.btnNotify {
@@ -181,6 +180,14 @@ body {
           border: 1px solid #C74B50;
           background-color: #fff;
           color:#C74B50; 
+        }
+        &.btnLight {
+          background-color: #efefef;
+          color:#333 ; 
+        }
+        &.sm {
+          height:$height-sm ; 
+          font-size:14px ; 
         }
       }
       h1 {
@@ -246,6 +253,47 @@ body {
               }
             }
             
+          }
+        }
+      }
+      &.msg {
+        overflow-y:auto ; 
+        padding-right: 10px ;
+        h2 {
+          padding:40px 0 10px ;
+        }
+        .wrapMsg{
+          display: flex;
+          flex-direction: row ;
+          flex-wrap : wrap ;
+          gap:10px ; 
+          .item {
+            flex : 1 1 200px ; 
+            display: inline-flex;
+            flex-direction: column ;
+            gap:5px; 
+            h3 {
+              font-size:12px ; 
+              font-weight: 600 ;
+              color: #868686 ;
+            }
+            .text {
+              display: flex;
+              height: 150px ;
+              overflow-y: auto ;
+              border:0.0625rem solid #DEDEDE ; 
+              padding: 10px ; 
+              box-shadow: #0000000a 0rem 0.125rem 0.625rem 0rem;
+              border-radius: 0.3rem ;
+              font-size:11px ; 
+              line-height: 1.5 ; 
+              outline: 0;
+            }
+            .btn {
+              button {
+                
+              }
+            }
           }
         }
       }
@@ -329,3 +377,6 @@ body {
     }
   }
 }
+
+
+

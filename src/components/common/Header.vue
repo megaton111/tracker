@@ -7,7 +7,7 @@
       <router-link to="/Unipass">통관진행정보</router-link>
     </nav>
     <!-- <nav>
-      <router-link to="/Message">자주 쓰는 메세지 복사</router-link>
+      <router-link to="/Message">자주 쓰는 메세지</router-link>
     </nav> -->
   </header>
 </template>
