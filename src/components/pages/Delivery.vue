@@ -1,33 +1,49 @@
 <template>
 
-  <div class="description">
+  <top-description>
     운송장 번호를 1개만 입력했을 경우에는 진행과정이 모두 보이며, 운송장 번호를 여러 개 입력했을 경우에는 배송완료일만 노출합니다.<br />
     여러 운송장 번호를 입력 할 경우에는 한줄에 한개의 운송장을 입력해주세요. (예시참고)
     <br />주문리스트에 배송완료일 입력을 위해 만든 기능입니다.
-  </div>
+  </top-description>
 
   <div class="sectionWrap">
 
     <section class="enter">
+      
       <div class="row fix">
-        <select v-model="companyCode">
+        
+        <t-select 
+        v-model="companyCode"
+        :options="companyList"
+        @update:modelValue="changeSelect"></t-select>
+
+        <!-- <select v-model="companyCode">
           <template v-for="(item, idx) in companyList" :key="idx">
             <option :value="item.Code">{{ item.Name }}</option>
           </template>
-        </select>
+        </select> -->
+
       </div>
       <div class="row">
-        <textarea v-model="originTrackList" placeholder="예) 운송장번호를 여러개 입력 시 한줄에 한개씩
+
+        <t-textarea 
+          v-model="originTrackList"
+          placeholder="예) 운송장번호를 여러개 입력 시 한줄에 한개씩
+123123123123123
+123123123123123
+123123123123123"></t-textarea>
+        
+        <!-- <textarea v-model="originTrackList" placeholder="예) 운송장번호를 여러개 입력 시 한줄에 한개씩
   123123123123123
   123123123123123
   123123123123123">
-      </textarea>
+      </textarea> -->
+
       </div>
       <div class="row fix">
         <button type="button" @click="deliveryCheckHandler">조회</button>
       </div>
     </section>
-
 
     <section class="result" v-if="deliveryResult.length > 0 || single.status || alertText">
       <div class="status" v-if="alertText">{{ alertText }}</div>
@@ -47,7 +63,6 @@
         </li>
       </ul>
     </section>
-    
 
   </div> <!-- end of sectionWrap -->
 
@@ -57,7 +72,10 @@
 <script>
   import axios from 'axios';
   import { reactive, toRefs } from 'vue';
+  import TopDescription from '../layout/TopDescription' ; 
   import loading from '../common/loading' ; 
+  import TSelect from '../common/TSelect';
+  import TTextarea from '../common/TTextarea';
 
   const APIKEY = 'L038PeyOLd9b7XdJLe7YCQ' ; 
   const COMPANY_API = 'https://info.sweettracker.co.kr/api/v1/companylist?t_key='+APIKEY;
@@ -66,7 +84,10 @@
     name : 'delivery' ,
     
     components : {
-      loading
+      loading ,
+      TopDescription ,
+      TSelect ,
+      TTextarea
     } ,
 
     setup () {
@@ -83,11 +104,20 @@
         single : {
           status : null , 
           progress : [] ,
-        }
+        } ,
+
+        trackValue : '' ,
       }) ;
 
-      // 택배사 리스트 가져오기
-      axios.get( COMPANY_API ).then(res=>state.companyList = res.data.Company) ; 
+      // 택배사 리스트 가져와서 select value item 형태로 변환 { Name : '', Code : '' } --> { name : '', value : '' }
+      axios.get( COMPANY_API ).then(res=>{
+        let arr = res.data.Company ; 
+        arr = arr.map( item => {
+          return { name : item.Name, value : item.Code }
+        }) ; 
+        return state.companyList = arr ;
+      }) ; 
+
 
       // 입력한 정보 값 체크
       const deliveryCheckHandler = () => {
@@ -159,8 +189,12 @@
           state.result.push( '검색결과가 없습니다. 운송장번호와 택배사를 확인해주세요.' ) ; 
         }
       }
+
+      const changeSelect = ( value ) => {
+        console.log( 'changeSelect value :', value ) ; 
+      }
       
-      return { ...toRefs(state), deliveryCheckHandler, checkTrackInfo } ;
+      return { ...toRefs(state), deliveryCheckHandler, checkTrackInfo, changeSelect } ;
     } ,
   }
 </script>

@@ -31,6 +31,17 @@
 123456789"></textarea>
           </div>
         </div>
+        <div class="col" style="--gap-col:5px">
+          <div class="row fix">
+            <h1>수취인 전화번호</h1>
+          </div>
+          <div class="row">
+              <textarea resize="false" v-model="telList" placeholder="예) 한줄에 하나의 정보 입력
+010-1234-1234
+010-1234-1234
+010-1234-1234"></textarea>
+          </div>
+        </div>
       </div>
       
       <div class="row fix"><button type="button" @click="searchHandler">조회</button></div>
@@ -107,23 +118,26 @@
         person : null , 
         pnumber: null , 
         product : '' , 
+        telList : '' , 
       }
     } , 
     methods : {
       
       searchHandler () {
 
-        if( this.name.length < 1 || this.number.length < 1 || this.name.length !== this.number.length ) {
-          alert( '입력한 이름, 번호 수량이 같아야합니다' ) ; 
-        } else {
+        if( this.name.length == this.number.length && this.name.length == this.tel.length ) {
+          // console.log( '---------------------검증통과' ) ; 
           this.loading = true ; 
           this.resultList = [] ;
           this.checkCode() ; 
+        } else {
+          alert( '입력한 이름, 번호 수량이 같아야합니다' ) ; 
         }
+
       } ,
 
       checkCode () {
-        axios.get( `${URL}?crkyCn=o220p260j056x276q000c050u0&persEcm=${this.number[0]}&pltxNm=${this.name[0]}`)
+        axios.get( `${URL}?crkyCn=o220p260j056x276q000c050u0&persEcm=${this.number[0]}&pltxNm=${this.name[0]}&cralTelno=${this.tel[0]}`)
         .then(( res ) => {
           
           let xml = res.data
@@ -140,6 +154,7 @@
 
           this.name.shift() ; 
           this.number.shift() ; 
+          this.tel.shift() ; 
 
           if( this.name.length > 0 ) {
             this.checkCode() ; 
@@ -147,7 +162,7 @@
             this.loading = false ; 
             this.nameList = '' ; 
             this.numberList = '' ; 
-            console.log('검사끝') ; 
+            this.telList = '' ; 
           }
         }) ;
 
@@ -184,6 +199,10 @@
       number : {
         get () { return this.numberList == '' ? [] : this.numberList.split('\n').filter(i => i.length !== 0) ;  } ,
         set ( value ) { this.numberList = value ;  }
+      } ,
+      tel : {
+        get () { return this.telList == '' ? [] : this.telList.split('\n').filter(i => i.length !== 0).map(item=>item.replace(/-/g, '')) ;  } ,
+        set ( value ) { this.telList = value ;  }
       }
     }
   }

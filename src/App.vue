@@ -1,21 +1,21 @@
 <template>
-
-  <Header />
-  <div class="container" id="container"><router-view /></div>
-
+  <app-header :title="title"></app-header>
+  <app-content></app-content>
 </template>
 
 <script>
-// import axios from 'axios';
-// import { reactive, toRefs } from 'vue';
-import Header from './components/common/Header' ; 
+import AppHeader from './components/layout/AppHeader' ; 
+import AppContent from './components/layout/AppContent' ; 
 export default {
   name: 'App',
   components : {
-    Header
+    AppHeader , 
+    AppContent
   } ,
-  setup () {
-
-  } ,
+  data () {
+    return {
+      title : 'Tracker' ,
+    }
+  }
 };
 </script>
