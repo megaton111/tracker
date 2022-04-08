@@ -1,20 +1,19 @@
 <template>
 
-  <div class="description">
+  <top-description>
     통관 과정을 조회할 수 있는 기능입니다. <br />
     운송장 번호를 입력하세요. 년도는 통관 진행 해당년도입니다.
-  </div>
+  </top-description>
 
   <div class="sectionWrap">
 
     <section class="enter">
       <div class="row" style="--gap:4px;">
-        <div class="col number"><input type="text" v-model="number" placeholder="운송장 번호를 입력하세요"></div>
+        <div class="col number">
+          <t-input type="text" v-model="number" placeholder="운송장 번호를 입력하세요"></t-input>
+        </div>
         <div class="col year">
-          <select v-model="year">
-            <option value="2022">2022</option>
-            <option value="2021">2021</option>
-          </select>
+          <t-select v-model="year" :options="yearList"></t-select>
         </div>
         <div class="col btn"><button type="button" @click="searchHandler">조회</button></div>
       </div>
@@ -37,33 +36,30 @@
 
 <script>
   import axios from 'axios';
+  import { reactive, toRefs, ref } from 'vue';
   import convert from 'xml-js' ; 
-  import loading from '../common/loading' ; 
 
   const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
   const URL = `${PROXY}/ext/rest/cargCsclPrgsInfoQry/retrieveCargCsclPrgsInfo?crkyCn=k280o211a048o132e070b010d0&hblNo`;
 
   export default {
     name : 'PersonalCustomsCode' ,
-    components : {
-      loading
-    } ,
-    data () {
-      return {
+    setup(){
+      const disableTeleport = ref(false);
+      const state = reactive({
         number : '' ,
         year : '2022' ,  
         status : null , 
         progress : [] ,
         loading : false ,
-      }
-    } , 
-    methods : {
-      
-      searchHandler() {
-        console.log( 'number :', this.number ) ; 
-        this.loading = true ,
+        yearList : [{ name : '2021' , value : '2021' }, { name : '2022' , value : '2022' }]
+      }) ;
 
-        axios.get( `${URL}=${this.number}&blYy=${this.year}` )
+      const searchHandler = () => {
+        console.log( 'number :', state.number ) ; 
+        state.loading = true ,
+
+        axios.get( `${URL}=${state.number}&blYy=${state.year}` )
         .then(( res ) => {
 
           let xml = res.data
@@ -71,33 +67,31 @@
           ,   jsonParse = JSON.parse( json )
           ; 
           
-          this.status = jsonParse.cargCsclPrgsInfoQryRtnVo.cargCsclPrgsInfoQryVo.csclPrgsStts._text ;
-          this.progress = jsonParse.cargCsclPrgsInfoQryRtnVo.cargCsclPrgsInfoDtlQryVo ;
-          this.loading = false;
+          state.status = jsonParse.cargCsclPrgsInfoQryRtnVo.cargCsclPrgsInfoQryVo.csclPrgsStts._text ;
+          state.progress = jsonParse.cargCsclPrgsInfoQryRtnVo.cargCsclPrgsInfoDtlQryVo ;
+          state.loading = false;
           
         })
         .catch(error =>{
           console.log( 'error :', error ) ; 
-          this.status = '조회된 결과가 없습니다' ; 
-          this.progress = [] ; 
-          this.loading = false;
+          state.status = '조회된 결과가 없습니다' ; 
+          state.progress = [] ; 
+          state.loading = false;
         }) ;
-      } ,
+      } ;
 
-      dateFormat(value, pattern) {
+      const dateFormat = (value, pattern) => {
         var i = 0,
           date = value.toString();
         return pattern.replace(/#/g,() => date[i++]);
-      }
+      } ;
 
-
-    } ,
-    computed : {
-    
-    }
+      return { 
+        ...toRefs(state) , 
+        disableTeleport ,
+        searchHandler ,
+        dateFormat
+      } ;
+    },
   }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

@@ -11,47 +11,25 @@
     <section class="enter">
       
       <div class="row fix">
-        
-        <t-select 
-        v-model="companyCode"
-        :options="companyList"
-        @update:modelValue="changeSelect"></t-select>
-
-        <!-- <select v-model="companyCode">
-          <template v-for="(item, idx) in companyList" :key="idx">
-            <option :value="item.Code">{{ item.Name }}</option>
-          </template>
-        </select> -->
-
+        <t-select v-model="companyCode" :options="companyList" @update:modelValue="changeSelect"></t-select>
       </div>
       <div class="row">
-
-        <t-textarea 
-          v-model="originTrackList"
-          placeholder="예) 운송장번호를 여러개 입력 시 한줄에 한개씩
-123123123123123
-123123123123123
-123123123123123"></t-textarea>
-        
-        <!-- <textarea v-model="originTrackList" placeholder="예) 운송장번호를 여러개 입력 시 한줄에 한개씩
-  123123123123123
-  123123123123123
-  123123123123123">
-      </textarea> -->
-
+        <t-textarea v-model="originTrackList" placeholder="예) 운송장번호를 여러개 입력 시 한줄에 한개씩&#10;123123123123123&#10;123123123123123&#10;123123123123123"></t-textarea>
       </div>
       <div class="row fix">
         <button type="button" @click="deliveryCheckHandler">조회</button>
       </div>
     </section>
 
-    <section class="result" v-if="deliveryResult.length > 0 || single.status || alertText">
-      <div class="status" v-if="alertText">{{ alertText }}</div>
-
+    <!-- 운송장 번호 여러 개 조회 시 -->
+    <section class="result" v-if="deliveryResult.length > 0">
       <ul class="lstWrap" v-if="deliveryResult.length > 0">
         <li v-for="(item, idx) in deliveryResult" :key="idx"> {{ item }} </li>
       </ul>
+    </section>
 
+    <!-- 운송장 번호 한개 조회 시 -->
+    <section class="result" v-else-if="single.status">
       <div class="status" v-if="single.status">
         <strong>{{ single.status }}</strong>
       </div>
@@ -64,33 +42,32 @@
       </ul>
     </section>
 
+    <!-- 잘못된 검색 결과 -->
+    <section class="result" v-else-if="alertText">
+      <div class="status" v-if="alertText">{{ alertText }}</div>
+    </section>
+
   </div> <!-- end of sectionWrap -->
 
-  <loading  v-if="loading" />
+  <teleport to="#teleport-area" :disabled="disableTeleport">
+    <loading v-if="loading"/>
+  </teleport>
+
 </template>
 
 <script>
+  import { reactive, toRefs, ref } from 'vue';
   import axios from 'axios';
-  import { reactive, toRefs } from 'vue';
-  import TopDescription from '../layout/TopDescription' ; 
-  import loading from '../common/loading' ; 
-  import TSelect from '../common/TSelect';
-  import TTextarea from '../common/TTextarea';
-
-  const APIKEY = 'L038PeyOLd9b7XdJLe7YCQ' ; 
-  const COMPANY_API = 'https://info.sweettracker.co.kr/api/v1/companylist?t_key='+APIKEY;
+  const APIKEY = 'L038PeyOLd9b7XdJLe7YCQ' ;   // 개인키
+  const COMPANY_API = 'https://info.sweettracker.co.kr/api/v1/companylist?t_key='+APIKEY ;  // 택배사 리스트
+  const DELIVERY_API = 'https://info.sweettracker.co.kr/api/v1/trackingInfo?t_key='+APIKEY ;  // 운송장 조회
 
   export default {
     name : 'delivery' ,
-    
     components : {
-      loading ,
-      TopDescription ,
-      TSelect ,
-      TTextarea
     } ,
-
     setup () {
+      const disableTeleport = ref(false);
       const state = reactive({
         companyCode : '01' ,        // 택배사 코드(기본은 우체국택배)
         companyList : null ,        // 택배사 리스트
@@ -149,7 +126,7 @@
 
       // 운송장 여러 개 조회 시
       const checkTrackInfo = () => {
-        axios.get( 'https://info.sweettracker.co.kr/api/v1/trackingInfo?t_key='+APIKEY+'&t_code='+state.companyCode+'&t_invoice='+state.trackList[0] )
+        axios.get( DELIVERY_API+'&t_code='+state.companyCode+'&t_invoice='+state.trackList[0] )
         .then(( res ) => {
           state.trackList.shift() ; 
           trackInfoSet( res ) ; 
@@ -166,7 +143,7 @@
       // 운송장 1개 조회 시
       const checkTrackInfoSingle = () => {
         console.log( '싱글 체크' ) ; 
-        axios.get( 'https://info.sweettracker.co.kr/api/v1/trackingInfo?t_key='+APIKEY+'&t_code='+state.companyCode+'&t_invoice='+state.trackList[0] )
+        axios.get( DELIVERY_API+'&t_code='+state.companyCode+'&t_invoice='+state.trackList[0] )
         .then(( res ) => {
           state.alertText = '' ; 
           state.loading = false ; 
@@ -194,7 +171,14 @@
         console.log( 'changeSelect value :', value ) ; 
       }
       
-      return { ...toRefs(state), deliveryCheckHandler, checkTrackInfo, changeSelect } ;
+      return { 
+        ...toRefs(state) , 
+        deliveryCheckHandler , 
+        checkTrackInfo , 
+        changeSelect , 
+        disableTeleport 
+      } ;
+
     } ,
   }
 </script>

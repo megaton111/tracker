@@ -8,3 +8,15 @@
   align-items: center ;
   justify-content: center ;
 }
+@mixin round-box () {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  width: 100% ;
+  margin-bottom: 1.5rem;
+  border-radius: 0.65rem;
+  border: 0.0625rem solid #DEDEDE;
+  box-shadow: #0000000a 0rem 0.125rem 0.625rem 0rem ;
+}

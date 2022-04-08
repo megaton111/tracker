@@ -1,26 +1,12 @@
 html, body { height: 100% ; overflow: hidden !important ;}
 
-// $color-background : #FEFBF3 ; 
-
-@mixin round-box () {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
-  width: 100% ;
-  margin-bottom: 1.5rem;
-  border-radius: 0.65rem;
-  border: 0.0625rem solid #DEDEDE;
-  box-shadow: #0000000a 0rem 0.125rem 0.625rem 0rem ;
-}
-
 body {
   width: 100% ;
   display: flex;
   justify-content: center ;
   background-color: #fff;
 }
+
 #app { 
   display: flex; 
   justify-content: center ;
@@ -28,71 +14,11 @@ body {
   gap:40px ; 
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
-  .header{
-    display: flex;
-    flex-direction: column ;
-    flex : 0 0 240px ; 
-    padding:0 10px ; 
-    align-items:center;
-    h1 {
-      @include round-box ; 
-      justify-content: flex-start ;
-      a {
-        color:#333 ; 
-        font-size:18px; 
-        font-weight: 700 ;
-        color:#2C3333 ;
-        letter-spacing: -1px ;
-        &::first-letter {
-          color:#DD4A48; 
-        }
-      }
-    }
-    span {
-      display: inline-flex;
-      margin-left: 4px ;
-      font-size:11px ; 
-      vertical-align: middle ;
-      color:#717a7a ;
-    }
-    nav {
-      display: flex;
-      @include round-box ; 
-      padding:0 ; 
-      flex-direction: column ;
-      overflow: hidden;
-      button, a {
-        display: inline-flex;
-        width: 100% ;
-        align-items: center ;
-        justify-content: flex-start;
-        text-align: left ;
-        background: none ;
-        border : 0 ; 
-        font-size:14px ; 
-        font-weight: 400 ;
-        padding: 1rem;
-        cursor: pointer;
-        letter-spacing: -1px ;
-        color:#D1D1D1 ;
-        transition:all .3s ; 
-        &:not(:last-child) {
-          border-bottom:0.0625rem solid #DEDEDE ; 
-        }
-        &.router-link-active{
-          color:#2C3333 ;
-          font-weight: 700 ;
-          background-color: #f8f8f8;
-        }
-      }
-    }
-  }
   .container {
     display: flex; flex-direction: column ;
     width: 500px ;
     gap: 20px ; 
     overflow: hidden;
-    // padding:20px 10px ; 
     flex: 1; 
     h2 {
       font-size:14px; 
@@ -101,7 +27,6 @@ body {
     // 페이지 설명 
     .description{
       font-size:12px ; line-height: 1.5; 
-      // @include round-box ; 
       margin-bottom: 0;
       justify-content: flex-start ; 
     }
@@ -116,7 +41,6 @@ body {
     section {
       position: relative;
       display: flex;
-      // flex : 1; 
       flex-direction: column ;
       gap: 10px ; 
       overflow: hidden ;
@@ -124,14 +48,11 @@ body {
       $rd : 0.3rem ; 
       $height  :40px ; 
       $height-sm : 34px ; 
-      input {
+      input[type=text],input[type=number] {
         width: 100% ;
         padding : 0 10px ; 
         height : $height ;
-        // border-radius: 0;
         font-size:14px ; 
-        // border: 1px solid #000;
-
         border-radius: $rd;
         border: 0.0625rem solid #DEDEDE;
         box-shadow: #0000000a 0rem 0.125rem 0.625rem 0rem ;
@@ -141,8 +62,6 @@ body {
         width: 100% ;
         padding : 0 10px ; 
         height : $height ;
-        // border-radius: 0;
-        // border: 1px solid #000;
         outline: 0 ;
         border-radius: $rd;
         border: 0.0625rem solid #DEDEDE;
@@ -212,17 +131,19 @@ body {
           &.number {
             flex : 3 ;
           }
+          &.r {
+            flex: 0 0 auto ;
+            margin-left: auto ;
+          }
         }
       }
       &.enter { 
-        // @include round-box ; 
         flex : 0 0 auto ; 
       }
       &.result {
         @include round-box ; 
         flex-direction: column ;
         justify-content: flex-start;
-        // min-height: 100px ;
         .status{
           width: 100% ;
           font-size:14px ; 
@@ -246,7 +167,6 @@ body {
               flex : 1; 
               &.date {
                 flex:0 0 160px ;
-                // flex-basis: 160px ;
               }
               &.name {
                 flex:0 0 100px ; 
@@ -289,121 +209,65 @@ body {
               line-height: 1.5 ; 
               outline: 0;
             }
-            .btn {
-              button {
-                
-              }
-            }
           }
         }
       }
     }
 
-  }
-
-}
-
-
-.popupWrap{
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 10000;
-  width: 100% ; height: 100% ; 
-  background-color: rgba( 0, 0, 0, 0.7 ) ;
-  display: flex;
-  flex-direction: column ;
-  justify-content: center ;
-  align-items: center ;
-  .popup{
-    display: flex;
-    flex-direction: column ;
-    gap:10px ; 
-    border-radius: 0.5rem;
-    width: 400px ;
-    background-color: #fff;
-    padding:20px ; 
+    &.calculatePrice{
+      .btnNotify{
+        height: 100% ;
+      }
+      .info {
+        display: flex;
+        flex-direction: column ;
+        gap : 5px ; 
+        width: 100% ;
+        dt {
+          font-weight: 700 ;
+          font-size: 14px ;
+        }
+      }
     
-    .top {
-      text-align: center ;
-      font-weight:700 ; 
-      padding:10px 0 ; 
-      font-size:16px ; 
-    }
-    .content {
-      display: flex;
-      flex-direction: column ;
-      gap:10px ; 
-      .input {
-        .item {
+      .priceResult{
+        width: 100% ;
+        display: flex;
+        flex-direction: column ;
+        gap:10px ; 
+        dl {
           display: flex;
-          gap:10px ; 
-          span {
-            display: flex;
-            flex : 1 ; 
-            white-space: nowrap ; 
-            align-items: center ;
-            font-size:14px ; 
+          flex-direction: row ;
+          gap:10px ;
+          font-size: 14px ;
+          &.line {
+            border-bottom:1px solid #DEDEDE ; 
+            padding-bottom: 10px ;
+          }
+          dd {
             font-weight: 700 ;
           }
         }
       }
-      .textWrap{
-        border : 1px solid #00000059 ; 
-        padding:10px; 
-        border-radius: 4px ;
-        font-size:12px ; 
-        line-height:1.5 ; 
-      }
     }
-    .bottom {
-      .btns {
-        display: flex;
-        gap:4px ; 
-        button {
-          flex : 1; 
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          font-weight: 700;
-          outline: none;
-          border: none;
-          border-radius: 0.375rem;
-          flex-shrink: 0;
-          min-height: 40px ;
-          cursor: pointer;
-        };
-      }
-    }
+
   }
+
 }
 
-
-
-// select 
-.select-wrap {
-  position: relative;
-  display: flex;
-  gap: 10px ; 
-  .label{
-    display: inline-flex;
-    white-space: nowrap ;
-    align-items: center ;
+ul.lst_fee {
+  > li {
     font-weight: 700 ;
-    font-size:14px ; 
   }
-}
-
-// textarea
-.textarea-wrap{
-  position: relative;
-  display: flex;
-  gap: 10px ; 
-  .label{
-    display: inline-flex;
-    white-space: nowrap ;
-    align-items: center ;
-    font-weight: 700 ;
-    font-size:14px ; 
+  li {
+    list-style: none;
+    line-height:1.5 ;
+    font-size:12px ; 
+    ul {
+      padding-left: 10px ;
+      li {
+        font-weight: 400 ;
+        list-style: inside ;
+      }
+    }
   }
 }

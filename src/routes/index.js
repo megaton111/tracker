@@ -3,6 +3,7 @@ import Delivery from "@/components/pages/Delivery.vue";
 import PersonalCustomsCode from "@/components/pages/PersonalCustomsCode.vue";
 import Unipass from "@/components/pages/Unipass.vue";
 import Message from "@/components/pages/Message.vue";
+import CalculatePrice from "@/components/pages/CalculatePrice.vue";
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: "/Message",
     name: "Message",
     component: Message,
+  },
+  {
+    path: "/CalculatePrice",
+    name: "CalculatePrice",
+    component: CalculatePrice,
   },
 ];
 
