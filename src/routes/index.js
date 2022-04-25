@@ -1,9 +1,10 @@
-import { createWebHistory, createRouter } from "vue-router";
-import Delivery from "@/components/pages/Delivery.vue";
-import PersonalCustomsCode from "@/components/pages/PersonalCustomsCode.vue";
-import Unipass from "@/components/pages/Unipass.vue";
-import Message from "@/components/pages/Message.vue";
-import CalculatePrice from "@/components/pages/CalculatePrice.vue";
+import { createWebHistory, createRouter } from "vue-router" ;
+import Delivery from "@/components/pages/Delivery.vue" ;
+import PersonalCustomsCode from "@/components/pages/PersonalCustomsCode.vue" ;
+import Unipass from "@/components/pages/Unipass.vue" ;
+import Message from "@/components/pages/Message.vue" ;
+import CalculatePrice from "@/components/pages/CalculatePrice.vue" ;
+import SalePrice from "@/components/pages/SalePrice.vue" ;
 
 const routes = [
   {
@@ -36,6 +37,11 @@ const routes = [
     path: "/CalculatePrice",
     name: "CalculatePrice",
     component: CalculatePrice,
+  },
+  {
+    path: "/SalePrice",
+    name: "SalePrice",
+    component: SalePrice,
   },
 ];
 

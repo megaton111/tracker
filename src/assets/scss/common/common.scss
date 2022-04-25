@@ -29,6 +29,15 @@ input[type=text] , input[type=number] {
       background-color: rgba( 0, 0, 0, 0.05 );
     }
   }
+  &.right {
+    text-align: right ;
+  }
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 *::-webkit-scrollbar {
