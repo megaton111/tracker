@@ -1,6 +1,6 @@
 <template>
   <div class="input-wrap">
-    <template v-if="label"><label class="label" :for="unique" :style="{ width : labelW + 'px' }">{{ label }}</label></template>
+    <template v-if="label"><label class="label" :for="unique" :style="{ minWidth : labelW + 'px' }">{{ label }}</label></template>
     <input :type="type" v-model="textValue" :id="unique" :placeholder="placeholder" :class="setClass" />
     <template v-if="unit"><span class="unit">{{ unit }}</span></template>
   </div>

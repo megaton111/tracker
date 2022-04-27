@@ -5,6 +5,7 @@ import Unipass from "@/components/pages/Unipass.vue" ;
 import Message from "@/components/pages/Message.vue" ;
 import CalculatePrice from "@/components/pages/CalculatePrice.vue" ;
 import SalePrice from "@/components/pages/SalePrice.vue" ;
+import OptionPrice from "@/components/pages/OptionPrice.vue" ;
 
 const routes = [
   {
@@ -42,6 +43,11 @@ const routes = [
     path: "/SalePrice",
     name: "SalePrice",
     component: SalePrice,
+  },
+  {
+    path: "/OptionPrice",
+    name: "OptionPrice",
+    component: OptionPrice,
   },
 ];
 

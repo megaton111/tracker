@@ -7,6 +7,7 @@
     <nav>
       <router-link to="/CalculatePrice">스마트스토어 수수료 계산</router-link>
       <router-link to="/SalePrice">할인율 계산</router-link>
+      <router-link to="/OptionPrice">옵션 가격차이 계산</router-link>
     </nav>
     <!-- <nav>
       <router-link to="/Message">자주 쓰는 메세지</router-link>
