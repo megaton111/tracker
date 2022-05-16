@@ -45,7 +45,7 @@
         <li v-for="(item, idx) in resultList" :key="idx">
           <span class="name">{{ item.name }}</span>
           <span>{{ item.check }}</span>
-          <button v-if="item.check!='일치'" class="btnNotify" @click="showNotifyPopup( item.name, item.number )">안내문구생성</button>
+          <button v-if="item.check!='일치'" class="btnNotify" @click="showNotifyPopup( item.name, item.number, item.tel )">안내문구생성</button>
         </li>
       </ul>
     </section>
@@ -70,10 +70,12 @@
           <div class="textWrap" id="textWrap">
             안녕하세요 {{ person }} 고객님 :) <br />
             [{{product}}] 주문하신 쇼핑몰입니다~ <br />
-            다름이 아니라 저희측 현지 배송업체 확인결과 주문하신 '개인통관부호'가 잘못된것으로 판단되어 재확인차 연락드립니다. 아래의 정보 확인부탁드리며, 정확한 정보를 답장으로 전달주시면 감사하겠습니다~<br /><br />
+            다름이 아니라 저희측 현지 배송업체 확인결과 주문하신 '개인통관부호'가 잘못된것으로 판단되어 재확인차 연락드립니다. 아래의 정보 확인부탁드리며, <br/>
+            개인통관부호는 수취인 이름과 휴대폰번호가 일치해야합니다. 정확한 정보를 답장으로 전달주시면 감사하겠습니다~<br /><br />
 
             - 수취인 : [ {{ person }} ]<br />
             - 개인통관부호 : [ {{ pnumber }} ]<br />
+            - 휴대폰번호 : [ {{ ptel }} ]<br />
 
             개인통관부호는 수취인의 이름으로 발급된 [P+12자리 숫자] 번호여야 합니다! 감사합니다!<br />
 
@@ -115,6 +117,7 @@
         showNotify : false , 
         person : null , 
         pnumber: null , 
+        ptel : null , 
         product : '' , 
         name : computed(() => state.nameList == '' ? [] : state.nameList.split('\n').filter(i => i.length !== 0)) ,
         number : computed(() => state.numberList == '' ? [] : state.numberList.split('\n').filter(i => i.length !== 0)) ,
@@ -146,6 +149,7 @@
           state.resultList.push({
             name : state.name[0] , 
             number : state.number[0] ,
+            tel : state.tel[0] ,
             check : result == 1 ? '일치' : '불일치'
           }) ; 
 
@@ -166,10 +170,12 @@
 
       } ;
 
-      const showNotifyPopup = ( name , num ) => {
+      const showNotifyPopup = ( name , num, tel ) => {
+        console.log( '---------->', name , num, tel ) ; 
         state.showNotify = true ; 
         state.person = name ; 
         state.pnumber = num ; 
+        state.ptel = tel ; 
       } ;
 
       const closePop = () => {
