@@ -1,7 +1,7 @@
 <template>
   
   <top-description>
-  주문리스트 엑셀을 우리 양식에 맞게 변환해주는 서비스입니다. 
+  주문리스트 엑셀을 우리 양식에 맞게 변환
   </top-description>
 
   <div class="sectionWrap salePrice">
@@ -20,8 +20,8 @@
 
     <section class="result">
       <!-- {{ makeData }} -->
-      <div class="row">
-        <div class="col">
+      <div class="row" style="height:100%;">
+        <div class="col" style="--gap-col:10px; height:100%;">
           <div class="wrapTable">
             <table>
               <!-- <thead>
@@ -29,41 +29,36 @@
                   <th v-for="( column , idx ) in getColumn" :key="idx">{{ column }}</th>
                 </tr>
               </thead> -->
-              <tbody ref="code">
+              <tbody>
                 <tr v-for="( row, num ) in makeData" :key="num">
                   <td v-for="( cell, t ) in row" :key="t">{{ cell }}</td>
                 </tr>
               </tbody>
             </table>
           </div>
+          <div class="btnArea"><button type="button" class="btn" @click="copy">복사</button></div>
         </div>
       </div>
-      <!-- <div class="row">
-        <div class="col"><button type="button" class="btn" @click="copy">복사</button></div>
-      </div> -->
     </section>
 
   </div> <!-- end of sectionWrap -->
 </template>
 
 <script>
-  import { reactive, toRefs, watch, ref } from 'vue';
-  // import { priceComma } from '@/utils';
+  import { reactive, toRefs, watch } from 'vue';
   export default {
     name : 'ExcelConverter' ,
     setup () {
 
-      const code = ref(null) ;
-
-      const state = reactive({
+const state = reactive({
         excelData : '' ,
-        getColumn : [ '구매자명',	'수취인명', '판매사이트', '상품주문번호',	'구매자ID', '수취인연락처1', '개인통관고유부호' , '주문일시', '상품명', '옵션정보', '수량', '판매가격' ] , 
+        getColumn : [ '구매자명',	'수취인명', '판매사이트', '상품주문번호',	'구매자ID', '수취인연락처1', '개인통관고유부호' , '결제일', '상품명', '옵션정보', '수량', '판매가격' ] , 
         makeData : [] , 
       }) ;
 
       const convert = ( data ) => {
-        
-        console.log( data.split( '\n' ) ) ; 
+
+        state.makeData = [] ; 
         
         let setData = data.split( '\n' ).map( item => item.split('\t') )
         ,   columnName = setData.shift()
@@ -74,41 +69,26 @@
 
         if( setData[setData.length-1] == '' ) { setData.splice(-1,1); } // 엑셀 파일에서 복사한 자료로 작업 시 마지막 배열은 빈 배열로 들어가 있어서 삭제함
 
-        console.log( 'setData : ', setData ) ; 
-        console.log( 'setData.length : ', setData.length ) ; 
         for( let i=0; i<setData.length; i++ ) {
 
-          console.log( '------------------' + i + '------------------' )
-          
-          let arr = [] ;
-          let result = null ; 
+          let arr = []
+          ,   result = null 
+          ,   idx = null 
+          ; 
 
           for( let j=0; j<state.getColumn.length; j++ ) {
 
-            // if( state.getColumn[j] == '판매가격' ){
-            //   result = parseFloat( setData[i][price1].replace(/(₩|,)/g, "") ) + parseFloat( setData[i][price2].replace(/(₩|,)/g, "") )+ parseFloat( setData[i][price3].replace(/(₩|,)/g, "") );
-            // } else if( state.getColumn[j] == '판매사이트' ) {
-            //   result = '스마트스토어' ; 
-            // } else if( state.getColumn[j] == '주문일시' ){
-            //   result = '2022-06-12' ; 
-            // } else {
-            //   let idx = columnName.indexOf( state.getColumn[j] ) ;
-            //   result = setData[i][idx] ; 
-            // }
 
-            let idx = columnName.indexOf( state.getColumn[j] ) ;
+            idx = columnName.indexOf( state.getColumn[j] ) ;
 
             switch( state.getColumn[j] ) {
               case '판매가격' : 
-                // console.log( '---->', setData[i][price1], setData[i][price2], setData[i][price3] ) ; 
-                // console.log( '---->', setData[i][price1], setData[i][price2], setData[i][price3].replace(/(₩|,)/g, "" ) ) ; 
                 result = parseFloat( setData[i][price1].replace(/(₩|,)/g, "") ) + parseFloat( setData[i][price2].replace(/(₩|,)/g, "") )+ parseFloat( setData[i][price3].replace(/(₩|,)/g, "") );
                 break ; 
               case '판매사이트' : 
                 result = '스마트스토어' ; 
                 break ; 
-              case '주문일시' : 
-                idx = columnName.indexOf( '결제일' ) ;
+              case '결제일' : 
                 result = setData[i][idx].split(' ')[0] ; 
                 break ; 
               default : 
@@ -124,10 +104,13 @@
       }
 
       const copy = () => {
-        let target = code.value ;
-        target.select();
-        target.setSelectionRange(0, Number.MAX_SAFE_INTEGER);
-        document.execCommand('copy');
+        let tableDom = document.querySelector('table');
+        let range  =  document.createRange();
+        range.selectNodeContents(tableDom)
+        let select =  window.getSelection()
+        select.removeAllRanges()
+        select.addRange(range)
+        document.execCommand('copy')
       }
 
       watch(
@@ -136,7 +119,6 @@
           convert( excelData ) ; 
         }
       )
-
 
       return { 
         ...toRefs(state) ,
@@ -149,9 +131,12 @@
 <style lang="scss">
 .wrapTable{
   width : 100% ; 
-  flex : 0 0 auto; 
+  flex :1 ; 
   height : 100% ; 
   overflow-y:auto ; 
+}
+.btnArea {
+  flex : 0 0 auto ; 
 }
 table {
   width : 100% ; 
