@@ -4,7 +4,30 @@
   주문리스트 엑셀을 우리 양식에 맞게 변환
   </top-description>
 
-  <div class="sectionWrap salePrice">
+  <div class="sectionWrap excelConverter">
+    <section class="enter">
+      <div class="row">
+        <div class="col" style="--gap-col:5px">
+          <div class="row fix">
+            <h1>가져올 컬럼 설정</h1>
+          </div>
+          <div class="row">
+            <div class="setColWrap">
+              <div class="set">
+                <input type="text" placeholder="쉼표로 구분하여 입력해주세요." v-model="setColValue" />
+                <button type="button" @click="setColumn">설정</button>
+              </div>
+              <div class="error" v-show="errorColumn.length > 0">
+                <div v-for="( e, i ) in errorColumn" :key="i">[{{ e }}]</div> <strong>컬럼정보가없습니다.</strong>
+              </div>
+              <ul class="lst">
+                <li v-for="( column , idx ) in getColumn" :key="idx">{{ column }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
     <section class="enter">
       <div class="row">
         <div class="col" style="--gap-col:5px">
@@ -31,7 +54,7 @@
               </thead> -->
               <tbody>
                 <tr v-for="( row, num ) in makeData" :key="num">
-                  <td v-for="( cell, t ) in row" :key="t">{{ cell }}</td>
+                  <td v-for="( cell, t ) in row" :key="t"><div class="ellipsis">{{ cell }}</div></td>
                 </tr>
               </tbody>
             </table>
@@ -50,15 +73,18 @@
     name : 'ExcelConverter' ,
     setup () {
 
-const state = reactive({
+    const state = reactive({
         excelData : '' ,
         getColumn : [ '구매자명',	'수취인명', '판매사이트', '상품주문번호',	'구매자ID', '수취인연락처1', '개인통관고유부호' , '결제일', '상품명', '옵션정보', '수량', '판매가격' ] , 
         makeData : [] , 
+        setColValue : '' , 
+        errorColumn : [] , 
       }) ;
 
       const convert = ( data ) => {
 
         state.makeData = [] ; 
+        state.errorColumn = [] ; 
         
         let setData = data.split( '\n' ).map( item => item.split('\t') )
         ,   columnName = setData.shift()
@@ -80,6 +106,11 @@ const state = reactive({
 
 
             idx = columnName.indexOf( state.getColumn[j] ) ;
+
+            if( idx < 0 && !(state.getColumn[j] == '판매가격') && !(state.getColumn[j] == '판매사이트') ) {
+              if( state.errorColumn.indexOf( state.getColumn[j] ) >= 0 ) return ; 
+              state.errorColumn.push( state.getColumn[j] ) ;
+            }
 
             switch( state.getColumn[j] ) {
               case '판매가격' : 
@@ -103,6 +134,11 @@ const state = reactive({
 
       }
 
+      const setColumn = () => {
+        let column = state.setColValue ; 
+        state.getColumn = column.split(',').map(item=>item.trim()) ; 
+      }
+
       const copy = () => {
         let tableDom = document.querySelector('table');
         let range  =  document.createRange();
@@ -122,6 +158,7 @@ const state = reactive({
 
       return { 
         ...toRefs(state) ,
+        setColumn , 
         copy ,
       } ;
     } ,
@@ -129,27 +166,4 @@ const state = reactive({
   }
 </script>
 <style lang="scss">
-.wrapTable{
-  width : 100% ; 
-  flex :1 ; 
-  height : 100% ; 
-  overflow-y:auto ; 
-}
-.btnArea {
-  flex : 0 0 auto ; 
-}
-table {
-  width : 100% ; 
-  border-collapse: collapse;
-  border-spacing: 0;
-  tr {
-    th, td {
-      border : 1px solid #333 ; 
-      padding:2px ;
-      font-size:11px ;  
-      white-space: normal;
-      word-break: break-all;
-    }
-  }
-}
 </style>

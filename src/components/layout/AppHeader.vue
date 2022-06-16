@@ -6,10 +6,6 @@
     </nav>
     <nav>
       <router-link v-for="(menu,idx) in menus2" :key="idx" :to="menu.url">{{ menu.title }}</router-link>
-      <!-- <router-link to="/CalculatePrice">스마트스토어 수수료 계산</router-link>
-      <router-link to="/SalePrice">할인율 계산</router-link>
-      <router-link to="/OptionPrice">옵션 가격차이 계산</router-link>
-      <router-link to="/ExcelConverter">엑셀 변환</router-link> -->
     </nav>
     <!-- <nav>
       <router-link to="/Message">자주 쓰는 메세지</router-link>
@@ -37,7 +33,7 @@
           { url : '/CalculatePrice', title : '스마트스토어 수수료 계산' } , 
           { url : '/SalePrice', title : '할인율 계산' } , 
           { url : '/OptionPrice', title : '옵션 가격차이 계산' } ,
-          { url : '/ExcelConverter', title : '엑셀 변환' } ,
+          { url : '/ExcelConverter', title : '주문 엑셀 변환' } ,
         ] , 
 
       }) ;
