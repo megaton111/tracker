@@ -6,6 +6,7 @@ import Message from "@/components/pages/Message.vue" ;
 import CalculatePrice from "@/components/pages/CalculatePrice.vue" ;
 import SalePrice from "@/components/pages/SalePrice.vue" ;
 import OptionPrice from "@/components/pages/OptionPrice.vue" ;
+import ExcelConverter from "@/components/pages/ExcelConverter.vue" ;
 
 const routes = [
   {
@@ -48,6 +49,11 @@ const routes = [
     path: "/OptionPrice",
     name: "OptionPrice",
     component: OptionPrice,
+  },
+  {
+    path: "/ExcelConverter",
+    name: "ExcelConverter",
+    component: ExcelConverter,
   },
 ];
 

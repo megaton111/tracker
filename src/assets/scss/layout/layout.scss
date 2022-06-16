@@ -298,3 +298,20 @@ ul.lst_fee {
     }
   }
 }
+
+.btn {
+  display: flex;
+  // flex-basis: 80px ;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  outline: none;
+  border: none;
+  border-radius: 0.375rem;
+  min-height: 34px;
+  height: 34px;
+  background-color: #efefef;
+  color:#333 ; 
+  font-size:14px ; 
+  cursor: pointer;
+}
