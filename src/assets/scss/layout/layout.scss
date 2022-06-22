@@ -35,7 +35,7 @@ body {
   .sectionWrap {
     display: flex; flex-direction: column ;
     flex: 1;
-    gap: 20px ;
+    gap: var( --sectionGap , 20px ) ;
     overflow: hidden;
 
     section {
