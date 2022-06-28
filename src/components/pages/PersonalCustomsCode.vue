@@ -125,13 +125,11 @@
   import { reactive, toRefs, ref, computed } from 'vue';
   import convert from 'xml-js' ; 
   import { copyText } from '@/utils';
-import TTab from '../common/TTab.vue';
 
   const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
   const URL = `${PROXY}/ext/rest/persEcmQry/retrievePersEcm`;
 
   export default {
-	components: { TTab },
     name : 'PersonalCustomsCode' ,
     setup() {
       const disableTeleport = ref(false);

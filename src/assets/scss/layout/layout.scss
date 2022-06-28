@@ -435,3 +435,11 @@ ul.lst_fee {
     }
   }
 }
+
+@media (max-width: 740px) {
+  #app {
+    flex-direction: column ;
+    padding:10px 0 ; 
+    border : 1px solid red ; 
+  }
+}
