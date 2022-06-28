@@ -400,3 +400,38 @@ ul.lst_fee {
     }
   }
 }
+
+.tabs{
+  display: flex;
+  border:1px solid #DEDEDE ;
+  border-bottom:0 ; 
+  border-radius: 0.65rem 0.65rem 0 0 ;
+  overflow: hidden;
+  > button {
+    display: inline-flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center ;
+    text-align: left;
+    background: none;
+    border: 0;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 1rem;
+    cursor: pointer;
+    letter-spacing: -1px;
+    color: #D1D1D1;
+    // transition: all 0.3s;
+    border-bottom: 1px solid #DEDEDE ;
+    background-color: #f9f9f9;
+    &:not(:last-child){
+      border-right: 1px solid #DEDEDE ;
+    }
+    &.active {
+      border-bottom: 0 ; 
+      color: #2C3333;
+      font-weight: 700;
+      background-color: #fff;
+    }
+  }
+}

@@ -7,7 +7,9 @@
 
   <div class="sectionWrap personalCodeCheck">
 
-    <section class="enter">
+    <t-tab :items="tabItems" v-model="tabIdx"></t-tab>
+
+    <section class="enter" v-if="!tabIdx">
 
       <div class="row fix" style="--gap:10px">
         <div class="col" style="--gap-col:5px">
@@ -40,7 +42,7 @@
       
     </section>
 
-    <section class="enter excel">
+    <section class="enter excel" v-else>
 
       <div class="row fix" style="--gap:10px">
         <div class="col" style="--gap-col:5px;">
@@ -123,11 +125,13 @@
   import { reactive, toRefs, ref, computed } from 'vue';
   import convert from 'xml-js' ; 
   import { copyText } from '@/utils';
+import TTab from '../common/TTab.vue';
 
   const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
   const URL = `${PROXY}/ext/rest/persEcmQry/retrievePersEcm`;
 
   export default {
+	components: { TTab },
     name : 'PersonalCustomsCode' ,
     setup() {
       const disableTeleport = ref(false);
@@ -147,7 +151,9 @@
         tel : computed(() => state.telList == '' ? [] : state.telList.split('\n').filter(i => i.length !== 0).map(item=>item.replace(/-/g, ''))) ,
 
         excelData : '' ,
-        store : 'naver'
+        store : 'naver' ,
+        tabItems: [ '개별 입력', '엑셀 입력' ],
+        tabIdx : 0 , 
       }) ;
 
       const searchHandler = () => {

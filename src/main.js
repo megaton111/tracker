@@ -9,6 +9,7 @@ import TSelect from './components/common/TSelect';
 import TTextarea from './components/common/TTextarea';
 import TInput from './components/common/TInput';
 import TRadio from './components/common/TRadio';
+import TTab from './components/common/TTab';
 
 const app = createApp(App);
 
@@ -18,6 +19,7 @@ app.component( "TSelect", TSelect ) ;
 app.component( "TTextarea", TTextarea ) ;
 app.component( "TInput", TInput ) ;
 app.component( "TRadio", TRadio ) ;
+app.component( "TTab", TTab ) ;
 
 app
   .use(store)
