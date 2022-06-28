@@ -5,7 +5,7 @@
     여러 개 입력 시 줄바꿈하여 입력해주세요 (예시참고)
   </top-description>
 
-  <div class="sectionWrap">
+  <div class="sectionWrap personalCodeCheck">
 
     <section class="enter">
 
@@ -37,6 +37,29 @@
       </div>
       
       <div class="row fix"><button type="button" @click="searchHandler">조회</button></div>
+      
+    </section>
+
+    <section class="enter excel">
+
+      <div class="row fix" style="--gap:10px">
+        <div class="col" style="--gap-col:5px;">
+          <div class="row fix">
+            <h1>엑셀로 조회</h1>
+          </div>
+          <div class="row">
+            <select name="" id="" v-model="store">
+              <option value="naver">스마트스토어</option>
+              <option value="tmon">티몬</option>
+            </select>
+          </div>
+          <div class="row">
+            <t-textarea v-model="excelData" placeholder="엑셀 전체를 복사해서 넣어주세요."></t-textarea>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row fix"><button type="button" @click="searchExcelHandler">조회</button></div>
       
     </section>
 
@@ -122,6 +145,9 @@
         name : computed(() => state.nameList == '' ? [] : state.nameList.split('\n').filter(i => i.length !== 0)) ,
         number : computed(() => state.numberList == '' ? [] : state.numberList.split('\n').filter(i => i.length !== 0)) ,
         tel : computed(() => state.telList == '' ? [] : state.telList.split('\n').filter(i => i.length !== 0).map(item=>item.replace(/-/g, ''))) ,
+
+        excelData : '' ,
+        store : 'naver'
       }) ;
 
       const searchHandler = () => {
@@ -135,6 +161,40 @@
         }
 
       } ;
+
+      const searchExcelHandler = () => {
+
+        let setData = state.excelData.split( '\n' ).map( item => item.split('\t') )
+        ,   columnName = setData.shift()
+        ,   idxName = null 
+        ,   idxNumber = null 
+        ,   idxTel = null 
+        ;
+
+
+        if( state.store == 'naver' ) {
+
+          idxName = columnName.indexOf( '수취인명' ) ;
+          idxNumber = columnName.indexOf( '개인통관고유부호' ) ;
+          idxTel = columnName.indexOf( '수취인연락처1' ) ;
+
+        } else {
+
+          idxName = columnName.indexOf( '수취인명' ) ;
+          idxNumber = columnName.indexOf( '개인통관고유부호' ) ;
+          idxTel = columnName.indexOf( '수취인연락처' ) ;
+
+        }
+
+        for( let i=0; i<setData.length; i++ ) {
+          state.name.push( setData[i][idxName] ) ; 
+          state.number.push( setData[i][idxNumber] ) ; 
+          state.tel.push( setData[i][idxTel].replace(/-/g, '') ) ; 
+        }
+
+        checkCode() ; 
+
+      }
 
       const checkCode = () => {
         axios.get( `${URL}?crkyCn=o220p260j056x276q000c050u0&persEcm=${state.number[0]}&pltxNm=${state.name[0]}&cralTelno=${state.tel[0]}`)
@@ -164,14 +224,12 @@
             state.nameList = '' ; 
             state.numberList = '' ; 
             state.telList = '' ; 
-            console.log( 'state.nameList :' ,state)  ;
           }
         }) ;
 
       } ;
 
       const showNotifyPopup = ( name , num, tel ) => {
-        console.log( '---------->', name , num, tel ) ; 
         state.showNotify = true ; 
         state.person = name ; 
         state.pnumber = num ; 
@@ -194,7 +252,8 @@
         checkCode ,
         showNotifyPopup ,
         closePop ,
-        copyHandler
+        copyHandler ,
+        searchExcelHandler
       } ;
     } ,
   }
