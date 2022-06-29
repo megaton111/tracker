@@ -61,7 +61,7 @@
         </div>
       </div>
       
-      <div class="row fix"><button type="button" @click="searchExcelHandler">조회</button></div>
+      <!-- <div class="row fix"><button type="button" @click="searchExcelHandler">조회</button></div> -->
       
     </section>
 
@@ -122,7 +122,7 @@
 
 <script>
   import axios from 'axios';
-  import { reactive, toRefs, ref, computed } from 'vue';
+  import { reactive, toRefs, ref, computed, watch } from 'vue';
   import convert from 'xml-js' ; 
   import { copyText } from '@/utils';
 
@@ -156,6 +156,8 @@
 
       const searchHandler = () => {
 
+        state.resultList = [] ; 
+
         if( state.name.length == state.number.length && state.name.length == state.tel.length ) {
           state.loading = true ; 
           state.resultList = [] ;
@@ -168,6 +170,8 @@
 
       const searchExcelHandler = () => {
 
+        state.resultList = [] ; 
+
         let setData = state.excelData.split( '\n' ).map( item => item.split('\t') )
         ,   columnName = setData.shift()
         ,   idxName = null 
@@ -175,6 +179,7 @@
         ,   idxTel = null 
         ;
 
+        if( setData[setData.length-1] == '' ) { setData.splice(-1,1); }
 
         if( state.store == 'naver' ) {
 
@@ -248,6 +253,13 @@
         let textWrap = document.querySelector('#textWrap') ; 
         copyText( textWrap )  ;
       } ;
+
+
+      watch(
+        [ () => state.excelData ], () => {
+          if( state.excelData !== '' ) { searchExcelHandler() ; }
+        },
+      );
 
       return { 
         ...toRefs(state) , 
