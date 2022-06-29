@@ -186,7 +186,16 @@ body {
                 flex:0 0 160px ;
               }
               &.name {
-                flex:0 0 100px ; 
+                flex:0 0 80px ; 
+              }
+              &.txt-result {
+                flex:0 0 60px ; 
+                &.error{
+                  color:red ; 
+                }
+              }
+              &.txt-err{
+                color:red ; 
               }
             }
             

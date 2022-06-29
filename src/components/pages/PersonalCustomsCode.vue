@@ -2,7 +2,6 @@
 
   <top-description>
     수취인 이름과 개인통관고유번호가 일치한지 확인하는 기능입니다.<br />
-    여러 개 입력 시 줄바꿈하여 입력해주세요 (예시참고)
   </top-description>
 
   <div class="sectionWrap personalCodeCheck" style="--sectionGap:20px">
@@ -82,7 +81,8 @@
           <ul class="lstWrap">
             <li v-for="(item, idx) in resultList" :key="idx">
               <span class="name">{{ item.name }}</span>
-              <span>{{ item.check }}</span>
+              <span class="txt-result" :class="{ error : item.check!='일치' }">{{ item.check }}</span>
+              <span class="txt-err" v-if="item.check!='일치'">{{ item.errMsg }}</span>
               <button v-if="item.check!='일치'" class="btnNotify" @click="showNotifyPopup( item.name, item.number, item.tel )">안내문구생성</button>
             </li>
           </ul>
@@ -229,13 +229,22 @@
           ,   json = convert.xml2json(xml, { compact : true } )
           ,   jsonParse = JSON.parse( json )
           ,   result = jsonParse.persEcmQryRtnVo.tCnt._text 
+          ,   errMsg = '' 
           ; 
+
+          if( 
+            result == 0 && 
+            jsonParse.persEcmQryRtnVo.persEcmQryRtnErrInfoVo.errMsgCn._text == '납세의무자 휴대전화번호가 일치하지 않습니다.'
+          ) {
+            errMsg = '전화번호 불일치' ;
+          }
 
           state.resultList.push({
             name : state.name[0] , 
             number : state.number[0] ,
             tel : state.tel[0] ,
-            check : result == 1 ? '일치' : '불일치'
+            check : result == 1 ? '일치' : '불일치' ,
+            errMsg : errMsg
           }) ; 
 
           state.name.shift() ; 

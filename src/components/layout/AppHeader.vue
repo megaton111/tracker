@@ -5,9 +5,9 @@
     <div class="navWrap">
       <nav><router-link v-for="(menu,idx) in menus" :key="idx" :to="menu.url">{{ menu.title }}</router-link></nav>
       <nav><router-link v-for="(menu,idx) in menus2" :key="idx" :to="menu.url">{{ menu.title }}</router-link></nav>
-      <nav>
+      <!-- <nav>
         <router-link to="/Message">자주 쓰는 메세지</router-link>
-      </nav>
+      </nav> -->
     </div> <!-- end of navWrap -->
   </header>
 </template>
