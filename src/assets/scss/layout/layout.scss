@@ -1,4 +1,7 @@
-html, body { height: 100% ; overflow: hidden !important ;}
+html, body { 
+  // height: 100% ; 
+  // overflow: hidden !important ;
+}
 
 body {
   width: 100% ;
@@ -429,6 +432,7 @@ ul.lst_fee {
   border-bottom:0 ; 
   border-radius: 0.65rem 0.65rem 0 0 ;
   overflow: hidden;
+  flex: 0 0 auto;
   > button {
     display: inline-flex;
     width: 100%;
@@ -461,7 +465,11 @@ ul.lst_fee {
 @media (max-width: 740px) {
   #app {
     flex-direction: column ;
-    padding:10px 0 ; 
+    padding:10px ; 
     border : 1px solid red ; 
+    gap:20px ; 
+    .container {
+      width: 100% ;
+    }
   }
 }

@@ -44,10 +44,10 @@
 
     <section class="enter excel" v-else>
 
-      <div class="row fix" style="--gap:10px">
-        <div class="col" style="--gap-col:5px;">
-          <div class="row fix">
-            <h1>엑셀로 조회</h1>
+      <div class="row">
+        <div class="col bx">
+          <div class="row">
+            <h1>스토어 선택</h1>
           </div>
           <div class="row">
             <select name="" id="" v-model="store">
@@ -55,12 +55,21 @@
               <option value="tmon">티몬</option>
             </select>
           </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col bx">
+          <div class="row">
+            <h1>엑셀 입력</h1>
+          </div>
           <div class="row">
             <t-textarea v-model="excelData" placeholder="엑셀 전체를 복사해서 넣어주세요."></t-textarea>
           </div>
         </div>
       </div>
-      
+
+
       <!-- <div class="row fix"><button type="button" @click="searchExcelHandler">조회</button></div> -->
       
     </section>
@@ -68,22 +77,15 @@
     <section class="result" v-if="resultList.length > 0">
       
 
-      <div class="row">
-        <div class="col bx">
-          <div class="row">
-            <h1>결과</h1>
-          </div>
-          <div class="row">
-             <div class="col bx-rd" style="--gap-col:10px;">
-              <ul class="lstWrap">
-                <li v-for="(item, idx) in resultList" :key="idx">
-                  <span class="name">{{ item.name }}</span>
-                  <span>{{ item.check }}</span>
-                  <button v-if="item.check!='일치'" class="btnNotify" @click="showNotifyPopup( item.name, item.number, item.tel )">안내문구생성</button>
-                </li>
-              </ul>
-            </div>
-          </div>
+      <div class="row fix" style="">
+        <div class="col bx-rd" style="--gap-col:10px;">
+          <ul class="lstWrap">
+            <li v-for="(item, idx) in resultList" :key="idx">
+              <span class="name">{{ item.name }}</span>
+              <span>{{ item.check }}</span>
+              <button v-if="item.check!='일치'" class="btnNotify" @click="showNotifyPopup( item.name, item.number, item.tel )">안내문구생성</button>
+            </li>
+          </ul>
         </div>
       </div>
 

@@ -1,6 +1,7 @@
 <template>
   <header class="header">
     <h1><router-link to="/">{{title}}</router-link></h1>
+    <button type="button" class="btn-mobile-menu">모바일 메뉴 버튼</button>
     <div class="navWrap">
       <nav><router-link v-for="(menu,idx) in menus" :key="idx" :to="menu.url">{{ menu.title }}</router-link></nav>
       <nav><router-link v-for="(menu,idx) in menus2" :key="idx" :to="menu.url">{{ menu.title }}</router-link></nav>
