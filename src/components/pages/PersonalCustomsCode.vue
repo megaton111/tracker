@@ -5,7 +5,7 @@
     여러 개 입력 시 줄바꿈하여 입력해주세요 (예시참고)
   </top-description>
 
-  <div class="sectionWrap personalCodeCheck">
+  <div class="sectionWrap personalCodeCheck" style="--sectionGap:20px">
 
     <t-tab :items="tabItems" v-model="tabIdx"></t-tab>
 
@@ -66,13 +66,27 @@
     </section>
 
     <section class="result" v-if="resultList.length > 0">
-      <ul class="lstWrap">
-        <li v-for="(item, idx) in resultList" :key="idx">
-          <span class="name">{{ item.name }}</span>
-          <span>{{ item.check }}</span>
-          <button v-if="item.check!='일치'" class="btnNotify" @click="showNotifyPopup( item.name, item.number, item.tel )">안내문구생성</button>
-        </li>
-      </ul>
+      
+
+      <div class="row">
+        <div class="col bx">
+          <div class="row">
+            <h1>결과</h1>
+          </div>
+          <div class="row">
+             <div class="col bx-rd" style="--gap-col:10px;">
+              <ul class="lstWrap">
+                <li v-for="(item, idx) in resultList" :key="idx">
+                  <span class="name">{{ item.name }}</span>
+                  <span>{{ item.check }}</span>
+                  <button v-if="item.check!='일치'" class="btnNotify" @click="showNotifyPopup( item.name, item.number, item.tel )">안내문구생성</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </section>
 
   </div> <!-- end of sectionWrap -->

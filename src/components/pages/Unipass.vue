@@ -15,18 +15,31 @@
         <div class="col year">
           <t-select v-model="year" :options="yearList"></t-select>
         </div>
-        <div class="col btn"><button type="button" @click="searchHandler">조회</button></div>
+        <div class="col"><button type="button" @click="searchHandler">조회</button></div>
       </div>
     </section> <!-- end of section -->
 
     <section class="result" v-if="status">
-      <div class="status" v-if="status">현재 상태 : <strong>{{ status }}</strong></div>
-      <ul class="lstWrap" v-if="progress.length > 0">
-        <li v-for="(item, idx) in progress" :key="idx">
-          <span class="date">{{ dateFormat( item.prcsDttm._text , '####-##-##' ) }}</span>
-          <span>{{ item.cargTrcnRelaBsopTpcd._text }}</span>
-        </li>
-      </ul>
+
+      <div class="row">
+        <div class="col bx">
+          <div class="row">
+            <h1>결과</h1>
+          </div>
+          <div class="row">
+             <div class="col bx-rd" style="--gap-col:10px;">
+              <div class="status" v-if="status">현재 상태 : <strong>{{ status }}</strong></div>
+              <ul class="lstWrap" v-if="progress.length > 0">
+                <li v-for="(item, idx) in progress" :key="idx">
+                  <span class="date">{{ dateFormat( item.prcsDttm._text , '####-##-##' ) }}</span>
+                  <span>{{ item.cargTrcnRelaBsopTpcd._text }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </section> <!-- end of section -->
 
   </div> <!-- end of sectionWrap -->

@@ -1,7 +1,8 @@
 <template>
 
   <top-description>
-    운송장 번호를 1개만 입력했을 경우에는 진행과정이 모두 보이며, 운송장 번호를 여러 개 입력했을 경우에는 배송완료일만 노출합니다.<br />
+    운송장 번호를 1개만 입력했을 경우에는 진행과정이 모두 보이며,<br />
+    운송장 번호를 여러 개 입력했을 경우에는 배송완료일만 노출합니다.<br />
     여러 운송장 번호를 입력 할 경우에는 한줄에 한개의 운송장을 입력해주세요. (예시참고)
     <br />주문리스트에 배송완료일 입력을 위해 만든 기능입니다.
   </top-description>
@@ -9,13 +10,29 @@
   <div class="sectionWrap">
 
     <section class="enter">
-      
-      <div class="row fix">
-        <t-select v-model="companyCode" :options="companyList" @update:modelValue="changeSelect"></t-select>
-      </div>
+
       <div class="row">
-        <t-textarea v-model="originTrackList" placeholder="예) 운송장번호를 여러개 입력 시 한줄에 한개씩&#10;123123123123123&#10;123123123123123&#10;123123123123123"></t-textarea>
+        <div class="col bx">
+          <div class="row">
+            <h1>택배사 선택</h1>
+          </div>
+          <div class="row">
+            <t-select v-model="companyCode" :options="companyList" @update:modelValue="changeSelect"></t-select>
+          </div>
+        </div>
       </div>
+
+      <div class="row">
+        <div class="col bx">
+          <div class="row">
+            <h1>운송장 번호 입력</h1>
+          </div>
+          <div class="row">
+            <t-textarea v-model="originTrackList" placeholder="예) 운송장번호를 여러개 입력 시 한줄에 한개씩&#10;123123123123123&#10;123123123123123&#10;123123123123123"></t-textarea>
+          </div>
+        </div>
+      </div>
+      
       <div class="row fix">
         <button type="button" @click="deliveryCheckHandler">조회</button>
       </div>
@@ -23,23 +40,38 @@
 
     <!-- 운송장 번호 여러 개 조회 시 -->
     <section class="result" v-if="deliveryResult.length > 0">
-      <ul class="lstWrap" v-if="deliveryResult.length > 0">
-        <li v-for="(item, idx) in deliveryResult" :key="idx"> {{ item }} </li>
-      </ul>
+      <div class="row">
+        <div class="col bx">
+          <div class="row">
+             <div class="col bx-rd" style="--gap-col:10px;">
+              <ul class="lstWrap" v-if="deliveryResult.length > 0">
+                <li v-for="(item, idx) in deliveryResult" :key="idx"> {{ item }} </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- 운송장 번호 한개 조회 시 -->
     <section class="result" v-else-if="single.status">
-      <div class="status" v-if="single.status">
-        <strong>{{ single.status }}</strong>
+      <div class="row">
+        <div class="col bx">
+          <div class="row">
+             <div class="col bx-rd" style="--gap-col:10px;">
+              <div class="status" v-if="single.status">
+                <strong>{{ single.status }}</strong>
+              </div>
+              <ul class="lstWrap" v-if="single.progress.length > 0">
+                <li v-for="(item, idx) in single.progress" :key="idx">
+                  <span class="date">{{ item.timeString }}</span>
+                  <span>{{ item.where }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <ul class="lstWrap" v-if="single.progress.length > 0">
-        <li v-for="(item, idx) in single.progress" :key="idx">
-          <span class="date">{{ item.timeString }}</span>
-          <span>{{ item.where }}</span>
-        </li>
-      </ul>
     </section>
 
     <!-- 잘못된 검색 결과 -->

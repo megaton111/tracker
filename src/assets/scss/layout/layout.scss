@@ -35,14 +35,14 @@ body {
   .sectionWrap {
     display: flex; flex-direction: column ;
     flex: 1;
-    gap: var( --sectionGap , 20px ) ;
+    gap: var( --sectionGap , 30px ) ;
     overflow: hidden;
 
     section {
       position: relative;
       display: flex;
       flex-direction: column ;
-      gap: 10px ; 
+      gap: var(--gap, 20px) ; 
       overflow: hidden ;
 
       $rd : 0.3rem ; 
@@ -52,7 +52,7 @@ body {
         width: 100% ;
         padding : 0 10px ; 
         height : $height ;
-        font-size:14px ; 
+        font-size:12px ; 
         border-radius: $rd;
         border: 0.0625rem solid #DEDEDE;
         box-shadow: #0000000a 0rem 0.125rem 0.625rem 0rem ;
@@ -66,14 +66,15 @@ body {
         border-radius: $rd;
         border: 0.0625rem solid #DEDEDE;
         box-shadow: #0000000a 0rem 0.125rem 0.625rem 0rem ;
+        font-size: 12px;
       }
       textarea {
         width: 100% ;
         flex : 1 ; 
         padding: 10px ; 
         line-height:1.5; 
-        min-height:15rem ; 
-        font-size:14px ; 
+        min-height:10rem ; 
+        font-size:12px ; 
         outline: 0 ;
         border-radius: $rd;
         border: 0.0625rem solid #DEDEDE;
@@ -86,7 +87,7 @@ body {
         background-color: #39AEA9;
         border: 0 ; 
         color:#fff ;
-        font-size:16px; 
+        font-size:14px; 
         font-weight: 600 ;
         cursor: pointer; 
         border-radius: $rd;
@@ -110,7 +111,11 @@ body {
         }
       }
       h1 {
-        font-size:16px;
+        font-size:14px;
+        letter-spacing: -1px ;
+      }
+      h2 {
+        font-size:12px;
         letter-spacing: -.5px ;
       }
       .row {
@@ -135,15 +140,24 @@ body {
             flex: 0 0 auto ;
             margin-left: auto ;
           }
+          &.fit {
+            flex: 0 0 auto ; 
+          }
+          &.bx {
+            gap:5px ; 
+          }
         }
       }
       &.enter { 
         flex : 0 0 auto ; 
       }
       &.result {
-        @include round-box ; 
-        flex-direction: column ;
-        justify-content: flex-start;
+
+        .bx-rd{
+          @include round-box ; 
+          flex-direction: column ;
+          justify-content: flex-start;
+        }
         .status{
           width: 100% ;
           font-size:14px ; 
@@ -211,6 +225,15 @@ body {
             }
           }
         }
+      }
+
+      .bx-bg{
+        display: flex;
+        flex-direction: column ;
+        gap:2px; 
+        background-color: #ffede5;
+        padding:10px; 
+        border-radius: 0.3rem ;
       }
     }
 
@@ -324,7 +347,8 @@ ul.lst_fee {
     overflow-y:auto ; 
   }
   .btnArea {
-    flex : 0 0 auto ; 
+    // flex : 0 0 auto ; 
+    width: 100% ;
   }
   table {
     width : 100% ; 
@@ -384,7 +408,6 @@ ul.lst_fee {
   .enter {
     textarea {
       min-height: 60px !important;
-      font-size:11px !important;  
     }
   }
 }
@@ -395,7 +418,6 @@ ul.lst_fee {
     &.excel{
       textarea {
         min-height: 60px !important;
-        font-size:11px !important;  
       }
     }
   }

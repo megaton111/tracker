@@ -25,34 +25,39 @@
     vertical-align: middle ;
     color:#717a7a ;
   }
-  nav {
+  .navWrap{
     display: flex;
-    @include round-box ; 
-    padding:0 ; 
+    width: 100% ;
     flex-direction: column ;
-    overflow: hidden;
-    button, a {
-      display: inline-flex;
-      width: 100% ;
-      align-items: center ;
-      justify-content: flex-start;
-      text-align: left ;
-      background: none ;
-      border : 0 ; 
-      font-size:14px ; 
-      font-weight: 400 ;
-      padding: 1rem;
-      cursor: pointer;
-      letter-spacing: -1px ;
-      color:#D1D1D1 ;
-      transition:all .3s ; 
-      &:not(:last-child) {
-        border-bottom:0.0625rem solid #DEDEDE ; 
-      }
-      &.router-link-active{
-        color:#2C3333 ;
-        font-weight: 700 ;
-        background-color: #f8f8f8;
+    nav {
+      display: flex;
+      @include round-box ; 
+      padding:0 ; 
+      flex-direction: column ;
+      overflow: hidden;
+      button, a {
+        display: inline-flex;
+        width: 100% ;
+        align-items: center ;
+        justify-content: flex-start;
+        text-align: left ;
+        background: none ;
+        border : 0 ; 
+        font-size:14px ; 
+        font-weight: 400 ;
+        padding: 1rem;
+        cursor: pointer;
+        letter-spacing: -1px ;
+        color:#D1D1D1 ;
+        transition:all .3s ; 
+        &:not(:last-child) {
+          border-bottom:0.0625rem solid #DEDEDE ; 
+        }
+        &.router-link-active{
+          color:#2C3333 ;
+          font-weight: 700 ;
+          background-color: #f8f8f8;
+        }
       }
     }
   }
