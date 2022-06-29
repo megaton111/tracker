@@ -473,9 +473,9 @@ ul.lst_fee {
 
 @media (max-width: 740px) {
   #app {
+    width: 100% ;
     flex-direction: column ;
     padding:10px ; 
-    border : 1px solid red ; 
     gap:20px ; 
     .container {
       width: 100% ;

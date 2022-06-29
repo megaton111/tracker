@@ -1,8 +1,8 @@
 <template>
   <header class="header">
     <h1><router-link to="/">{{title}}</router-link></h1>
-    <button type="button" class="btn-mobile-menu">모바일 메뉴 버튼</button>
-    <div class="navWrap">
+    <button type="button" class="btn-mobile-menu" @click="toggleMenu">모바일 메뉴 버튼</button>
+    <div class="navWrap" :class="{ show : showMenu }">
       <nav><router-link v-for="(menu,idx) in menus" :key="idx" :to="menu.url">{{ menu.title }}</router-link></nav>
       <nav><router-link v-for="(menu,idx) in menus2" :key="idx" :to="menu.url">{{ menu.title }}</router-link></nav>
       <!-- <nav>
@@ -35,8 +35,17 @@
           { url : '/OptionPrice', title : '옵션 가격차이 계산' } ,
         ] , 
 
+        showMenu : false , 
+
       }) ;
-      return { ...toRefs(state) } ;
+
+      const toggleMenu = () => {
+        state.showMenu = !state.showMenu ; 
+      }
+      return { 
+        ...toRefs(state) ,
+        toggleMenu
+      } ;
     }
   }
 </script>
