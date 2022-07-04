@@ -174,19 +174,33 @@ body {
           display: flex;
           flex-direction: column ;
           min-height: min-content ;
-          gap:4px ; 
+          gap:10px ; 
           li {
             font-size: 14px ;
             display: flex;
-            gap:10px; 
+            flex-direction: column ;
+            gap:4px; 
             line-height: 1.6 ; 
+            .bx-status {
+              display: flex;
+              gap:10px ; 
+            }
+            .bx-err {
+              display: flex;
+              .txt-err {
+                font-size:12px ; 
+              }
+              .btnNotify{
+                height: 20px ;
+              }
+            }
             span {
               flex : 1; 
               &.date {
                 flex:0 0 160px ;
               }
               &.name {
-                flex:0 0 80px ; 
+                flex:0 0 auto  ; 
               }
               &.txt-result {
                 flex:0 0 60px ; 

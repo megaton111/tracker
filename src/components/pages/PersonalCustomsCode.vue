@@ -74,16 +74,24 @@
     </section>
 
     <section class="result" v-if="resultList.length > 0">
-      
 
       <div class="row fix" style="">
         <div class="col bx-rd" style="--gap-col:10px;">
           <ul class="lstWrap">
             <li v-for="(item, idx) in resultList" :key="idx">
-              <span class="name">{{ item.name }}</span>
-              <span class="txt-result" :class="{ error : item.check!='일치' }">{{ item.check }}</span>
-              <span class="txt-err" v-if="item.check!='일치'">{{ item.errMsg }}</span>
-              <button v-if="item.check!='일치'" class="btnNotify" @click="showNotifyPopup( item.name, item.number, item.tel )">안내문구생성</button>
+              <div class="bx-status">
+                <span class="name">{{ item.name }}</span>
+                <span class="txt-result" :class="{ error : item.check!='일치' }">{{ item.check }}</span>
+                <!-- <span class="txt-err" v-if="item.check!='일치'">{{ item.errMsg }}</span> -->
+              </div>
+              <div class="bx-err" v-if="item.check!='일치'">
+                <span class="txt-err">
+                  <template v-for="(t, i) in item.errMsg" :key="i">
+                    {{ t }}
+                  </template>
+                </span>
+                <button v-if="item.check!='일치'" class="btnNotify" @click="showNotifyPopup( item.name, item.number, item.tel )">안내문구생성</button>
+              </div>
             </li>
           </ul>
         </div>
@@ -229,15 +237,21 @@
           ,   json = convert.xml2json(xml, { compact : true } )
           ,   jsonParse = JSON.parse( json )
           ,   result = jsonParse.persEcmQryRtnVo.tCnt._text 
-          ,   errMsg = '' 
+          ,   errMsg = [] 
           ; 
 
-          if( 
-            result == 0 && 
-            jsonParse.persEcmQryRtnVo.persEcmQryRtnErrInfoVo.errMsgCn._text == '납세의무자 휴대전화번호가 일치하지 않습니다.'
-          ) {
-            errMsg = '전화번호 불일치' ;
+          // 에러 메세지 처리 
+          if( result == 0 ) {
+            if ( Array.isArray( jsonParse.persEcmQryRtnVo.persEcmQryRtnErrInfoVo ) ) {
+              // 문제가 2개 이상일 경우
+              // errMsg = '통관번호, 전화번호 모두 불일치' ;
+              errMsg = jsonParse.persEcmQryRtnVo.persEcmQryRtnErrInfoVo.map(t => t.errMsgCn._text) ;
+            } else {
+              // 문제가 1개 일 경우
+              errMsg.push(jsonParse.persEcmQryRtnVo.persEcmQryRtnErrInfoVo.errMsgCn._text );
+            }
           }
+
 
           state.resultList.push({
             name : state.name[0] , 
