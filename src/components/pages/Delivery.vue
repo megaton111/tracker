@@ -90,7 +90,7 @@
 <script>
   import { reactive, toRefs, ref } from 'vue';
   import axios from 'axios';
-  const APIKEY = 'QIV4DYvA0u6CgmTpqJVqew' ;   // 개인키
+  const APIKEY = 'XV1C7cHtH0ursgca1emaCA' ;   // 개인키
   const COMPANY_API = 'https://info.sweettracker.co.kr/api/v1/companylist?t_key='+APIKEY ;  // 택배사 리스트
   const DELIVERY_API = 'https://info.sweettracker.co.kr/api/v1/trackingInfo?t_key='+APIKEY ;  // 운송장 조회
 
