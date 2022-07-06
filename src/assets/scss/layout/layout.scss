@@ -178,7 +178,7 @@ body {
           li {
             font-size: 14px ;
             display: flex;
-            flex-direction: column ;
+            flex-direction: row ;
             gap:4px; 
             line-height: 1.6 ; 
             .bx-status {
@@ -197,7 +197,7 @@ body {
             span {
               flex : 1; 
               &.date {
-                flex:0 0 160px ;
+                flex : 0 0 160px; 
               }
               &.name {
                 flex:0 0 auto  ; 
@@ -213,6 +213,23 @@ body {
               }
             }
             
+          }
+
+          &.lstPersonal{
+            li {
+              flex-direction: column ;
+            }
+          }
+
+          &.lstUnipass{
+            li {
+              flex-direction: row ;
+              span {
+                &.date {
+                  flex : 0 0 100px; 
+                }
+              }
+            }
           }
         }
       }

@@ -77,7 +77,7 @@
 
       <div class="row fix" style="">
         <div class="col bx-rd" style="--gap-col:10px;">
-          <ul class="lstWrap">
+          <ul class="lstWrap lstPersonal">
             <li v-for="(item, idx) in resultList" :key="idx">
               <div class="bx-status">
                 <span class="name">{{ item.name }}</span>

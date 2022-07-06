@@ -29,7 +29,7 @@
           <div class="row">
              <div class="col bx-rd" style="--gap-col:10px;">
               <div class="status" v-if="status">현재 상태 : <strong>{{ status }}</strong></div>
-              <ul class="lstWrap" v-if="progress.length > 0">
+              <ul class="lstWrap lstUnipass" v-if="progress.length > 0">
                 <li v-for="(item, idx) in progress" :key="idx">
                   <span class="date">{{ dateFormat( item.prcsDttm._text , '####-##-##' ) }}</span>
                   <span>{{ item.cargTrcnRelaBsopTpcd._text }}</span>
