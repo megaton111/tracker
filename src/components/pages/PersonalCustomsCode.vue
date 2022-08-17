@@ -175,7 +175,7 @@
         excelData : '' ,
         store : 'naver' ,
         tabItems: [ '개별 입력', '엑셀 입력' ],
-        tabIdx : 0 , 
+        tabIdx : 1 , 
       }) ;
 
       const searchHandler = () => {

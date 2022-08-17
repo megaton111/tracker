@@ -97,6 +97,14 @@
           background-color: #f8f8f8;
         }
       }
+
+      &.link_evt{
+        border-color:#39AEA9 ; 
+        button, a {
+          // border: 1px solid #39AEA9;;
+          color:#39AEA9 ; 
+        }
+      }
     }
   }
 }

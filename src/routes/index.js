@@ -11,7 +11,7 @@ import ExcelConverter from "@/components/pages/ExcelConverter.vue" ;
 const routes = [
   {
     path: "/",
-    redirect: '/Delivery' 
+    redirect: '/PersonalCustomsCode' 
     // name: "Home",
     // component: Home,
   },
