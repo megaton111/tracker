@@ -7,6 +7,7 @@ import CalculatePrice from "@/components/pages/CalculatePrice.vue" ;
 import SalePrice from "@/components/pages/SalePrice.vue" ;
 import OptionPrice from "@/components/pages/OptionPrice.vue" ;
 import ExcelConverter from "@/components/pages/ExcelConverter.vue" ;
+import SimpleFunction from "@/components/pages/SimpleFunction.vue" ;
 
 const routes = [
   {
@@ -54,6 +55,11 @@ const routes = [
     path: "/ExcelConverter",
     name: "ExcelConverter",
     component: ExcelConverter,
+  },
+  {
+    path: "/SimpleFunction",
+    name: "SimpleFunction",
+    component: SimpleFunction,
   },
 ];
 
