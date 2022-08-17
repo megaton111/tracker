@@ -48,8 +48,8 @@
       }
 
       const openOrderPage = () => {
-        window.open('https://docs.google.com/spreadsheets/u/1/d/1rN_W3I1dtsRLUuC-6g3sbFJ59MOwoDrZ3yHAxWv_-_8/edit?ouid=117064527932252276882&usp=sheets_home&ths=true') ; 
-        window.open('https://docs.google.com/spreadsheets/d/1Kqge_wdLLP60_HqFqoFaHoZsuqOxkH6q0X5EFvlUgko/edit#gid=70014937') ; 
+        // window.open('https://docs.google.com/spreadsheets/u/1/d/1rN_W3I1dtsRLUuC-6g3sbFJ59MOwoDrZ3yHAxWv_-_8/edit?ouid=117064527932252276882&usp=sheets_home&ths=true') ; 
+        // window.open('https://docs.google.com/spreadsheets/d/1Kqge_wdLLP60_HqFqoFaHoZsuqOxkH6q0X5EFvlUgko/edit#gid=70014937') ; 
         window.open('https://www.kingjg.com/') ; 
         window.open('https://www.tabae.co.kr/') ; 
         window.open('https://zicgoo.com/') ; 
