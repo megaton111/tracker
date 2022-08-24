@@ -75,6 +75,13 @@ body {
         border: 0.0625rem solid #DEDEDE;
         box-shadow: #0000000a 0rem 0.125rem 0.625rem 0rem ;
         font-size: 12px;
+
+        background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+) no-repeat;
+        background-position: right 5px top; /* Change the px value here to change the distance */
+        -moz-appearance: none; 
+        -webkit-appearance: none; 
+        appearance: none;
+
       }
       textarea {
         width: 100% ;
@@ -388,38 +395,14 @@ ul.lst_fee {
 }
 
 .excelConverter{
-  .wrapTable{
-    width : 100% ; 
-    flex :1 ; 
-    height : 100% ; 
-    overflow-y:auto ; 
-  }
+  
   .btnArea {
     // flex : 0 0 auto ; 
-    width: 100% ;
-  }
-  table {
-    width : 100% ; 
-    border-collapse: collapse;
-    border-spacing: 0;
-    table-layout: fixed ;
-    tr {
-      th, td {
-        border : 1px solid #333 ; 
-        padding:2px ;
-        font-size:11px ;  
-        white-space: normal;
-        word-break: break-all;
-        .ellipsis {
-          width: 100% ;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-      }
+      width: 100% ;
     }
-  }
   
+  
+
   .setColWrap{
     display: flex;
     flex-direction: column ;
@@ -461,6 +444,34 @@ ul.lst_fee {
 }
 
 
+.wrapTable{
+  width : 100% ; 
+  flex :1 ; 
+  height : 100% ; 
+  overflow-y:auto ; 
+
+  table {
+    width : 100% ; 
+    border-collapse: collapse;
+    border-spacing: 0;
+    table-layout: fixed ;
+    tr {
+      th, td {
+        border : 1px solid #333 ; 
+        padding:2px ;
+        font-size:11px ;  
+        white-space: normal;
+        word-break: break-all;
+        .ellipsis {
+          width: 100% ;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+}
 .personalCodeCheck{
   .enter {
     &.excel{

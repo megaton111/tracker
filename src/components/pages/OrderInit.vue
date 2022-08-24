@@ -1,49 +1,14 @@
 <template>
 
   <div class="contWrap">
-    <top-description>
+    <!-- <top-description>
       수취인 이름과 개인통관고유번호가 일치한지 확인하는 기능입니다.<br />
-    </top-description>
+    </top-description> -->
 
     <div class="sectionWrap personalCodeCheck" style="--sectionGap:20px">
 
-      <t-tab :items="tabItems" v-model="tabIdx"></t-tab>
 
-      <section class="enter" v-if="!tabIdx">
-
-        <div class="row fix" style="--gap:10px">
-          <div class="col" style="--gap-col:5px">
-            <div class="row fix">
-              <h1>수취인</h1>
-            </div>
-            <div class="row">
-              <t-textarea v-model="nameList" placeholder="예) 수취인명을 한줄에 한개씩&#10;홍길동&#10;홍길동&#10;홍길동"></t-textarea>
-            </div>
-          </div>
-          <div class="col" style="--gap-col:5px">
-            <div class="row fix">
-              <h1>개인통관고유번호</h1>
-            </div>
-            <div class="row">
-              <t-textarea v-model="numberList" placeholder="예) 한줄에 하나의 정보 입력&#10;123456789&#10;123456789&#10;123456789"></t-textarea>
-            </div>
-          </div>
-          <div class="col" style="--gap-col:5px">
-            <div class="row fix">
-              <h1>수취인 전화번호</h1>
-            </div>
-            <div class="row">
-              <t-textarea v-model="telList" placeholder="예) 한줄에 하나의 정보 입력&#10;010-1234-1234&#10;010-1234-1234&#10;010-1234-1234"></t-textarea>
-            </div>
-          </div>
-        </div>
-        
-        <div class="row fix"><button type="button" @click="searchHandler">조회</button></div>
-        
-      </section>
-
-      <section class="enter excel" v-else>
-
+      <section class="enter excel">
         <div class="row">
           <div class="col bx">
             <div class="row">
@@ -52,7 +17,7 @@
             <div class="row">
               <select name="" id="" v-model="store">
                 <option value="naver">스마트스토어</option>
-                <option value="tmon">티몬</option>
+                <!-- <option value="tmon">티몬</option> -->
               </select>
             </div>
           </div>
@@ -68,33 +33,57 @@
             </div>
           </div>
         </div>
-
-
         <!-- <div class="row fix"><button type="button" @click="searchExcelHandler">조회</button></div> -->
-        
+      </section>
+      
+      <!-- 개인통관번호 일치 확인 -->
+      <section class="result" v-if="resultList.length > 0">
+        <div class="row fix" style="">
+          <div class="col bx-rd" style="--gap-col:10px; margin-bottom:0;">
+            <div class="row"><h1>개인통관번호 일치 여부</h1></div>
+            <div class="row">
+              <ul class="lstWrap lstPersonal">
+                <li v-for="(item, idx) in resultList" :key="idx" class="list-item">
+                  <div class="bx-status">
+                    <span class="name">{{ item.name }}</span>
+                    <span class="txt-result" :class="{ error : item.check!='일치' }">{{ item.check }}</span>
+                  </div>
+                  <div class="bx-err" v-if="item.check!='일치'">
+                    <span class="txt-err">
+                      <template v-for="(t, i) in item.errMsg" :key="i">
+                        {{ t }}
+                      </template>
+                    </span>
+                    <button v-if="item.check!='일치'" class="btnNotify" @click="showNotifyPopup( item )">안내문구생성</button>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div> 
+
       </section>
 
-      <section class="result" v-if="resultList.length > 0">
+      <!-- 주문리스트 형태로 엑셀 변환  -->
+      <section class="result" v-if="makeData.length > 0 && errorColumn.length == 0">
 
-        <div class="row fix" style="">
-          <div class="col bx-rd" style="--gap-col:10px;">
-            <ul class="lstWrap lstPersonal">
-              <li v-for="(item, idx) in resultList" :key="idx">
-                <div class="bx-status">
-                  <span class="name">{{ item.name }}</span>
-                  <span class="txt-result" :class="{ error : item.check!='일치' }">{{ item.check }}</span>
-                  <!-- <span class="txt-err" v-if="item.check!='일치'">{{ item.errMsg }}</span> -->
+        <div class="row">
+          <div class="col bx-rd" style="--gap-col:10px; margin-bottom:0;">
+            <div class="row"><h1>엑셀 변환</h1></div>
+            <div class="row">
+              <div class="col">
+                <div class="wrapTable">
+                  <table>
+                    <tbody>
+                      <tr v-for="( row, num ) in makeData" :key="num">
+                        <td v-for="( cell, t ) in row" :key="t"><div class="ellipsis">{{ cell }}</div></td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
-                <div class="bx-err" v-if="item.check!='일치'">
-                  <span class="txt-err">
-                    <template v-for="(t, i) in item.errMsg" :key="i">
-                      {{ t }}
-                    </template>
-                  </span>
-                  <button v-if="item.check!='일치'" class="btnNotify" @click="showNotifyPopup( item.name, item.number, item.tel, item.prod )">안내문구생성</button>
-                </div>
-              </li>
-            </ul>
+                <div class="btnArea"><button type="button" class="btn" @click="copyHandler('.wrapTable table')">복사</button></div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -112,12 +101,12 @@
         <div class="popup">
           <div class="top">개인통관고유번호 오류 안내</div>
           <div class="content">
-            <div class="input">
-              <div class="item">
-                <span>구매한 상품명</span>
+            <!-- <div class="input"> -->
+              <!-- <div class="item"> -->
+                <!-- <span>구매한 상품명</span> -->
                 <!-- <input type="text" v-model="product"> -->
-              </div>
-            </div>
+              <!-- </div> -->
+            <!-- </div> -->
             <div class="textWrap" id="textWrap">
               안녕하세요 {{ person }} 고객님 :) <br />
               [{{pprod}}] 주문하신 쇼핑몰입니다~ <br />
@@ -136,7 +125,7 @@
           </div>
           <div class="bottom">
             <div class="btns">
-              <button type="button" @click="copyHandler">문구 복사</button>
+              <button type="button" @click="copyHandler('#textWrap')">문구 복사</button>
               <button type="button" @click="closePop">닫기</button>
             </div>
           </div>
@@ -157,7 +146,7 @@
   const URL = `${PROXY}/ext/rest/persEcmQry/retrievePersEcm`;
 
   export default {
-    name : 'PersonalCustomsCode' ,
+    name : 'OrderInit' ,
     setup() {
       const disableTeleport = ref(false);
       const state = reactive({
@@ -182,8 +171,14 @@
         store : 'naver' ,
         tabItems: [ '개별 입력', '엑셀 입력' ],
         tabIdx : 1 , 
+
+        getColumnNaver : [ '구매자명',	'수취인명', '판매사이트', '상품주문번호',	'구매자ID', '수취인연락처1', '개인통관고유부호' , '결제일', '상품명', '옵션정보', '수량', '판매가격' ] , 
+        getColumnTmon : [ '주문자명',	'수취인명', '판매사이트', '주문번호',	'아이디', '수취인연락처', '개인통관고유부호' , '결제완료일', '딜명', '옵션명', '구매수량', '총 주문금액' ] , 
+        makeData : [] , 
+        errorColumn : [] , 
       }) ;
 
+      // 실행 안함
       const searchHandler = () => {
 
         state.resultList = [] ; 
@@ -201,6 +196,7 @@
       const searchExcelHandler = () => {
 
         state.resultList = [] ; 
+        state.loading = true ; 
 
         let setData = state.excelData.split( '\n' ).map( item => item.split('\t') )
         ,   columnName = setData.shift()
@@ -219,7 +215,6 @@
           idxTel = columnName.indexOf( '수취인연락처1' ) ;
           idxProdName = columnName.indexOf( '상품명' ) ;
 
-
         } else {
 
           idxName = columnName.indexOf( '수취인명' ) ;
@@ -233,6 +228,7 @@
           state.number.push( setData[i][idxNumber] ) ; 
           state.tel.push( setData[i][idxTel].replace(/-/g, '') ) ; 
           state.prod.push( setData[i][idxProdName] ) ; 
+          // console.log( 'state.prod : ', state.prod ) ; 
         }
 
         checkCode() ; 
@@ -262,7 +258,6 @@
             }
           }
 
-
           state.resultList.push({
             name : state.name[0] , 
             number : state.number[0] ,
@@ -287,30 +282,83 @@
             state.prodList = '' ; 
           }
         }) ;
-
       } ;
 
-      const showNotifyPopup = ( name , num, tel, prod ) => {
+      const showNotifyPopup = ( info ) => {
+        let { name, number, tel, prod } = info ; 
         state.showNotify = true ; 
         state.person = name ; 
-        state.pnumber = num ; 
+        state.pnumber = number ; 
         state.ptel = tel ; 
         state.pprod = prod ; 
       } ;
 
-      const closePop = () => {
-        state.showNotify = false ; 
+      const closePop = () => state.showNotify = false ;
+
+      const copyHandler = ( target ) => {
+        let copyTarget = document.querySelector( target ) ; 
+        copyText( copyTarget )  ;
       } ;
 
-      const copyHandler = () => {
-        let textWrap = document.querySelector('#textWrap') ; 
-        copyText( textWrap )  ;
-      } ;
+      const convertNaver = ( data ) => {
 
+        state.makeData = [] ; 
+        state.errorColumn = [] ; 
+        
+        let setData = data.split( '\n' ).map( item => item.split('\t') )
+        ,   columnName = setData.shift()
+        ,   price1 = columnName.indexOf( '상품별 총 주문금액' )
+        ,   price2 = columnName.indexOf( '배송비 합계' )
+        ,   price3 = columnName.indexOf( '제주/도서 추가배송비' ) 
+        ;
+
+        if( setData[setData.length-1] == '' ) { setData.splice(-1,1); } // 엑셀 파일에서 복사한 자료로 작업 시 마지막 배열은 빈 배열로 들어가 있어서 삭제함
+
+        for( let i=0; i<setData.length; i++ ) {
+
+          let arr = []
+          ,   result = null 
+          ,   idx = null 
+          ; 
+
+          for( let j=0; j<state.getColumnNaver.length; j++ ) {
+
+
+            idx = columnName.indexOf( state.getColumnNaver[j] ) ;
+
+            if( idx < 0 && !(state.getColumnNaver[j] == '판매가격') && !(state.getColumnNaver[j] == '판매사이트') ) {
+              if( state.errorColumn.indexOf( state.getColumnNaver[j] ) >= 0 ) return ; 
+              state.errorColumn.push( state.getColumnNaver[j] ) ;
+            }
+
+            switch( state.getColumnNaver[j] ) {
+              case '판매가격' : 
+                result = parseFloat( setData[i][price1].replace(/(₩|,)/g, "") ) + parseFloat( setData[i][price2].replace(/(₩|,)/g, "") )+ parseFloat( setData[i][price3].replace(/(₩|,)/g, "") );
+                break ; 
+              case '판매사이트' : 
+                result = '스마트스토어' ; 
+                break ; 
+              case '결제일' : 
+                result = setData[i][idx].split(' ')[0] ; 
+                break ; 
+              default : 
+                result = setData[i][idx] ; 
+            }
+
+            arr.push( result ) ;
+
+          }
+          state.makeData.push( arr ) ; 
+        }
+
+      }
 
       watch(
         [ () => state.excelData ], () => {
-          if( state.excelData !== '' ) { searchExcelHandler() ; }
+          if( state.excelData !== '' ) { 
+            searchExcelHandler() ; 
+            convertNaver( state.excelData ) ; 
+          }
         },
       );
 
@@ -322,8 +370,11 @@
         showNotifyPopup ,
         closePop ,
         copyHandler ,
-        searchExcelHandler
+        searchExcelHandler ,
       } ;
     } ,
   }
 </script>
+
+<style lang="scss" scoped>
+</style>

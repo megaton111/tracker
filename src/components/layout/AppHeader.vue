@@ -32,6 +32,7 @@
     setup( ) {
       const state = reactive({
         menus : [
+          { url : '/OrderInit', title : '주문 작업(통관번호+엑셀변환)'} , 
           { url : '/PersonalCustomsCode', title : '개인통관고유부호 일치확인'} , 
           { url : '/ExcelConverter', title : '주문 엑셀 변환' } ,
           { url : '/Delivery', title : '배송완료일 확인' } , 

@@ -8,13 +8,19 @@ import SalePrice from "@/components/pages/SalePrice.vue" ;
 import OptionPrice from "@/components/pages/OptionPrice.vue" ;
 import ExcelConverter from "@/components/pages/ExcelConverter.vue" ;
 import SimpleFunction from "@/components/pages/SimpleFunction.vue" ;
+import OrderInit from "@/components/pages/OrderInit.vue" ;
 
 const routes = [
   {
     path: "/",
-    redirect: '/PersonalCustomsCode' 
+    redirect: '/OrderInit' 
     // name: "Home",
     // component: Home,
+  },
+  {
+    path: "/OrderInit",
+    name: "OrderInit",
+    component: OrderInit,
   },
   {
     path: "/Delivery",
