@@ -1,50 +1,52 @@
 <template>
 
-  <top-description>
-    통관 과정을 조회할 수 있는 기능입니다. <br />
-    운송장 번호를 입력하세요. 년도는 통관 진행 해당년도입니다.
-  </top-description>
+  <div class="contWrap">
+    <top-description>
+      통관 과정을 조회할 수 있는 기능입니다. <br />
+      운송장 번호를 입력하세요. 년도는 통관 진행 해당년도입니다.
+    </top-description>
 
-  <div class="sectionWrap">
+    <div class="sectionWrap">
 
-    <section class="enter">
-      <div class="row" style="--gap:4px;">
-        <div class="col number">
-          <t-input type="text" v-model="number" placeholder="운송장 번호를 입력하세요"></t-input>
-        </div>
-        <div class="col year">
-          <t-select v-model="year" :options="yearList"></t-select>
-        </div>
-        <div class="col"><button type="button" @click="searchHandler">조회</button></div>
-      </div>
-    </section> <!-- end of section -->
-
-    <section class="result" v-if="status">
-
-      <div class="row">
-        <div class="col bx">
-          <div class="row">
-            <h1>결과</h1>
+      <section class="enter">
+        <div class="row" style="--gap:4px;">
+          <div class="col number">
+            <t-input type="text" v-model="number" placeholder="운송장 번호를 입력하세요"></t-input>
           </div>
-          <div class="row">
-             <div class="col bx-rd" style="--gap-col:10px;">
-              <div class="status" v-if="status">현재 상태 : <strong>{{ status }}</strong></div>
-              <ul class="lstWrap lstUnipass" v-if="progress.length > 0">
-                <li v-for="(item, idx) in progress" :key="idx">
-                  <span class="date">{{ dateFormat( item.prcsDttm._text , '####-##-##' ) }}</span>
-                  <span>{{ item.cargTrcnRelaBsopTpcd._text }}</span>
-                </li>
-              </ul>
+          <div class="col year">
+            <t-select v-model="year" :options="yearList"></t-select>
+          </div>
+          <div class="col"><button type="button" @click="searchHandler">조회</button></div>
+        </div>
+      </section> <!-- end of section -->
+
+      <section class="result" v-if="status">
+
+        <div class="row">
+          <div class="col bx">
+            <div class="row">
+              <h1>결과</h1>
+            </div>
+            <div class="row">
+              <div class="col bx-rd" style="--gap-col:10px;">
+                <div class="status" v-if="status">현재 상태 : <strong>{{ status }}</strong></div>
+                <ul class="lstWrap lstUnipass" v-if="progress.length > 0">
+                  <li v-for="(item, idx) in progress" :key="idx">
+                    <span class="date">{{ dateFormat( item.prcsDttm._text , '####-##-##' ) }}</span>
+                    <span>{{ item.cargTrcnRelaBsopTpcd._text }}</span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-    </section> <!-- end of section -->
+      </section> <!-- end of section -->
 
-  </div> <!-- end of sectionWrap -->
+    </div> <!-- end of sectionWrap -->
 
-  <loading  v-if="loading" />
+    <loading  v-if="loading" />
+  </div>
 </template>
 
 <script>

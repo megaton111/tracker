@@ -13,11 +13,16 @@
       </nav>
     </div> <!-- end of navWrap -->
   </header>
+  
 </template>
 <script>
   import { reactive, toRefs } from 'vue';
+  // import PersonalCustomsCode from '../pages/PersonalCustomsCode' ; 
   export default {
     name : 'AppHeader' ,
+    components : {
+      // PersonalCustomsCode
+    } , 
     props : {
       title : {
         type : String ,
@@ -27,7 +32,7 @@
     setup( ) {
       const state = reactive({
         menus : [
-          { url : '/PersonalCustomsCode', title : '개인통관고유부호 일치확인' } , 
+          { url : '/PersonalCustomsCode', title : '개인통관고유부호 일치확인'} , 
           { url : '/ExcelConverter', title : '주문 엑셀 변환' } ,
           { url : '/Delivery', title : '배송완료일 확인' } , 
           { url : '/Unipass', title : '통관진행 정보확인' } ,

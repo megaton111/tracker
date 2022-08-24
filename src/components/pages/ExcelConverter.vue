@@ -1,97 +1,99 @@
 <template>
   
-  <top-description>
-  마켓 주문 엑셀에서 우리 주문리스트 양식에 맞게 가져오기
-  </top-description>
+  <div class="contWrap">
+    <top-description>
+    마켓 주문 엑셀에서 우리 주문리스트 양식에 맞게 가져오기
+    </top-description>
 
-  <div class="sectionWrap excelConverter">
-    <section class="enter">
+    <div class="sectionWrap excelConverter">
+      <section class="enter">
 
-      
-      <div class="row">
-        <div class="col bx">
-          <div class="row">
-            <h1>스토어 선택</h1>
-          </div>
-          <div class="row">
-            <select name="" id="" v-model="store">
-              <option value="naver">스마트스토어</option>
-              <option value="tmon">티몬</option>
-            </select>
+        
+        <div class="row">
+          <div class="col bx">
+            <div class="row">
+              <h1>스토어 선택</h1>
+            </div>
+            <div class="row">
+              <select name="" id="" v-model="store">
+                <option value="naver">스마트스토어</option>
+                <option value="tmon">티몬</option>
+              </select>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="col bx">
-          <div class="row fix">
-            <h1>가져올 컬럼 설정</h1>
-          </div>
-          <div class="row">
-            <div class="setColWrap">
-              <div class="set">
-                <input type="text" placeholder="쉼표로 구분하여 입력해주세요." v-model="setColValue" />
-                <button type="button" @click="setColumn">설정</button>
-              </div>
-              <div class="error" v-show="errorColumn.length > 0">
-                <div v-for="( e, i ) in errorColumn" :key="i">[{{ e }}]</div> <strong>컬럼정보가없습니다.</strong>
-              </div>
-              <div class="bx-bg">
-                <h2>설정된 컬럼</h2>
-                <ul class="lst" v-if="store == 'naver'">
-                  <li v-for="( column , idx ) in getColumnNaver" :key="idx">{{ column }}</li>
-                </ul>
-                <ul class="lst" v-else>
-                  <li v-for="( column , idx ) in getColumnTmon" :key="idx">{{ column }}</li>
-                </ul>
+        <div class="row">
+          <div class="col bx">
+            <div class="row fix">
+              <h1>가져올 컬럼 설정</h1>
+            </div>
+            <div class="row">
+              <div class="setColWrap">
+                <div class="set">
+                  <input type="text" placeholder="쉼표로 구분하여 입력해주세요." v-model="setColValue" />
+                  <button type="button" @click="setColumn">설정</button>
+                </div>
+                <div class="error" v-show="errorColumn.length > 0">
+                  <div v-for="( e, i ) in errorColumn" :key="i">[{{ e }}]</div> <strong>컬럼정보가없습니다.</strong>
+                </div>
+                <div class="bx-bg">
+                  <h2>설정된 컬럼</h2>
+                  <ul class="lst" v-if="store == 'naver'">
+                    <li v-for="( column , idx ) in getColumnNaver" :key="idx">{{ column }}</li>
+                  </ul>
+                  <ul class="lst" v-else>
+                    <li v-for="( column , idx ) in getColumnTmon" :key="idx">{{ column }}</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="col bx">
-          <div class="row fix">
-            <h1>원본 엑셀 자료</h1>
-          </div>
-          <div class="row">
-            <t-textarea v-model="excelData" placeholder="내용을 복사해서 붙여넣으세요"></t-textarea>
-          </div>
-        </div>
-      </div>
-
-    </section>
-
-    <section class="result" v-if="makeData.length > 0 && errorColumn.length == 0">
-
-
-      <div class="row">
-        <div class="col bx">
-          <div class="row fix">
-            <h1>생성 데이터</h1>
-          </div>
-          <div class="row">
-             <div class="col bx-rd" style="--gap-col:10px;">
-              <div class="wrapTable">
-                <table>
-                  <tbody>
-                    <tr v-for="( row, num ) in makeData" :key="num">
-                      <td v-for="( cell, t ) in row" :key="t"><div class="ellipsis">{{ cell }}</div></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="btnArea"><button type="button" class="btn" @click="copy">복사</button></div>
+        <div class="row">
+          <div class="col bx">
+            <div class="row fix">
+              <h1>원본 엑셀 자료</h1>
+            </div>
+            <div class="row">
+              <t-textarea v-model="excelData" placeholder="내용을 복사해서 붙여넣으세요"></t-textarea>
             </div>
           </div>
         </div>
-      </div>
+
+      </section>
+
+      <section class="result" v-if="makeData.length > 0 && errorColumn.length == 0">
 
 
-    </section>
+        <div class="row">
+          <div class="col bx">
+            <div class="row fix">
+              <h1>생성 데이터</h1>
+            </div>
+            <div class="row">
+              <div class="col bx-rd" style="--gap-col:10px;">
+                <div class="wrapTable">
+                  <table>
+                    <tbody>
+                      <tr v-for="( row, num ) in makeData" :key="num">
+                        <td v-for="( cell, t ) in row" :key="t"><div class="ellipsis">{{ cell }}</div></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="btnArea"><button type="button" class="btn" @click="copy">복사</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-  </div> <!-- end of sectionWrap -->
+
+      </section>
+
+    </div> <!-- end of sectionWrap -->
+  </div>
 </template>
 
 <script>
