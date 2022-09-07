@@ -80,7 +80,6 @@
         axios.get( `${URL}=${state.number}&blYy=${state.year}` )
         .then(( res ) => {
 
-          console.log('#################### ', res ) ; 
           let xml = res.data
           ,   json = convert.xml2json(xml, { compact : true } )
           ,   jsonParse = JSON.parse( json )
