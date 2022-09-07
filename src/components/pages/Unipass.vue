@@ -73,6 +73,7 @@
       const searchHandler = () => {
         console.log( 'number :', state.number ) ; 
         state.loading = true ,
+        console.log( 'URL :', URL ) ; 
 
         axios.get( `${URL}=${state.number}&blYy=${state.year}` )
         .then(( res ) => {

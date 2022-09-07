@@ -14,7 +14,7 @@ body {
   display: flex; 
   justify-content: center ;
   height : 100%; 
-  gap:40px ; 
+  gap:20px ; 
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
   .container {
@@ -23,7 +23,7 @@ body {
     width: 500px ;
     gap: 20px ; 
     overflow: hidden;
-    flex: 1; 
+    flex: 1 0 500px; 
     h2 {
       font-size:14px; 
       color:#2C3333 ; 
@@ -133,36 +133,7 @@ body {
         font-size:12px;
         letter-spacing: -.5px ;
       }
-      .row {
-        width: 100%;
-        flex : 1 ;
-        display: flex;
-        gap: var(--gap, 0) ; 
-        > * {
-          flex : 1 ; 
-        }
-        &.fix {
-          flex : 0 0 auto ;
-        }
-        .col {
-          display: flex;
-          flex-direction: column;
-          gap: var(--gap-col, 0) ; 
-          &.number {
-            flex : 3 ;
-          }
-          &.r {
-            flex: 0 0 auto ;
-            margin-left: auto ;
-          }
-          &.fit {
-            flex: 0 0 auto ; 
-          }
-          &.bx {
-            gap:5px ; 
-          }
-        }
-      }
+      
       &.enter { 
         flex : 0 0 auto ; 
       }
@@ -355,6 +326,58 @@ body {
       }
     }
 
+  }
+
+  .aside {
+    display: flex;
+    flex-direction: column ;
+    flex:1 0 200px ;
+    height: max-content ;
+    gap:10px ; 
+    padding:1rem; 
+    border-radius: 0.65rem;
+    border: 0.0625rem solid #DEDEDE;
+    box-shadow: #0000000a 0rem 0.125rem 0.625rem 0rem;
+
+    h1 {
+      font-size:14px;
+      letter-spacing: -1px ;
+    }
+    h2 {
+      font-size:12px;
+      letter-spacing: -.5px ;
+    }
+  }
+
+  .row {
+    width: 100%;
+    flex : 1 ;
+    display: flex;
+    gap: var(--gap, 0) ; 
+    > * {
+      flex : 1 ; 
+    }
+    &.fix {
+      flex : 0 0 auto ;
+    }
+    .col {
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap-col, 0) ; 
+      &.number {
+        flex : 3 ;
+      }
+      &.r {
+        flex: 0 0 auto ;
+        margin-left: auto ;
+      }
+      &.fit {
+        flex: 0 0 auto ; 
+      }
+      &.bx {
+        gap:5px ; 
+      }
+    }
   }
 
 }
