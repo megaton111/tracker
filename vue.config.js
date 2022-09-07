@@ -9,7 +9,7 @@ module.exports = {
         changeOrigin: true,
       },
       '/site': {
-        target: 'https://www.koreaexim.go.kr',
+        target: 'https://www.koreaexim.go.kr/',
         changeOrigin: true,
       },
     },
