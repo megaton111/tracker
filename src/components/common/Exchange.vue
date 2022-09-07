@@ -24,7 +24,8 @@
   }
 
   const DATE = [ year, leftZero( month ) , leftZero( today ) ].join('') ; 
-  const EXCHANGE_API = `/site/program/financial/exchangeJSON?authkey=bcekO8Poam4eb0qR0W0fxD2wDS6k8SbG&searchdate=${DATE}&data=AP01` ; 
+  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
+  const EXCHANGE_API = `${PROXY}/site/program/financial/exchangeJSON?authkey=bcekO8Poam4eb0qR0W0fxD2wDS6k8SbG&searchdate=${DATE}&data=AP01` ; 
   // ["AED","AUD","BHD","BND","CAD","CHF","CNH","DKK","EUR","GBP","HKD","IDR(100)","JPY(100)","KRW","KWD","MYR","NOK","NZD","SAR","SEK","SGD","THB","USD"]
   export default {
     name : 'Exchange' ,
@@ -46,7 +47,7 @@
 
       axios.get( EXCHANGE_API ).then(res=>{
         let dataList = res.data ; 
-        console.log( 'dataList :', dataList ) ;
+        console.log( 'dataList --------->', dataList ) ;
         state.listResult = dataList.filter( item => props.currency.includes(item.cur_unit) ) ; 
         // console.log( 'listResult :', state.listResult ) ; 
       }) ; 
