@@ -46,6 +46,7 @@
 
       axios.get( EXCHANGE_API ).then(res=>{
         let dataList = res.data ; 
+        console.log( 'dataList :', dataList ) ;
         state.listResult = dataList.filter( item => props.currency.includes(item.cur_unit) ) ; 
         // console.log( 'listResult :', state.listResult ) ; 
       }) ; 

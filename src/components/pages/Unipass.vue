@@ -45,7 +45,9 @@
 
     </div> <!-- end of sectionWrap -->
 
-    <loading  v-if="loading" />
+    <teleport to="#teleport-area" :disabled="disableTeleport">
+      <loading v-if="loading"/>
+    </teleport>
   </div>
 </template>
 
