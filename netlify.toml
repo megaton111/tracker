@@ -9,10 +9,3 @@
   to = "/index.html"
   status = 200
   force = false
-
-
-[[redirects]]
-  from = "/proxy/*"
-  to = "https://www.koreaexim.go.kr/:splat"
-  status = 200
-  force = true

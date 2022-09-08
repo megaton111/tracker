@@ -13,17 +13,17 @@
   import { reactive, toRefs } from 'vue';
   import axios from 'axios';
 
-  let setDate = new Date()
-  ,   year = setDate.getFullYear()
-  ,   month = setDate.getMonth() + 1
-  ,   today = setDate.getDate() 
-  ; 
+  // let setDate = new Date()
+  // ,   year = setDate.getFullYear()
+  // ,   month = setDate.getMonth() + 1
+  // ,   today = setDate.getDate() 
+  // ; 
 
-  function leftZero( target ){
-    return target < 10 ? '0'+target : target ;
-  }
+  // function leftZero( target ){
+  //   return target < 10 ? '0'+target : target ;
+  // }
 
-  const DATE = [ year, leftZero( month ) , leftZero( today ) ].join('') ; 
+  // const DATE = [ year, leftZero( month ) , leftZero( today ) ].join('') ; 
   // const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
   // const EXCHANGE_API = `${PROXY}/site/program/financial/exchangeJSON?authkey=bcekO8Poam4eb0qR0W0fxD2wDS6k8SbG&searchdate=${DATE}&data=AP01` ; 
   const headers = {
@@ -31,7 +31,7 @@
     'Accept' : 'application/json'
   };
 
-  const EXCHANGE_API = `/site/program/financial/exchangeJSON?authkey=bcekO8Poam4eb0qR0W0fxD2wDS6k8SbG&searchdate=${DATE}&data=AP01` ; 
+  // const EXCHANGE_API = `/site/program/financial/exchangeJSON?authkey=bcekO8Poam4eb0qR0W0fxD2wDS6k8SbG&searchdate=${DATE}&data=AP01` ; 
   // ["AED","AUD","BHD","BND","CAD","CHF","CNH","DKK","EUR","GBP","HKD","IDR(100)","JPY(100)","KRW","KWD","MYR","NOK","NZD","SAR","SEK","SGD","THB","USD"]
   export default {
     name : 'Exchange' ,
@@ -48,19 +48,48 @@
         listResult : [] ,
       }) ;
 
-      
-      console.log({EXCHANGE_API})
+      const leftZero = ( target ) => {
+        return target < 10 ? '0'+target : target ;
+      }
 
-      axios.get( EXCHANGE_API, {headers} ).then(res=>{
-        console.log('res ???????????? ', res ) ; 
-        let dataList = res.data ; 
-        console.log( 'dataList ~~~~~~~~~~~~~~~~>', dataList ) ;
-        state.listResult = dataList.filter( item => props.currency.includes(item.cur_unit) ) ; 
-        // console.log( 'listResult :', state.listResult ) ; 
-      }) ; 
+      const setDay = () => {
+        console.log( 'setDay in' ) ; 
+        let setDate = new Date()
+        ,   year = setDate.getFullYear()
+        ,   month = setDate.getMonth() + 1
+        ,   today = setDate.getDate() 
+        ; 
+
+        return [ year, leftZero( month ) , leftZero( today ) ].join('') ; 
+      }
+
+      const getCurrency = () => {
+
+        let today = setDay() ; 
+        let exc_api = `/site/program/financial/exchangeJSON?authkey=bcekO8Poam4eb0qR0W0fxD2wDS6k8SbG&searchdate=${today}&data=AP01` ; 
+        
+        console.log( 'getCurrency in', today ) ; 
+
+        axios.get( exc_api, {headers} ).then(res=>{
+          console.log('res ???????????? ', res ) ; 
+          
+          let dataList = res.data ; 
+          console.log( 'dataList ~~~~~~~~~~~~~~~~>', dataList ) ;
+          
+          state.listResult = dataList.filter( item => props.currency.includes(item.cur_unit) ) ; 
+          // console.log( 'listResult :', state.listResult ) ; 
+        }) ; 
+        
+      }
+
+      getCurrency() ; 
+      // console.log({EXCHANGE_API})
 
       return { 
         ...toRefs(state) ,
+        getCurrency ,
+        setDay ,
+        leftZero
       } ;
     }
 
