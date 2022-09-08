@@ -11,6 +11,8 @@ module.exports = {
       '/site': {
         target: 'https://www.koreaexim.go.kr/',
         changeOrigin: true,
+        compress: true,
+        disableHostCheck: true
       },
     },
   }

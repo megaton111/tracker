@@ -72,6 +72,7 @@
 
         axios.get( exc_api, {headers} ).then(res=>{
           console.log('res ???????????? ', res ) ; 
+          console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~', typeof res ) ; 
           
           let dataList = res.data ; 
           console.log( 'dataList ~~~~~~~~~~~~~~~~>', dataList ) ;
