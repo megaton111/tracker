@@ -70,6 +70,7 @@
         let exc_api = `${state.baseUrl}/site/program/financial/exchangeJSON?authkey=bcekO8Poam4eb0qR0W0fxD2wDS6k8SbG&searchdate=${today}&data=AP01` ; 
         
         console.log( 'getCurrency in +++++++++++++++++++++++ ', today ) ; 
+        console.log( 'exc_api in +++++++++++++++++++++++ ', exc_api ) ; 
 
         axios.get( exc_api, headers ).then(res=>{
           console.log('*********************************** ', res ) ; 
