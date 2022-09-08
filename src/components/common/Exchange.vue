@@ -73,7 +73,7 @@
         console.log( 'exc_api in +++++++++++++++++++++++ ', exc_api ) ; 
 
         axios.get( exc_api, headers ).then(res=>{
-          console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ ', res ) ; 
+          console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& ', res ) ; 
           console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~', typeof res ) ; 
           
           let dataList = res.data ; 
