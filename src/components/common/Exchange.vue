@@ -71,8 +71,8 @@
         
         console.log( 'getCurrency in +++++++++++++++++++++++ ', today ) ; 
 
-        axios.get( exc_api, {headers} ).then(res=>{
-          console.log('rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr ', res ) ; 
+        axios.get( exc_api, headers ).then(res=>{
+          console.log('*********************************** ', res ) ; 
           console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~', typeof res ) ; 
           
           let dataList = res.data ; 
