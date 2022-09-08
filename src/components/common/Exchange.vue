@@ -46,6 +46,7 @@
     setup( props ) {
       const state = reactive({
         listResult : [] ,
+        baseUrl: process.env.VUE_APP_BASE_URL
       }) ;
 
       const leftZero = ( target ) => {
@@ -66,12 +67,12 @@
       const getCurrency = () => {
 
         let today = setDay() ; 
-        let exc_api = `/site/program/financial/exchangeJSON?authkey=bcekO8Poam4eb0qR0W0fxD2wDS6k8SbG&searchdate=${today}&data=AP01` ; 
+        let exc_api = `${state.baseUrl}/site/program/financial/exchangeJSON?authkey=bcekO8Poam4eb0qR0W0fxD2wDS6k8SbG&searchdate=${today}&data=AP01` ; 
         
         console.log( 'getCurrency in +++++++++++++++++++++++ ', today ) ; 
 
         axios.get( exc_api, {headers} ).then(res=>{
-          console.log('res ???????????? ', res ) ; 
+          console.log('rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr ', res ) ; 
           console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~', typeof res ) ; 
           
           let dataList = res.data ; 
