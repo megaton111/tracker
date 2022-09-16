@@ -71,6 +71,7 @@
         
         // console.log( 'getCurrency in +++++++++++++++++++++++ ', today ) ; 
         // console.log( 'exc_api in +++++++++++++++++++++++ ', exc_api ) ; 
+          console.log('---------------- runtimeCompiler 추가 -----------------------' ) ; 
 
         axios.get( exc_api, headers ).then(res=>{
           // console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& ', res ) ; 
