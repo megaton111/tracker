@@ -15,6 +15,12 @@ module.exports = {
         compress: true,
         disableHostCheck: true
       },
+      '/FER1101M.web': {
+        target: 'http://fx.kebhana.com/',
+        changeOrigin: true,
+        compress: true,
+        disableHostCheck: true
+      },
     },
   }
 }
