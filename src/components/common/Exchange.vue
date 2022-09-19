@@ -34,6 +34,10 @@
   // const EXCHANGE_API = `/site/program/financial/exchangeJSON?authkey=bcekO8Poam4eb0qR0W0fxD2wDS6k8SbG&searchdate=${DATE}&data=AP01` ; 
   // ["AED","AUD","BHD","BND","CAD","CHF","CNH","DKK","EUR","GBP","HKD","IDR(100)","JPY(100)","KRW","KWD","MYR","NOK","NZD","SAR","SEK","SGD","THB","USD"]
   // const EXCHANGE_API = 'http://fx.kebhana.com/FER1101M.web' ; 
+
+    const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
+    const URL = `${PROXY}/FER1101M.web`;
+
   export default {
     name : 'Exchange' ,
     components : {
@@ -70,9 +74,9 @@
 
         // let today = setDay() ; 
         // let exc_api = `/site/program/financial/exchangeJSON?authkey=bcekO8Poam4eb0qR0W0fxD2wDS6k8SbG&searchdate=${today}&data=AP01` ; 
-        let exc_api2 = `/FER1101M.web` ; 
+        // let exc_api2 = `/FER1101M.web` ; 
         
-        axios.get( exc_api2, headers ).then(res=>{
+        axios.get( URL, headers ).then(res=>{
           
           let dataList = res.data ; 
           let stringData = dataList.replace(/\n|\r|\s*/g, "") ; 

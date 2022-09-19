@@ -15,3 +15,9 @@
   to = "https://www.koreaexim.go.kr/:splat"
   status = 200
   force = true
+
+  [[redirects]]
+  from = "/proxy/*"
+  to = "http://fx.kebhana.com/:splat"
+  status = 200
+  force = true
