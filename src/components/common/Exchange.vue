@@ -84,7 +84,7 @@
           let lastNum = stringData.indexOf(']') ; 
           let cutStr = stringData.substring(startNum,lastNum-1) + ']' ; 
           // let result = JSON.parse( cutStr ) ;
-          console.log('++++++++++++++++++++++++++++++++++++')
+          console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^')
           console.log( 'stringData ========> ', stringData ) ; 
           console.log( 'cutStr ========>', cutStr ) ; 
           // console.log( '========>', result[0] ) ; 
