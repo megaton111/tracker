@@ -79,8 +79,9 @@
           let startNum = stringData.indexOf('[') ; 
           let lastNum = stringData.indexOf(']') ; 
           let cutStr = stringData.substring(startNum,lastNum-1) + ']' ; 
-          let result = JSON.parse( cutStr ) ;
-          console.log( '========>', result[0] ) ; 
+          // let result = JSON.parse( cutStr ) ;
+          console.log( '========>', cutStr ) ; 
+          // console.log( '========>', result[0] ) ; 
 
         }) ; 
         
