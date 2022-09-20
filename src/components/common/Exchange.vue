@@ -2,8 +2,8 @@
   <ul>
     <li v-for="(item, idx) in listResult" :key="idx">
       <dl>
-        <dt>{{ item.cur_unit }} </dt>    
-        <dd>{{ item.tts }}</dd>
+        <dt>{{ item.currSgn._text }} </dt>    
+        <dd>{{ item.fxrt._text }}</dd>
       </dl>
     </li>
   </ul>
@@ -54,11 +54,9 @@
         default : () => ['USD'] , 
       }
     } ,
-    setup(  ) {
+    setup( props ) {
       const state = reactive({
         listResult : [] ,
-        baseUrl: process.env.VUE_APP_BASE_URL ,
-        getStr : null , 
       }) ;
 
       const leftZero = ( target ) => {
@@ -78,35 +76,21 @@
 
       const getCurrency = () => {
 
-        console.log('getCurrency ininininin') ;
-
         let today = setDay() ; 
-        // let exc_api = `/site/program/financial/exchangeJSON?authkey=bcekO8Poam4eb0qR0W0fxD2wDS6k8SbG&searchdate=${today}&data=AP01` ; 
-        // let exc_api2 = `/FER1101M.web` ; 
-        
-        // axios.get( URL, headers ).then(res=>{
-        //   let dataList = res.data ; 
-        //   let stringData = dataList.replace(/\n|\r|\s*/g, "") ; 
-        //   let startNum = stringData.indexOf('[') ; 
-        //   let lastNum = stringData.indexOf(']') ; 
-        //   let cutStr = stringData.substring(startNum,lastNum-1) + ']' ; 
-        // }) ; 
 
         // https://unipass.customs.go.kr:38010/ext/rest/trifFxrtInfoQry/retrieveTrifFxrtInfo?crkyCn=b280r252j009y260n060y050n0&qryYymmDd=20220811&imexTp=2
-        axios.get( `${URL}?crkyCn=${APIKEY}&qryYymmDd=${today}&imexTp=2`)
         // axios.get( 'https://unipass.customs.go.kr:38010/ext/rest/trifFxrtInfoQry/retrieveTrifFxrtInfo?crkyCn=b280r252j009y260n060y050n0&qryYymmDd=20220811&imexTp=2')
+        
+        axios.get( `${URL}?crkyCn=${APIKEY}&qryYymmDd=${today}&imexTp=2`)
         .then(( res ) => {
           
           let xml = res.data
           ,   json = convert.xml2json(xml, { compact : true } )
           ,   jsonParse = JSON.parse( json )
           ,   result = jsonParse.trifFxrtInfoQryRtnVo.trifFxrtInfoQryRsltVo
-          // ,   errMsg = [] 
           ; 
 
-          // console.log({ jsonParse }) ;
-          console.log({ result }) ;
-          console.log( result[0].currSgn._text ) ;
+          state.listResult = result.filter(item=> props.currency.includes(item.currSgn._text) ) ;
 
         }) ;
         

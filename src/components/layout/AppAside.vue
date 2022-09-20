@@ -5,7 +5,7 @@
       <div class="col" style="--gap-col:10px"> 
         <div class="row fix"><h1>환율 정보</h1></div>
         <div class="row fix">
-          <exchange :currency="[ 'USD', 'CNH' ]" />
+          <exchange :currency="[ 'USD', 'CNY' ]" />
         </div>
       </div>
     </div>
