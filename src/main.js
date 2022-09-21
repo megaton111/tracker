@@ -10,6 +10,10 @@ import TTextarea from './components/common/TTextarea';
 import TInput from './components/common/TInput';
 import TRadio from './components/common/TRadio';
 import TTab from './components/common/TTab';
+import Exchange from './components/common/Exchange';
+import ContentBox from './components/common/ContentBox';
+import CostChange from './components/common/CostChange';
+import TelChange from './components/common/TelChange';
 
 const app = createApp(App);
 
@@ -20,6 +24,10 @@ app.component( "TTextarea", TTextarea ) ;
 app.component( "TInput", TInput ) ;
 app.component( "TRadio", TRadio ) ;
 app.component( "TTab", TTab ) ;
+app.component( "Exchange", Exchange ) ;
+app.component( "ContentBox", ContentBox ) ;
+app.component( "CostChange", CostChange ) ;
+app.component( "TelChange", TelChange ) ;
 
 app
   .use(store)

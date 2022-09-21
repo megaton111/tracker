@@ -23,7 +23,7 @@ body {
     width: 500px ;
     gap: 20px ; 
     overflow: hidden;
-    flex: 1 0 500px; 
+    flex: 0 0 500px; 
     h2 {
       font-size:14px; 
       color:#2C3333 ; 
@@ -331,20 +331,21 @@ body {
   .aside {
     display: flex;
     flex-direction: column ;
-    flex:1 0 200px ;
+    flex:0 0 200px ;
     height: max-content ;
-    gap:10px ; 
+    gap:20px ; 
     padding:1rem; 
     border-radius: 0.65rem;
     border: 0.0625rem solid #DEDEDE;
     box-shadow: #0000000a 0rem 0.125rem 0.625rem 0rem;
 
     h1 {
-      font-size:14px;
+      font-size:12px;
       letter-spacing: -1px ;
+      // color:#39AEA9; 
     }
     h2 {
-      font-size:12px;
+      font-size:11px;
       letter-spacing: -.5px ;
     }
   }

@@ -42,8 +42,8 @@
           { url : '/CalculatePrice', title : '스마트스토어 수수료 계산' } , 
           { url : '/SalePrice', title : '할인율 계산' } , 
           { url : '/OptionPrice', title : '옵션 가격차이 계산' } ,
-          { url : '/SimpleFunction', title : '간편기능' } ,
-          { url : '/ExchangeInfo', title : '환율정보' } ,
+          // { url : '/SimpleFunction', title : '간편기능' } ,
+          // { url : '/ExchangeInfo', title : '환율정보' } ,
         ] , 
 
         showMenu : false , 

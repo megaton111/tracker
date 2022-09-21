@@ -1,14 +1,21 @@
 <template>
   
   <aside class="aside">
-    <div class="row fix">
-      <div class="col" style="--gap-col:10px"> 
-        <div class="row fix"><h1>환율 정보</h1></div>
-        <div class="row fix">
-          <exchange :currency="[ 'USD', 'CNY' ]" />
-        </div>
-      </div>
-    </div>
+    
+    <content-box title="환율정보">
+      <exchange :currency="[ 'USD', 'CNY' ]" />
+    </content-box>
+
+    <content-box title="사입단가 계산 [중국가격X300]">
+      <cost-change />
+    </content-box>
+
+    <content-box title="전화번호 (-) 제거">
+      <tel-change />
+    </content-box>
+
+    
+
     <!-- <div class="row fix">
       <div class="col" style="--gap-col:10px">
         <div class="row fix"><h1>krw</h1></div>
@@ -20,20 +27,15 @@
 </template>
 <script>
   import { reactive, toRefs } from 'vue';
-  import Exchange from '../common/Exchange' ;
   export default {
     name : 'AppAside' ,
     components : {
-      Exchange
     } , 
     props : {
     } ,
     setup( ) {
       const state = reactive({
       }) ;
-
-      
-
       return { 
         ...toRefs(state) ,
       } ;
