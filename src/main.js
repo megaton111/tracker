@@ -14,6 +14,7 @@ import Exchange from './components/common/Exchange';
 import ContentBox from './components/common/ContentBox';
 import CostChange from './components/common/CostChange';
 import TelChange from './components/common/TelChange';
+import EngChange from './components/common/EngChange';
 
 const app = createApp(App);
 
@@ -28,6 +29,7 @@ app.component( "Exchange", Exchange ) ;
 app.component( "ContentBox", ContentBox ) ;
 app.component( "CostChange", CostChange ) ;
 app.component( "TelChange", TelChange ) ;
+app.component( "EngChange", EngChange ) ;
 
 app
   .use(store)

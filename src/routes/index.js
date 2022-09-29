@@ -10,6 +10,7 @@ import ExcelConverter from "@/components/pages/ExcelConverter.vue" ;
 // import SimpleFunction from "@/components/pages/SimpleFunction.vue" ;
 import OrderInit from "@/components/pages/OrderInit.vue" ;
 import ExchangeInfo from "@/components/pages/ExchangeInfo.vue" ;
+import KeywordSeller from "@/components/pages/KeywordSeller.vue" ;
 
 const routes = [
   {
@@ -72,6 +73,11 @@ const routes = [
     path: "/ExchangeInfo",
     name: "ExchangeInfo",
     component: ExchangeInfo,
+  },
+  {
+    path: "/KeywordSeller",
+    name: "KeywordSeller",
+    component: KeywordSeller,
   },
 ];
 

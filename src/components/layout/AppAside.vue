@@ -14,6 +14,10 @@
       <tel-change />
     </content-box>
 
+    <content-box title="이름 영문변환">
+      <eng-change />
+    </content-box>
+
     
 
     <!-- <div class="row fix">

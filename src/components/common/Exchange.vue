@@ -64,7 +64,6 @@
       }
 
       const setDay = () => {
-        console.log( 'setDay in' ) ; 
         let setDate = new Date()
         ,   year = setDate.getFullYear()
         ,   month = setDate.getMonth() + 1

@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.25.0",
     "core-js": "^3.6.5",
+    "crypto-js": "^4.1.1",
     "sass-loader": "^10.2.1",
     "vue": "^3.0.0",
     "vue-google-charts": "^1.1.0",

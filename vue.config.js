@@ -21,6 +21,18 @@ module.exports = {
         compress: true,
         disableHostCheck: true
       },
+      '/v1': {
+        target: 'https://openapi.naver.com/',
+        changeOrigin: true,
+        compress: true,
+        disableHostCheck: true
+      },
+      '/keywordstool': {
+        target: 'https://api.naver.com/',
+        changeOrigin: true,
+        compress: true,
+        disableHostCheck: true
+      },
     },
   }
 }

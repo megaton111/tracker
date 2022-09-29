@@ -124,6 +124,9 @@ body {
           height:$height-sm ; 
           font-size:14px ; 
         }
+        &.fluid {
+          padding: 0 20px ; 
+        }
       }
       h1 {
         font-size:14px;
@@ -334,7 +337,7 @@ body {
     flex:0 0 200px ;
     height: max-content ;
     gap:20px ; 
-    padding:1rem; 
+    padding:1rem 0 ; 
     border-radius: 0.65rem;
     border: 0.0625rem solid #DEDEDE;
     box-shadow: #0000000a 0rem 0.125rem 0.625rem 0rem;
@@ -347,6 +350,14 @@ body {
     h2 {
       font-size:11px;
       letter-spacing: -.5px ;
+    }
+
+    > .row {
+      padding: 0 1rem; 
+      &:not(:last-child) {
+        padding-bottom:20px ; 
+        border-bottom:1px solid #DEDEDE ; 
+      }
     }
   }
 
