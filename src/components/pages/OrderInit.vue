@@ -1,12 +1,8 @@
 <template>
 
   <div class="contWrap">
-    <!-- <top-description>
-      수취인 이름과 개인통관고유번호가 일치한지 확인하는 기능입니다.<br />
-    </top-description> -->
 
     <div class="sectionWrap personalCodeCheck" style="--sectionGap:20px">
-
 
       <section class="enter excel">
         <div class="row">
@@ -17,7 +13,6 @@
             <div class="row">
               <select name="" id="" v-model="store">
                 <option value="naver">스마트스토어</option>
-                <!-- <option value="tmon">티몬</option> -->
               </select>
             </div>
           </div>
@@ -33,7 +28,6 @@
             </div>
           </div>
         </div>
-        <!-- <div class="row fix"><button type="button" @click="searchExcelHandler">조회</button></div> -->
       </section>
       
       <!-- 개인통관번호 일치 확인 -->
@@ -101,12 +95,6 @@
         <div class="popup">
           <div class="top">개인통관고유번호 오류 안내</div>
           <div class="content">
-            <!-- <div class="input"> -->
-              <!-- <div class="item"> -->
-                <!-- <span>구매한 상품명</span> -->
-                <!-- <input type="text" v-model="product"> -->
-              <!-- </div> -->
-            <!-- </div> -->
             <div class="textWrap" id="textWrap">
               안녕하세요 {{ person }} 고객님 :) <br />
               [{{pprod}}] 주문하신 쇼핑몰입니다~ <br />

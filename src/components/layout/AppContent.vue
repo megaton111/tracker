@@ -1,18 +1,4 @@
 <template>
-  <!-- <div class="container" id="container">
-    <router-view v-slot="{ Component }">
-      <transition name="fade" mode="out-in" appear>
-          <component :is="Component"></component>
-      </transition>
-    </router-view>
-  </div> -->
-
-  <!-- <div class="container" id="container">
-    <transition name="scale" mode="out-in">
-      <router-view>
-      </router-view>
-    </transition>
-  </div> -->
 
   <div class="container" id="container">
     <router-view v-slot="{ Component }">
@@ -32,7 +18,6 @@
 <style lang="scss" scoped>
 
 // scale
-
 .scale-enter-active,
 .scale-leave-active {
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) ;
@@ -40,15 +25,14 @@
 .scale-enter-from,
 .scale-leave-to {
   opacity: 0;
-  transform: scale(.95);
+  // transform: scale(.5);
 }
 
 
 // fade 
-
 .fade-enter-active,
 .fade-leave-active {
-  transition-duration: 2s;
+  transition-duration: 1s;
   transition-property: opacity;
   transition-timing-function: ease;
 }

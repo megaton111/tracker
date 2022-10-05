@@ -49,7 +49,7 @@ https://github.com/gustjqdl/Naver_DailyKeyword_Crawling/blob/master/%EC%B5%9C%EA
   const timestamp = Date.now() + '';
   const accessKey = '010000000084e677e74a63f62190879c5cb1402cf5ddbcceacc2ca327302d25860ff090624' ;
   const secretKey = 'AQAAAACE5nfnSmP2IZCHnFyxQCz1yrO0D6dIbSGgK3Q' ;
-  const CUSTOMERID = 1723622 ; 
+  const CUSTOMERID = '1723622' ; 
 
   var hmac = CryptoJS.algo.HMAC.create(CryptoJS.algo.SHA256, secretKey);
   hmac.update(timestamp + '.' + method + '.' + api_url);
@@ -74,9 +74,11 @@ https://github.com/gustjqdl/Naver_DailyKeyword_Crawling/blob/master/%EC%B5%9C%EA
       }
 
       const getShopKeyword = () => {
-
+        
+        console.log( ' 1111111111111 ' ) ;
         axios.get( '/keywordstool?hintKeywords=' + encodeURI( state.keywordSeller ) + '&showDetail=1' , {
           headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
             'X-Timestamp':timestamp ,
             'X-API-KEY': accessKey ,
             'X-API-SECRET': secretKey , 

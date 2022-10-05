@@ -49,6 +49,7 @@
           },
         } )
         .then(( res ) => {
+          console.log( 'res data :', res.data ) ; 
           state.inputValue = res.data.aResult[0].aItems[0].name.replace(/ /g, ''); 
         })
         .catch( error => {

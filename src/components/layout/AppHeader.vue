@@ -17,11 +17,9 @@
 </template>
 <script>
   import { reactive, toRefs } from 'vue';
-  // import PersonalCustomsCode from '../pages/PersonalCustomsCode' ; 
   export default {
     name : 'AppHeader' ,
     components : {
-      // PersonalCustomsCode
     } , 
     props : {
       title : {
@@ -35,14 +33,14 @@
           { url : '/OrderInit', title : '주문 작업(통관번호+엑셀변환)'} , 
           { url : '/PersonalCustomsCode', title : '개인통관고유부호 일치확인'} , 
           { url : '/ExcelConverter', title : '주문 엑셀 변환' } ,
-          { url : '/Delivery', title : '배송완료일 확인' } , 
-          { url : '/Unipass', title : '통관진행 정보확인' } ,
+          { url : '/Delivery', title : '배송 조회' } , 
+          { url : '/Unipass', title : '통관 조회' } ,
         ] , 
         menus2 : [
           { url : '/CalculatePrice', title : '스마트스토어 수수료 계산' } , 
           { url : '/SalePrice', title : '할인율 계산' } , 
           { url : '/OptionPrice', title : '옵션 가격차이 계산' } ,
-          // { url : '/KeywordSeller', title : '셀러 키워드' } ,
+          { url : '/KeywordSeller', title : '셀러 키워드' } ,
           // { url : '/SimpleFunction', title : '간편기능' } ,
           // { url : '/ExchangeInfo', title : '환율정보' } ,
         ] , 

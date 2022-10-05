@@ -1,9 +1,6 @@
 <template>
 
   <div class="contWrap">
-    <top-description>
-      수취인 이름과 개인통관고유번호가 일치한지 확인하는 기능입니다.<br />
-    </top-description>
 
     <div class="sectionWrap personalCodeCheck" style="--sectionGap:20px">
 
