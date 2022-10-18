@@ -57,8 +57,10 @@ https://github.com/gustjqdl/Naver_DailyKeyword_Crawling/blob/master/%EC%B5%9C%EA
   var hash = hmac.finalize();
   hash.toString(CryptoJS.enc.Base64) ;
 
-  const CLIENTID = '79iwaLXFMnMTypZ1uUI4' ;
-  const CLIENTSECRET = 'ysCUOmSLqa' ;
+  // const CLIENTID = '79iwaLXFMnMTypZ1uUI4' ;
+  // const CLIENTSECRET = 'ysCUOmSLqa' ;
+  const CLIENTID = 'nuOJ4_haYkrHigHn6CeA' ;
+  const CLIENTSECRET = 'U4S7D3tuJG' ;
   
   export default {
     name : 'KeywordSeller' ,
@@ -75,8 +77,9 @@ https://github.com/gustjqdl/Naver_DailyKeyword_Crawling/blob/master/%EC%B5%9C%EA
 
       const getShopKeyword = () => {
         
-        console.log( ' 1111111111111 ' ) ;
+        console.log( ' 222222222 ' ) ;
         axios.get( '/keywordstool?hintKeywords=' + encodeURI( state.keywordSeller ) + '&showDetail=1' , {
+        // axios.get( 'https://api.naver.com/keywordstool?hintKeywords=' + encodeURI( state.keywordSeller ) + '&showDetail=1' , {
           headers: {
             'Content-Type': 'application/json; charset=UTF-8',
             'X-Timestamp':timestamp ,
