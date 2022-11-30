@@ -18,7 +18,7 @@
               <h1>택배사 선택</h1>
             </div>
             <div class="row">
-              <t-select v-model="companyCode" :options="companyList" @update:modelValue="changeSelect"></t-select>
+              <t-select v-model="companyCode" :options="companyList"></t-select>
             </div>
           </div>
         </div>
@@ -91,11 +91,9 @@
 </template>
 
 <script>
-  import { reactive, toRefs, ref } from 'vue';
+  import { reactive, toRefs, ref, computed, onMounted } from 'vue';
+  import { useStore } from "vuex";
   import axios from 'axios';
-  const APIKEY = '0mMEv1tRdOGpva8oiwnTjg' ;   // 개인키
-  const COMPANY_API = 'https://info.sweettracker.co.kr/api/v1/companylist?t_key='+APIKEY ;  // 택배사 리스트
-  const DELIVERY_API = 'https://info.sweettracker.co.kr/api/v1/trackingInfo?t_key='+APIKEY ;  // 운송장 조회
 
   export default {
     name : 'delivery' ,
@@ -103,6 +101,7 @@
     } ,
     setup () {
       const disableTeleport = ref(false);
+      const store = useStore();
       const state = reactive({
         companyCode : '01' ,        // 택배사 코드(기본은 우체국택배)
         companyList : null ,        // 택배사 리스트
@@ -112,22 +111,28 @@
         deliveryResult : [] , 
         alertText : '' ,            // 알림 텍스트
         loading : false ,
-
         single : {
           status : null , 
           progress : [] ,
         } ,
-
         trackValue : '' ,
+        deliveryInfo : computed(() => store.state.deliveryInfo ) 
       }) ;
 
+      const COMPANY_API = 'https://info.sweettracker.co.kr/api/v1/companylist?t_key='+state.deliveryInfo.APIKEY ;  // 택배사 리스트
+      const DELIVERY_API = 'https://info.sweettracker.co.kr/api/v1/trackingInfo?t_key='+state.deliveryInfo.APIKEY ;  // 운송장 조회
+
+      // onMounted(async ()=>{
+      //   console.log( 'onMounted' ) ;
+      // });
+      
       // 택배사 리스트 가져와서 select value item 형태로 변환 { Name : '', Code : '' } --> { name : '', value : '' }
       axios.get( COMPANY_API ).then(res=>{
         let arr = res.data.Company ; 
-        arr = arr.map( item => {
+        state.companyList = arr.map( item => {
           return { name : item.Name, value : item.Code }
         }) ; 
-        return state.companyList = arr ;
+        return state.companyList ;
       }) ; 
 
 
@@ -142,10 +147,8 @@
 
         if( state.companyCode == '' ) {
           state.alertText = '택배사를 선택하세요' ; 
-          console.log( 'state.alertTex :', state.alertText ) ; 
         } else if ( state.originTrackList == '' ) {
           state.alertText = '운송장 번호를 입력하세요' ; 
-          console.log( 'state.alertTex :', state.alertText ) ; 
         } else {
           state.loading = true ; 
           
@@ -177,7 +180,6 @@
 
       // 운송장 1개 조회 시
       const checkTrackInfoSingle = () => {
-        console.log( '싱글 체크' ) ; 
         axios.get( DELIVERY_API+'&t_code='+state.companyCode+'&t_invoice='+state.trackList[0] )
         .then(( res ) => {
           state.alertText = '' ; 
@@ -186,7 +188,6 @@
           state.single.progress = res.data.trackingDetails ; 
         })
         .catch( error => {
-          console.log( 'error : ', error ) ; 
           state.single.status = '조회된 결과가 없습니다.' ;
         })
       }
@@ -202,16 +203,18 @@
         }
       }
 
-      const changeSelect = ( value ) => {
-        console.log( 'changeSelect value :', value ) ; 
-      }
+      // const changeSelect = ( value ) => {
+      //   console.log( 'changeSelect value :', value ) ; 
+      // }
       
       return { 
         ...toRefs(state) , 
         deliveryCheckHandler , 
         checkTrackInfo , 
-        changeSelect , 
-        disableTeleport 
+        // changeSelect , 
+        disableTeleport ,
+        COMPANY_API , 
+        DELIVERY_API
       } ;
 
     } ,
