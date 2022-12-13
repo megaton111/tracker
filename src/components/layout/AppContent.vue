@@ -1,17 +1,38 @@
 <template>
 
-  <div class="container" id="container">
-    <router-view v-slot="{ Component }">
-      <transition name="scale" mode="out-in">
-        <component :is="Component" />
-      </transition>
-    </router-view>
+  <div class="flex flex-1">
+    <!-- <div class="flex-1 grid grid-cols-10 gap-4 items-start py-10 px-4 mx-auto max-w-4xl px-2 sm:px-6 lg:px-8 lg:max-w-6xl sm:">
+      <app-aside class="col-span-2 mx-auto max-w-[40rem] lg:mx-0 lg:max-w-none lg:flex-none"></app-aside>
+      <div class="col-span-8 min-w-0 max-w-[40rem] lg:mt-0 lg:ml-0 lg:ml-16 lg:max-w-[50rem] lg:flex-auto prose-sm prose prose-slate prose-a:font-semibold prose-a:text-sky-500 hover:prose-a:text-sky-600">
+        <router-view v-slot="{ Component }">
+          <transition name="scale" mode="out-in">
+            <component :is="Component" />
+          </transition>
+        </router-view>
+      </div>
+    </div> -->
+
+    <div class="flex-1 flex flex-col gap-10 items-start py-10 px-4 mx-auto max-w-4xl px-2 sm:px-6 lg:px-8 lg:max-w-6xl sm:flex-row">
+      <app-aside class="flex grow-0 shrink-0 w-full sm:w-52 gap-6 flex-col items-start mx-auto bg-white"></app-aside>
+      <div class="flex flex-col flex-1 min-w-0 max-w-[40rem] lg:mt-0 lg:max-w-[50rem] hover:prose-a:text-sky-600">
+        <router-view v-slot="{ Component }">
+          <transition name="scale" mode="out-in">
+            <component :is="Component" />
+          </transition>
+        </router-view>
+      </div>
+    </div>
+
   </div>
 
 </template>
 <script>
+  import AppAside from '../layout/AppAside' ; 
   export default {
     name : 'AppContent' ,
+    components : {
+    AppAside
+  } ,
   }
 </script>
 

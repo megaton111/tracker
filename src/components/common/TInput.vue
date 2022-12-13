@@ -1,9 +1,14 @@
 <template>
-  <div class="input-wrap">
-    <template v-if="label"><label class="label" :for="unique" :style="{ minWidth : labelW + 'px' }">{{ label }}</label></template>
-    <input :type="type" v-model="textValue" :id="unique" :placeholder="placeholder" :class="setClass" />
-    <template v-if="unit"><span class="unit">{{ unit }}</span></template>
-  </div>
+  <template v-if="label"><label class="label" :for="unique" :style="{ minWidth : labelW + 'px' }">{{ label }}</label></template>
+  <input 
+    :type="type" 
+    v-model="textValue" 
+    :id="unique" 
+    :placeholder="placeholder" 
+    :class="setClass" 
+    @input="$emit('update:modelValue',$event.target.value)"
+    class="border py-2 px-1 block w-full rounded-md border-gray-300 shadow-sm outline-0 outline-none focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+  <template v-if="unit"><span class="unit">{{ unit }}</span></template>
 </template>
 <script>
   import { reactive, toRefs, watch } from 'vue';

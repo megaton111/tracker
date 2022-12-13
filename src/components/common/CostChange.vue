@@ -1,6 +1,8 @@
 <template>
-    <div><t-input type="text" v-model="cnyPrice" placeholder="가격" style="width:60px"></t-input></div>
-    <div class="result">{{ resultPrice }}원</div>
+  <div class="flex flex-col gap-2">
+    <div class=""><t-input type="text" v-model="cnyPrice" placeholder="가격"></t-input></div>
+    <div class="text-right">{{ resultPrice }}원</div>
+  </div>
 </template>
 
 <script>

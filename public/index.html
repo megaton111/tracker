@@ -17,12 +17,15 @@
 
       gtag('config', 'G-PCX9JPC99M');
     </script>
+    <style>
+      html, body { height: 100% }
+    </style>
   </head>
-  <body>
+  <body class="h-full">
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
-    <div id="app"></div>
+    <div id="app" class="flex flex-col h-full"></div>
     <!-- built files will be auto injected -->
     <div id="teleport-area"></div>
   </body>

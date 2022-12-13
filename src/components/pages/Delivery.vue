@@ -1,86 +1,116 @@
 <template>
 
-  <div class="contWrap">
+  <div class="flex flex-col gap-10">
     <top-description>
       운송장 번호를 1개만 입력했을 경우에는 진행과정이 모두 보이며,<br />
       운송장 번호를 여러 개 입력했을 경우에는 배송완료일만 노출합니다.<br />
-      여러 운송장 번호를 입력 할 경우에는 한줄에 한개의 운송장을 입력해주세요. (예시참고)
-      <br />주문리스트에 배송완료일 입력을 위해 만든 기능입니다.
+      여러 운송장 번호를 입력 할 경우에는 한줄에 한개의 운송장을 입력해주세요.
     </top-description>
 
-    <div class="sectionWrap">
-
-      <section class="enter">
-
-        <div class="row">
-          <div class="col bx">
-            <div class="row">
-              <h1>택배사 선택</h1>
-            </div>
-            <div class="row">
-              <t-select v-model="companyCode" :options="companyList"></t-select>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col bx">
-            <div class="row">
-              <h1>운송장 번호 입력</h1>
-            </div>
-            <div class="row">
-              <t-textarea v-model="originTrackList" placeholder="예) 운송장번호를 여러개 입력 시 한줄에 한개씩&#10;123123123123123&#10;123123123123123&#10;123123123123123"></t-textarea>
-            </div>
-          </div>
-        </div>
-        
-        <div class="row fix">
-          <button type="button" @click="deliveryCheckHandler">조회</button>
-        </div>
-      </section>
-
-      <!-- 운송장 번호 여러 개 조회 시 -->
-      <section class="result" v-if="deliveryResult.length > 0">
-        <div class="row">
-          <div class="col bx">
-            <div class="row">
-              <div class="col bx-rd" style="--gap-col:10px;">
-                <ul class="lstWrap" v-if="deliveryResult.length > 0">
-                  <li v-for="(item, idx) in deliveryResult" :key="idx"> {{ item }} </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 운송장 번호 한개 조회 시 -->
-      <section class="result" v-else-if="single.status">
-        <div class="row">
-          <div class="col bx">
-            <div class="row">
-              <div class="col bx-rd" style="--gap-col:10px;">
-                <div class="status" v-if="single.status">
-                  <strong>{{ single.status }}</strong>
+    <div class="flex flex-col gap-10">
+      <div class="flex flex-col gap-4">
+        <div class="text-base font-bold text-lg">택배사 선택</div>
+        <div class="flex flex-col w-80">
+          <RadioGroup v-model="selectDeliveryComp" class="">
+            <RadioGroupLabel class="sr-only">택배사를 선택하세요.</RadioGroupLabel>
+            <div class="grid grid-cols-3 gap-2">
+              <RadioGroupOption 
+                as="template" 
+                v-for="comp in deliveryCompList" 
+                :key="comp.name" 
+                :value="comp" 
+                v-slot="{ active, checked }"
+              >
+                <div :class="[active ? 'ring-2 ring-indigo-500' : '', 'bg-white shadow-sm text-gray-900 cursor-pointer group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 ']">
+                  <RadioGroupLabel as="span">{{ comp.name }}</RadioGroupLabel>
+                  <span 
+                    :class="[active ? 'border' : 'border-2', checked ? 'border-indigo-500' : 'border-transparent', 'pointer-events-none absolute -inset-px rounded-md']" 
+                    aria-hidden="true" 
+                  />
                 </div>
-                <ul class="lstWrap" v-if="single.progress.length > 0">
-                  <li v-for="(item, idx) in single.progress" :key="idx">
-                    <span class="date">{{ item.timeString }}</span>
-                    <span>{{ item.where }}</span>
-                  </li>
-                </ul>
-              </div>
+              </RadioGroupOption>
             </div>
-          </div>
+          </RadioGroup>
         </div>
-      </section>
+      </div>
+      <div class="flex flex-col gap-4">
+        <div class="text-base font-bold text-lg">운송장 번호 입력</div>
+        <div class="flex flex-col">
+          <textarea 
+            rows="5" 
+            v-model="originTrackList" 
+            class="block w-full border border-solid py-2 px-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm outline-0 outline-none" 
+            placeholder="예) 운송장번호를 여러개 입력 시 한줄에 한개씩&#10;123123123123123&#10;123123123123123&#10;123123123123123"
+            @input="trackCheckHandler"
+          />
+        </div>
+      </div>
 
-      <!-- 잘못된 검색 결과 -->
-      <section class="result" v-else-if="alertText">
-        <div class="status" v-if="alertText">{{ alertText }}</div>
-      </section>
+    </div>
 
-    </div> <!-- end of sectionWrap -->
+
+		<TransitionRoot as="template" :show="open">
+			<Dialog as="div" class="relative z-10" @close="open = false">
+				<TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
+					<div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+				</TransitionChild>
+
+				<div class="fixed inset-0 z-10 overflow-y-auto">
+					<div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+						<TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200" leave-from="opacity-100 translate-y-0 sm:scale-100" leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+							<DialogPanel class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+								<div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-8">
+									<div class="sm:flex sm:items-start">
+										<div class="mt-3 text-center sm:mt-0 sm:text-left">
+											<DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">조회 결과</DialogTitle>
+											<div class="mt-6" id="textWrap">
+												
+												<!-- 결과 : 운송장 번호 여러 개 조회 시 -->
+												<div class="flex flex-col gap-2" v-if="deliveryResult.length > 0">
+													<ul class="flex flex-col gap-2">
+														<li v-for="(item, idx) in deliveryResult" :key="idx"> {{ item }} </li>
+													</ul>
+												</div>
+
+												<!-- 결과 : 운송장 번호 한개 조회 시 -->
+												<div class="flex flex-col gap-2" v-else-if="single.status">
+													<div class="" v-if="single.status">
+														현재 상태 : <strong>{{ single.status }}</strong>
+													</div>
+													<ul class="flex flex-col gap-2" v-if="single.progress.length > 0">
+														<li v-for="(item, idx) in single.progress" :key="idx">
+															<span class="date">{{ item.timeString }}</span>
+															<span>{{ item.where }}</span>
+														</li>
+													</ul>
+												</div>
+
+												<!-- 결과 : 오류 -->
+												<div class="flex flex-col gap-2" v-else-if="alertText">
+													<div class="" v-if="alertText">{{ alertText }}</div>
+												</div>
+												
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+									<button 
+                    type="button" 
+                    class="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                    @click="copyHandler('#textWrap'); open = false;"
+                  >복사</button>
+									<button 
+                    type="button" 
+                    class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" @click="open = false" ref="cancelButtonRef"
+                  >확인</button>
+								</div>
+							</DialogPanel>
+						</TransitionChild>
+					</div>
+				</div>
+			</Dialog>
+		</TransitionRoot>
 
     <teleport to="#teleport-area" :disabled="disableTeleport">
       <loading v-if="loading"/>
@@ -94,12 +124,43 @@
   import { reactive, toRefs, ref, computed, onMounted } from 'vue';
   import { useStore } from "vuex";
   import axios from 'axios';
+  import { copyText } from '@/utils';
+
+  // import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from '@headlessui/vue'
+  // import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
+
+  import { 
+    Menu, 
+    MenuButton, 
+    MenuItem, 
+    MenuItems, 
+    RadioGroup, 
+    RadioGroupLabel, 
+    RadioGroupOption ,
+		Dialog, 
+		DialogPanel, 
+		DialogTitle, 
+		TransitionChild, 
+		TransitionRoot 
+  } from '@headlessui/vue' ;
+  import { ChevronDownIcon } from '@heroicons/vue/20/solid' ;
+	import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline' ;
 
   export default {
     name : 'delivery' ,
     components : {
+      RadioGroup , 
+      RadioGroupLabel , 
+      RadioGroupOption  ,
+			Dialog , 
+			DialogPanel , 
+			DialogTitle , 
+			TransitionChild , 
+			TransitionRoot ,
     } ,
     setup () {
+
+
       const disableTeleport = ref(false);
       const store = useStore();
       const state = reactive({
@@ -116,16 +177,28 @@
           progress : [] ,
         } ,
         trackValue : '' ,
-        deliveryInfo : computed(() => store.state.deliveryInfo ) 
+        selectedCompanyName : '우체국택배' ,
+        selectedCompanyCode : '01' ,
+        deliveryInfo : computed(() => store.state.deliveryInfo ) ,
+				compelete : false  ,
       }) ;
 
-      const COMPANY_API = 'https://info.sweettracker.co.kr/api/v1/companylist?t_key='+state.deliveryInfo.APIKEY ;  // 택배사 리스트
-      const DELIVERY_API = 'https://info.sweettracker.co.kr/api/v1/trackingInfo?t_key='+state.deliveryInfo.APIKEY ;  // 운송장 조회
+			// 택배 API
+			const COMPANY_API = 'https://info.sweettracker.co.kr/api/v1/companylist?t_key='+state.deliveryInfo.APIKEY ;  // 택배사 리스트
+			const DELIVERY_API = 'https://info.sweettracker.co.kr/api/v1/trackingInfo?t_key='+state.deliveryInfo.APIKEY ;  // 운송장 조회
 
-      // onMounted(async ()=>{
-      //   console.log( 'onMounted' ) ;
-      // });
-      
+      // 택배사 리스트 설정
+      const deliveryCompList = [
+        { name: 'CJ대한통운', code: '04' },
+        { name: '우체국택배', code: '01' },
+        { name: '한진택배', code: '01' },
+      ] ;
+
+      // 선택된 택배사
+      const selectDeliveryComp = ref(deliveryCompList[0]) ;
+
+			const open = ref(false) ;
+
       // 택배사 리스트 가져와서 select value item 형태로 변환 { Name : '', Code : '' } --> { name : '', value : '' }
       axios.get( COMPANY_API ).then(res=>{
         let arr = res.data.Company ; 
@@ -135,6 +208,37 @@
         return state.companyList ;
       }) ; 
 
+			// 택배사 선택 : 셀렉트 박스 용
+      const selectCompany = ( name, code ) => {
+        state.selectedCompanyName = name ; 
+        state.selectedCompanyCode = code ; 
+      }
+
+      const trackCheckHandler = () => {
+
+				// 변수 초기화
+        state.result = [] ; 
+        state.deliveryResult = [] ;
+        state.single.status = null ;
+        state.single.progress = [] ; 
+
+        if( state.companyCode == '' ) {
+          state.alertText = '택배사를 선택하세요' ; 
+        } else if ( state.originTrackList == '' ) {
+          state.alertText = '운송장 번호를 입력하세요' ; 
+        } else {
+          state.loading = true ; 
+          
+          // 새로운 배열에 담는다. 기존 textarea에 트랙리스트를 계속 남겨두기 위함 , filter 는 빈값제거하기 위함
+          state.trackList = state.originTrackList.split('\n').filter(Boolean) ; 
+          if( state.trackList.length > 1 ) {  // 운송장 번호 1개 조회 시에는 과정까지 노출해주기 위해 분리 처리
+            checkTrackInfo() ;
+          } else {
+            checkTrackInfoSingle() ;
+          }
+        }
+
+      }
 
       // 입력한 정보 값 체크
       const deliveryCheckHandler = () => {
@@ -164,7 +268,7 @@
 
       // 운송장 여러 개 조회 시
       const checkTrackInfo = () => {
-        axios.get( DELIVERY_API+'&t_code='+state.companyCode+'&t_invoice='+state.trackList[0] )
+        axios.get( DELIVERY_API+'&t_code='+selectDeliveryComp.value.code+'&t_invoice='+state.trackList[0] )
         .then(( res ) => {
           state.trackList.shift() ; 
           trackInfoSet( res ) ; 
@@ -174,21 +278,27 @@
             state.deliveryResult = state.result ; 
             state.alertText = '' ; 
             state.loading = false ; 
+            open.value = true ; 
+            state.originTrackList = '' ;
           }
         }) ;
       }
 
       // 운송장 1개 조회 시
       const checkTrackInfoSingle = () => {
-        axios.get( DELIVERY_API+'&t_code='+state.companyCode+'&t_invoice='+state.trackList[0] )
+        axios.get( DELIVERY_API+'&t_code='+selectDeliveryComp.value.code+'&t_invoice='+state.trackList[0] )
         .then(( res ) => {
           state.alertText = '' ; 
           state.loading = false ; 
           state.single.status = res.data.lastDetail.kind ; 
           state.single.progress = res.data.trackingDetails ; 
+					open.value = true ; 
+          state.originTrackList = '' ;
         })
         .catch( error => {
           state.single.status = '조회된 결과가 없습니다.' ;
+					open.value = true ; 
+          state.originTrackList = '' ;
         })
       }
 
@@ -203,18 +313,24 @@
         }
       }
 
-      // const changeSelect = ( value ) => {
-      //   console.log( 'changeSelect value :', value ) ; 
-      // }
-      
+      const copyHandler = ( target ) => {
+        let copyTarget = document.querySelector( target ) ; 
+        copyText( copyTarget )  ;
+      } ;
+
       return { 
         ...toRefs(state) , 
         deliveryCheckHandler , 
         checkTrackInfo , 
-        // changeSelect , 
         disableTeleport ,
         COMPANY_API , 
-        DELIVERY_API
+        DELIVERY_API ,
+        selectCompany ,
+        deliveryCompList ,
+        selectDeliveryComp ,
+        trackCheckHandler ,
+				open ,
+        copyHandler
       } ;
 
     } ,

@@ -11,6 +11,7 @@ import ExcelConverter from "@/components/pages/ExcelConverter.vue" ;
 import OrderInit from "@/components/pages/OrderInit.vue" ;
 import ExchangeInfo from "@/components/pages/ExchangeInfo.vue" ;
 import KeywordSeller from "@/components/pages/KeywordSeller.vue" ;
+import SiteList from "@/components/pages/SiteList.vue" ;
 
 const routes = [
   {
@@ -79,11 +80,18 @@ const routes = [
     name: "KeywordSeller",
     component: KeywordSeller,
   },
+  {
+    path: "/SiteList",
+    name: "SiteList",
+    component: SiteList,
+  },
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
+  linkActiveClass: "bg-gray-900 text-white",
+  linkExactActiveClass: "route-active"
 });
 
 export default router;

@@ -1,8 +1,167 @@
 <template>
 
-  <div class="contWrap">
+  <div class="flex flex-col gap-10">
 
-    <div class="sectionWrap personalCodeCheck" style="--sectionGap:20px">
+    <div class="flex flex-1 flex-col gap-6">
+      <div class="flex flex-col gap-4">
+        <div class="text-base font-bold text-lg">스토어 선택</div>
+        <div class="flex flex-col w-80">
+          <Menu as="div" class="relative inline-block text-left w-full">
+            <div>
+              <MenuButton class="inline-flex w-full justify-between rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
+                {{ selectedStore.name }}
+                <ChevronDownIcon class="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
+              </MenuButton>
+            </div>
+            <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
+              <MenuItems class="absolute left-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none w-80">
+                <div class="py-1 ">
+
+                  <template v-for="( t, i ) in storeList" :key="i">
+                    <MenuItem v-slot="{ active }">
+                      <button 
+                        type="buton" 
+                        :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm w-full text-left']"
+                        @click="selectStore( t.name, t.value )"
+                      >{{ t.name }}</button>
+                    </MenuItem>  
+                  </template>
+                </div>
+              </MenuItems>
+            </transition>
+          </Menu>
+        </div>
+      </div>
+      <div class="flex flex-col gap-4">
+        <div class="text-base font-bold text-lg">엑셀 입력</div>
+        <div class="flex flex-col">
+          <textarea 
+            rows="5" 
+            v-model="excelData" 
+            class="block w-full border border-solid py-2 px-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm outline-0 outline-none" 
+            placeholder="엑셀 전체를 복사해서 넣어주세요."
+          />
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-4" v-if="makeData.length > 0 && errorColumn.length == 0">
+        <div class="text-base font-bold text-lg">엑셀 생성 결과</div>
+        <div class="flex flex-col gap-2">
+          
+          <div class="w-full flex-1 h-full">
+            <table class="border-collapse table-fixed w-full h-full">
+              <tbody>
+                <tr v-for="( row, num ) in makeData" :key="num">
+                  <td 
+                    v-for="( cell, t ) in row" 
+                    :key="t"
+                    class="text-xs border border-gray-500 border-solid"
+                  >
+                    <div class="w-full whitespace-nowrap overflow-hidden text-ellipsis">{{ cell }}</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="">
+            <button 
+              type="submit" 
+              class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              @click="copy"
+            >복사</button>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+
+    
+
+    <!-- 팝업 -->
+    <TransitionRoot as="template" :show="open">
+			<Dialog as="div" class="relative z-10" @close="open = false">
+				<TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
+					<div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+				</TransitionChild>
+
+				<div class="fixed inset-0 z-10 overflow-y-auto">
+					<div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+						<TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200" leave-from="opacity-100 translate-y-0 sm:scale-100" leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+							<DialogPanel class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+								<div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-8">
+									<div class="sm:flex sm:items-start">
+										<div class="mt-3 text-center sm:mt-0 sm:text-left">
+											<DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">조회 결과</DialogTitle>
+											<div class="mt-6" id="textWrap">
+
+                        <div class="flex flex-col gap-2" v-if="resultList.length > 0">
+													<ul class="flex flex-col gap-4">
+														
+                            <li class="flex flex-col gap-1" v-for="(item, idx) in resultList" :key="idx">
+															<div class="flex flex-row gap-2">
+                                <span class="">{{ item.name }}</span>
+                                <span class="font-bold" :class="{ 'text-red-600' : item.check!='일치' }">{{ item.check }}</span>
+                              </div>
+                              <div class="flex flex-row gap-1" v-if="item.check!='일치'">
+                                <span class="flex flex-1 p-0.5 px-2 border border-red-600 border-solid rounded items-center text-red-600 text-xs">
+                                  <template v-for="(t, i) in item.errMsg" :key="i">
+                                    이유 : {{ t }}
+                                  </template>
+                                </span>
+                                <button 
+                                  type="submit" 
+                                  class="inline-flex h-8 justify-center rounded-md border border-transparent bg-red-500 py-1 px-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-red-800 focus:ring-offset-2 whitespace-nowrap"
+                                  @click="copyErrorMsgHandler( item.name, item.number, item.tel, item.prod, 'person'+idx )"
+                                >안내문구복사</button>
+                                <div class="opacity-0 w-0 h-0" :id="'person'+idx">
+                                <!-- <div class="opacity-0 invisible w-0 h-0" :id="'person'+idx"> -->
+                                  안녕하세요 {{ item.name }} 고객님 :) <br />
+                                  <!-- [{{ item.prod }}] 주문하신 쇼핑몰입니다~ <br /> -->
+                                  브리크스토어입니다.<br />
+                                  다름이 아니라 저희측 현지 배송업체 확인결과 주문하신 '개인통관부호'가 잘못된것으로 판단되어 재확인차 연락드립니다. 아래의 정보 확인부탁드리며, <br/>
+                                  개인통관부호는 수취인 이름과 휴대폰번호가 일치해야합니다. 정확한 정보를 답장으로 전달주시면 감사하겠습니다~<br /><br />
+
+                                  - 수취인 : [ {{ item.name }} ]<br />
+                                  - 개인통관부호 : [ {{ item.number }} ]<br />
+                                  - 휴대폰번호 : [ {{ item.tel }} ]<br />
+
+                                  개인통관부호는 수취인의 이름으로 발급된 [P+12자리 숫자] 번호여야 합니다! 감사합니다!<br />
+
+                                  개인통관부호는 아래의 링크에서 확인 / 발급이 가능하십니다.<br />
+                                  https://unipass.customs.go.kr/csp/persIndex.do
+                                </div>
+                                <!-- <button class="btnNotify" @click="copyErrorMsgHandler( item.name, item.number, item.tel, item.prod, 'person'+idx )">안내문구복사</button> -->
+                              </div>
+														</li>
+
+													</ul>
+												</div>
+
+                        
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+									<!-- <button 
+                    type="button" 
+                    class="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                    @click="copyHandler('#textWrap'); open = false;"
+                  >복사</button> -->
+									<button 
+                    type="button" 
+                    class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" 
+                    @click="open = false" 
+                  >확인</button>
+								</div>
+							</DialogPanel>
+						</TransitionChild>
+					</div>
+				</div>
+			</Dialog>
+		</TransitionRoot>
+
+    <!-- <div class="sectionWrap personalCodeCheck" style="--sectionGap:20px">
 
       <section class="enter excel">
         <div class="row">
@@ -30,7 +189,6 @@
         </div>
       </section>
       
-      <!-- 개인통관번호 일치 확인 -->
       <section class="result" v-if="resultList.length > 0">
         <div class="row fix" style="">
           <div class="col bx-rd" style="--gap-col:10px; margin-bottom:0;">
@@ -58,7 +216,6 @@
 
       </section>
 
-      <!-- 주문리스트 형태로 엑셀 변환  -->
       <section class="result" v-if="makeData.length > 0 && errorColumn.length == 0">
 
         <div class="row">
@@ -83,14 +240,15 @@
 
       </section>
 
-    </div> <!-- end of sectionWrap -->
+    </div>  -->
+    <!-- end of sectionWrap -->
 
     <teleport to="#teleport-area" :disabled="disableTeleport">
       <loading v-if="loading"/>
     </teleport>
     
     <!-- <loading  v-if="loading" /> -->
-    <teleport to="#teleport-area" :disabled="disableTeleport">
+    <!-- <teleport to="#teleport-area" :disabled="disableTeleport">
       <div class="popupWrap" v-if="showNotify">
         <div class="popup">
           <div class="top">개인통관고유번호 오류 안내</div>
@@ -119,7 +277,7 @@
           </div>
         </div>
       </div>
-    </teleport>
+    </teleport> -->
   </div>
 
 </template>
@@ -129,12 +287,37 @@
   import { reactive, toRefs, ref, computed, watch } from 'vue';
   import convert from 'xml-js' ; 
   import { copyText } from '@/utils';
+  import { 
+    Menu, 
+    MenuButton, 
+    MenuItem, 
+    MenuItems, 
+		Dialog, 
+		DialogPanel, 
+		DialogTitle, 
+		TransitionChild, 
+		TransitionRoot 
+  } from '@headlessui/vue' ;
+  import { ChevronDownIcon } from '@heroicons/vue/20/solid' ;
+	import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline' ;
 
   const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
   const URL = `${PROXY}/ext/rest/persEcmQry/retrievePersEcm`;
 
   export default {
     name : 'OrderInit' ,
+    components : {
+      Menu, 
+      MenuButton, 
+      MenuItem, 
+      MenuItems, 
+      ChevronDownIcon ,
+      Dialog, 
+      DialogPanel, 
+      DialogTitle, 
+      TransitionChild, 
+      TransitionRoot 
+    } ,
     setup() {
       const disableTeleport = ref(false);
       const state = reactive({
@@ -164,7 +347,15 @@
         getColumnTmon : [ '주문자명',	'수취인명', '판매사이트', '주문번호',	'아이디', '수취인연락처', '개인통관고유부호' , '결제완료일', '딜명', '옵션명', '구매수량', '총 주문금액' ] , 
         makeData : [] , 
         errorColumn : [] , 
+
+        storeList : [ 
+          { name : '네이버', value : 'NAVER' } ,
+          { name : '티몬', value : 'TMON' } ,
+        ] ,
+        selectedStore : { name : '네이버', value : 'NAVER' } ,
       }) ;
+
+      const open = ref(false) ;
 
       // 실행 안함
       const searchHandler = () => {
@@ -268,6 +459,7 @@
             state.numberList = '' ; 
             state.telList = '' ; 
             state.prodList = '' ; 
+            open.value = true ; 
           }
         }) ;
       } ;
@@ -341,6 +533,21 @@
 
       }
 
+      const selectStore = ( name, value ) => {
+        state.selectedStore.name = name ; 
+        state.selectedStore.value = value ; 
+      }
+
+      const copy = () => {
+        let tableDom = document.querySelector('table');
+        let range  =  document.createRange();
+        range.selectNodeContents(tableDom)
+        let select =  window.getSelection()
+        select.removeAllRanges()
+        select.addRange(range)
+        document.execCommand('copy')
+      }
+
       watch(
         [ () => state.excelData ], () => {
           if( state.excelData !== '' ) { 
@@ -359,6 +566,9 @@
         closePop ,
         copyHandler ,
         searchExcelHandler ,
+        selectStore ,
+        open ,
+        copy
       } ;
     } ,
   }

@@ -1,5 +1,6 @@
 <template>
   <div><t-input type="text" v-model="inputValue" @input="changeHandler" ref="inputTarget"></t-input></div>
+  <!-- <div><t-input type="text" v-model="inputValue" @update:model-value="$emit('update:modelValue', $event)" ref="inputTarget"></t-input></div> -->
 </template>
 
 <script>
@@ -17,8 +18,7 @@
       const inputTarget = ref( null ) ; 
 
       const state = reactive({
-        // options : [ { name : '옵션 1' , value : 0 } ] ,
-        inputValue : '' , // 원가
+        inputValue : '' ,
       }) ;
 
       const addOption = () => {

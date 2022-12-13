@@ -15,6 +15,7 @@ import ContentBox from './components/common/ContentBox';
 import CostChange from './components/common/CostChange';
 import TelChange from './components/common/TelChange';
 import EngChange from './components/common/EngChange';
+import RelSite from './components/common/RelSite';
 
 const app = createApp(App);
 
@@ -30,6 +31,7 @@ app.component( "ContentBox", ContentBox ) ;
 app.component( "CostChange", CostChange ) ;
 app.component( "TelChange", TelChange ) ;
 app.component( "EngChange", EngChange ) ;
+app.component( "RelSite", RelSite ) ;
 
 app
   .use(store)

@@ -1,8 +1,8 @@
 <template>
-  <ul>
+  <ul class="sm:rounded-md bg-gray-50 p-2">
     <li v-for="(item, idx) in listResult" :key="idx">
-      <dl>
-        <dt>{{ item.currSgn._text }} </dt>    
+      <dl class="flex justify-between">
+        <dt class="text-gray-900 font-bold">{{ item.currSgn._text }} </dt>    
         <dd>{{ item.fxrt._text }}</dd>
       </dl>
     </li>
@@ -114,23 +114,23 @@
 </script>
 
 <style lang="scss" scoped>
-  ul {
-    display: flex;
-    flex-direction: column ;
-    gap: 5px ;
-    padding:10px ; 
-    background-color: #f8f8f8 ;
-    border-radius: 5px ;
-    li {
-      list-style: none ;
-      font-size:12px ; 
-      dl {
-        display: flex;
-        dd {
-          margin-left: auto ;
-          font-weight: 700 ;
-        }
-      }
-    }
-  }
+  // ul {
+  //   display: flex;
+  //   flex-direction: column ;
+  //   gap: 5px ;
+  //   padding:10px ; 
+  //   background-color: #f8f8f8 ;
+  //   border-radius: 5px ;
+  //   li {
+  //     list-style: none ;
+  //     font-size:12px ; 
+  //     dl {
+  //       display: flex;
+  //       dd {
+  //         margin-left: auto ;
+  //         font-weight: 700 ;
+  //       }
+  //     }
+  //   }
+  // }
 </style>
