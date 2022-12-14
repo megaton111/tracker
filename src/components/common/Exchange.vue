@@ -1,5 +1,5 @@
 <template>
-  <ul class="sm:rounded-md bg-gray-50 p-2">
+  <ul class="sm:rounded-md bg-gray-50 p-2 pb-0 sm:pb-2">
     <li v-for="(item, idx) in listResult" :key="idx">
       <dl class="flex justify-between">
         <dt class="text-gray-900 font-bold">{{ item.currSgn._text }} </dt>    

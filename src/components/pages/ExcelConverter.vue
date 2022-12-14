@@ -1,15 +1,15 @@
 <template>
   
-  <div class="flex flex-col gap-10">
+  <div class="flex flex-col gap-5 sm:gap-10">
     <top-description>
     마켓 주문 엑셀에서 우리 주문리스트 양식에 맞게 가져오기
     </top-description>
 
 
-    <div class="flex flex-col gap-10">
-      <div class="flex flex-col gap-4">
-        <div class="text-base font-bold text-lg">스토어 선택</div>
-        <div class="flex flex-col w-80">
+    <div class="flex flex-col gap-5 sm:gap-6">
+      <div class="flex flex-col gap-2 sm:gap-4">
+        <div class="text-base font-bold text-sm sm:text-lg">스토어 선택</div>
+        <div class="flex flex-col w-full sm:w-80">
           <Menu as="div" class="relative inline-block text-left w-full">
             <div>
               <MenuButton class="inline-flex w-full justify-between rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
@@ -37,8 +37,8 @@
         </div>
       </div>
 
-      <div class="flex flex-col gap-4">
-        <div class="text-base font-bold text-lg">가져올 컬럼 설정</div>
+      <div class="flex flex-col gap-2 sm:gap-4">
+        <div class="text-base font-bold text-sm sm:text-lg">가져올 컬럼 설정</div>
         <div class="flex flex-grow gap-2">
           <div class="flex flex-1">
             <t-input type="text" v-model="setColValue" placeholder="쉼표로 구분하여 입력해주세요."></t-input>
@@ -53,8 +53,8 @@
         </div>
       </div>
       
-      <div class="flex flex-col gap-4">
-        <div class="text-base font-bold text-lg">설정된 컬럼</div>
+      <div class="flex flex-col gap-2 sm:gap-4">
+        <div class="text-base font-bold text-sm sm:text-lg">설정된 컬럼</div>
         <div class="flex flex-col gap-2" v-show="errorColumn.length > 0">
           <div v-for="( e, i ) in errorColumn" :key="i">[{{ e }}]</div> <strong>컬럼정보가없습니다.</strong>
         </div>
@@ -74,8 +74,8 @@
         </div>
       </div>
 
-      <div class="flex flex-col gap-4">
-        <div class="text-base font-bold text-lg">엑셀 원본 입력</div>
+      <div class="flex flex-col gap-2 sm:gap-4">
+        <div class="text-base font-bold text-sm sm:text-lg">엑셀 원본 입력</div>
         <div class="flex flex-col gap-2">
           <textarea 
             rows="5" 

@@ -2,7 +2,7 @@
   
   <aside class="">
     
-    <content-box title="환율정보" class="flex-1 bg-white">
+    <content-box title="환율정보" class="flex-1">
       <exchange :currency="[ 'USD', 'CNY' ]" />
     </content-box>
 

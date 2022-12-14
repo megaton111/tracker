@@ -1,15 +1,15 @@
 <template>
 
-  <div class="flex flex-col gap-10">
+  <div class="flex flex-col gap-5 sm:gap-10">
     <top-description>
       운송장 번호를 1개만 입력했을 경우에는 진행과정이 모두 보이며,<br />
       운송장 번호를 여러 개 입력했을 경우에는 배송완료일만 노출합니다.<br />
       여러 운송장 번호를 입력 할 경우에는 한줄에 한개의 운송장을 입력해주세요.
     </top-description>
 
-    <div class="flex flex-col gap-10">
-      <div class="flex flex-col gap-4">
-        <div class="text-base font-bold text-lg">택배사 선택</div>
+    <div class="flex flex-col gap-5 sm:gap-6">
+      <div class="flex flex-col gap-2 sm:gap-4">
+        <div class="text-base font-bold text-sm sm:text-lg">택배사 선택</div>
         <div class="flex flex-col w-80">
           <RadioGroup v-model="selectDeliveryComp" class="">
             <RadioGroupLabel class="sr-only">택배사를 선택하세요.</RadioGroupLabel>
@@ -33,8 +33,8 @@
           </RadioGroup>
         </div>
       </div>
-      <div class="flex flex-col gap-4">
-        <div class="text-base font-bold text-lg">운송장 번호 입력</div>
+      <div class="flex flex-col gap-2 sm:gap-4">
+        <div class="text-base font-bold text-sm sm:text-lg">운송장 번호 입력</div>
         <div class="flex flex-col">
           <textarea 
             rows="5" 

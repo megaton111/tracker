@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-col gap-3 w-full divide-gray-600/30 dark:divide-gray-600/70 divide-y"> 
+  <div class="flex flex-col gap-2 sm:gap-3 w-full divide-gray-600/30 dark:divide-gray-600/70 divide-y"> 
     <div class="font-medium text-gray-900 font-bold"><h1>{{ contentTitle }}</h1></div>
-    <div class="w-full space-y-6 pt-4">
+    <div class="w-full space-y-6 pt-2 sm:pt-4">
       <slot></slot>
     </div>
   </div>

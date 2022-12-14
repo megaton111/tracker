@@ -1,11 +1,15 @@
 <template>
 
-  <div class="flex flex-col gap-10">
+  <div class="flex flex-col gap-5 sm:gap-10 w-full">
+    <top-description>
+    엑셀 변환과 개인통관고유번호 일치 확인을 동시에 진행합니다.
+    </top-description>
 
-    <div class="flex flex-1 flex-col gap-6">
-      <div class="flex flex-col gap-4">
-        <div class="text-base font-bold text-lg">스토어 선택</div>
-        <div class="flex flex-col w-80">
+
+    <div class="flex flex-1 flex-col gap-5 sm:gap-6">
+      <div class="flex flex-col gap-2 sm:gap-4">
+        <div class="text-base font-bold text-sm sm:text-lg">스토어 선택</div>
+        <div class="flex flex-col w-full sm:w-80">
           <Menu as="div" class="relative inline-block text-left w-full">
             <div>
               <MenuButton class="inline-flex w-full justify-between rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
@@ -32,8 +36,8 @@
           </Menu>
         </div>
       </div>
-      <div class="flex flex-col gap-4">
-        <div class="text-base font-bold text-lg">엑셀 입력</div>
+      <div class="flex flex-col gap-2 sm:gap-4">
+        <div class="text-base font-bold text-sm sm:text-lg">엑셀 입력</div>
         <div class="flex flex-col">
           <textarea 
             rows="5" 

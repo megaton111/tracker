@@ -1,11 +1,11 @@
 <template>
 
-  <div class="flex flex-col gap-10">
+  <div class="flex flex-col gap-5 sm:gap-6">
 
-    <div class="flex flex-col gap-4" v-for="(siteGroup, idx) in sites" :key="idx">
-      <div class="text-base font-bold text-lg">{{ siteGroup.category }}</div>
+    <div class="flex flex-col gap-2 sm:gap-4" v-for="(siteGroup, idx) in sites" :key="idx">
+      <div class="text-base font-bold text-sm sm:text-lg">{{ siteGroup.category }}</div>
       <div class="flex flex-col">
-        <ul class="grid grid-cols-6 w-full gap-2">
+        <ul class="grid grid-cols-3 sm:grid-cols-6 w-full gap-2">
           <li 
             v-for="(t,i) in siteGroup.list" 
             :key="i"

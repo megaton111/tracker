@@ -12,13 +12,13 @@
       </div>
     </div> -->
 
-    <div class="flex-1 flex flex-col gap-10 items-start py-10 px-4 mx-auto max-w-4xl px-2 sm:px-6 lg:px-8 lg:max-w-6xl sm:flex-row">
-      <app-aside class="flex grow-0 shrink-0 w-full sm:w-52 gap-6 flex-col items-start mx-auto bg-white"></app-aside>
-      <div class="flex flex-col flex-1 min-w-0 max-w-[40rem] lg:mt-0 lg:max-w-[50rem] hover:prose-a:text-sky-600">
+    <div class="flex flex-1 flex-col gap-5 sm:gap-10 items-start py-5 sm:py-10 px-4 mx-auto max-w-4xl px-2 sm:px-6 lg:px-8 lg:max-w-6xl sm:flex-row">
+      <app-aside class="flex grow-0 shrink-0 w-full sm:w-52 gap-6 flex-col items-start mx-auto bg-gray-50 sm:bg-transparent p-3 sm:p-0 border border-gray-200 sm:border-0"></app-aside>
+      <div class="flex flex-col flex-1 min-w-0 w-full max-w-[40rem] lg:mt-0 lg:max-w-[50rem] hover:prose-a:text-sky-600">
         <router-view v-slot="{ Component }">
-          <transition name="scale" mode="out-in">
+          <!-- <transition name="scale" mode="out-in"> -->
             <component :is="Component" />
-          </transition>
+          <!-- </transition> -->
         </router-view>
       </div>
     </div>

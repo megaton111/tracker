@@ -1,18 +1,18 @@
 <template>
 
-  <div class="flex flex-col gap-10">
+  <div class="flex flex-col gap-5 sm:gap-10">
     <top-description>
       통관 과정을 조회할 수 있는 기능입니다. <br />
       운송장 번호를 입력하세요. 년도는 통관 진행 해당년도입니다.
     </top-description>
 
     <div class="flex flex-col gap-10">
-      <div class="flex flex-row gap-2">
+      <div class="flex flex-col sm:flex-row gap-2">
 
-        <div class="flex w-80">
+        <div class="flex sm:w-80">
           <t-input type="text" v-model="trackNumber" placeholder="운송장 번호를 입력하세요"></t-input>
         </div>
-        <div class="flex w-28">
+        <div class="flex sm:w-28">
           <Menu as="div" class="relative inline-block text-left w-full">
             <div>
               <MenuButton class="inline-flex w-full justify-between rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
@@ -38,10 +38,10 @@
             </transition>
           </Menu>
         </div>
-        <div class="flex flex-0">
+        <div class="flex sm:flex-0">
           <button 
             type="submit" 
-            class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            class="inline-flex w-full sm:w-auto justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             @click="searchHandler"
           >조회</button>
         </div>

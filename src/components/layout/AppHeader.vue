@@ -16,7 +16,11 @@
           </div>
           <div class="hidden sm:ml-6 sm:block">
             <div class="flex space-x-4">
-              <router-link v-for="(item,idx) in navigation" :key="idx" :to="item.href" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" :aria-current="item.current ? 'page' : undefined">{{ item.name }}</router-link>
+              <router-link 
+                v-for="(item,idx) in navigation" 
+                :key="idx" 
+                :to="item.href" 
+                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" :aria-current="item.current ? 'page' : undefined">{{ item.name }}</router-link>
               <!-- <a v-for="item in navigation" :key="item.name" :href="item.href" :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'px-3 py-2 rounded-md text-sm font-medium']" :aria-current="item.current ? 'page' : undefined">{{ item.name }}</a> -->
             </div>
           </div>
@@ -30,17 +34,6 @@
       </div>
     </DisclosurePanel>
   </Disclosure>
-  <!-- <header class="header">
-    <h1><router-link to="/">{{title}}</router-link></h1>
-    <button type="button" class="btn-mobile-menu" @click="toggleMenu">모바일 메뉴 버튼</button>
-    <div class="navWrap" :class="{ show : showMenu }">
-      <nav><router-link v-for="(menu,idx) in menus" :key="idx" :to="menu.url">{{ menu.title }}</router-link></nav>
-      <nav><router-link v-for="(menu,idx) in menus2" :key="idx" :to="menu.url">{{ menu.title }}</router-link></nav>
-      <nav class="link_evt">
-        <a href="#;" @click="openOrderPage">주문 관련 사이트 열기</a>
-      </nav>
-    </div>
-  </header> -->
   
 </template>
 <script>
@@ -62,7 +55,7 @@
     setup( ) {
       const state = reactive({
         navigation : [
-          { name: '통합 처리(통관번호+엑셀변환)', href: '/OrderInit', current: true },
+          { name: '통합 처리', href: '/OrderInit', current: true },
           { name: '개인통관고유부호 일치확인', href: '/PersonalCustomsCode', current: false },
           { name: '엑셀 변환', href: '/ExcelConverter', current: false },
           { name: '배송 조회', href: '/Delivery', current: false },
