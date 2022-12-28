@@ -10,6 +10,7 @@
   "dependencies": {
     "@headlessui/vue": "^1.7.4",
     "@heroicons/vue": "^2.0.13",
+    "@vueuse/core": "^9.8.2",
     "axios": "^0.25.0",
     "core-js": "^3.6.5",
     "crypto-js": "^4.1.1",
@@ -60,10 +61,13 @@
       "parser": "babel-eslint"
     },
     "rules": {
-      "no-unused-vars": "off" ,
-      "vue/no-unused-components": ["error", {
-        "ignoreWhenBindingPresent": true
-      }]
+      "no-unused-vars": "off",
+      "vue/no-unused-components": [
+        "error",
+        {
+          "ignoreWhenBindingPresent": true
+        }
+      ]
     }
   },
   "browserslist": [

@@ -13,10 +13,10 @@
               :value="tab" 
               v-slot="{ active, checked }"
             >
-              <div :class="[active ? 'ring-2 ring-indigo-500' : '', 'bg-white shadow-sm text-gray-900 cursor-pointer group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 ']">
+              <div :class="[active ? 'ring-2 ring-indigo-500 dark:ring-red-500' : '', 'bg-white dark:bg-gray-700 dark:border-gray-900 shadow-sm text-gray-900 dark:text-gray-50 cursor-pointer group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 ']">
                 <RadioGroupLabel as="span">{{ tab.name }}</RadioGroupLabel>
                 <span 
-                  :class="[active ? 'border' : 'border-2', checked ? 'border-indigo-500' : 'border-transparent', 'pointer-events-none absolute -inset-px rounded-md']" 
+                  :class="[active ? 'border' : 'border-2', checked ? 'border-indigo-500 dark:border-red-500' : 'border-transparent', 'pointer-events-none absolute -inset-px rounded-md']" 
                   aria-hidden="true" 
                 />
               </div>
@@ -26,37 +26,37 @@
       </div>
     </div>
     
-    <div class="flex flex-1 flex-col gap-2" v-if="selectTab.value == '01'">
-      <div class="flex flex-col sm:flex-row w-full gap-5 sm:gap-4">
-        <div class="flex flex-1 flex-col gap-2 sm:gap-4">
-          <div class="text-base font-bold text-sm sm:text-lg">수취인</div>
+    <div class="flex flex-col flex-1 gap-2" v-if="selectTab.value == '01'">
+      <div class="flex flex-col w-full gap-5 sm:flex-row sm:gap-4">
+        <div class="flex flex-col flex-1 gap-2 sm:gap-4">
+          <div class="text-style-section-head">수취인</div>
           <div class="flex flex-col">
             <textarea 
               rows="5" 
               v-model="nameList" 
-              class="block w-full border border-solid py-2 px-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm outline-0 outline-none" 
+              class="block w-full px-2 py-2 border border-gray-300 border-solid rounded-md shadow-sm outline-none focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm outline-0 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-100" 
               placeholder="예) 수취인명을 한줄에 한개씩&#10;홍길동&#10;홍길동&#10;홍길동"
             />
           </div>
         </div>
-        <div class="flex flex-1 flex-col gap-2 sm:gap-4">
-          <div class="text-base font-bold text-sm sm:text-lg">개인통관고유번호</div>
+        <div class="flex flex-col flex-1 gap-2 sm:gap-4">
+          <div class="text-style-section-head">개인통관고유번호</div>
           <div class="flex flex-col">
             <textarea 
               rows="5" 
               v-model="numberList" 
-              class="block w-full border border-solid py-2 px-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm outline-0 outline-none" 
+              class="block w-full px-2 py-2 border border-gray-300 border-solid rounded-md shadow-sm outline-none focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm outline-0 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-100" 
               placeholder="예) 한줄에 하나의 정보 입력&#10;123456789&#10;123456789&#10;123456789"
             />
           </div>
         </div>
-        <div class="flex flex-1 flex-col gap-2 sm:gap-4">
-          <div class="text-base font-bold text-sm sm:text-lg">수취인 전화번호</div>
+        <div class="flex flex-col flex-1 gap-2 sm:gap-4">
+          <div class="text-style-section-head">수취인 전화번호</div>
           <div class="flex flex-col">
             <textarea 
               rows="5" 
               v-model="telList" 
-              class="block w-full border border-solid py-2 px-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm outline-0 outline-none" 
+              class="block w-full px-2 py-2 border border-gray-300 border-solid rounded-md shadow-sm outline-none focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm outline-0 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-100" 
               placeholder="예) 한줄에 하나의 정보 입력&#10;010-1234-1234&#10;010-1234-1234&#10;010-1234-1234"
             />
           </div>
@@ -65,25 +65,25 @@
       <div class="flex flex-1">
         <button 
           type="submit" 
-          class="flex sm:inline-flex w-full sm:w-auto justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm sm:inline-flex sm:w-auto hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:bg-gray-500 dark:border-gray-900 dark:text-gray-50"
           @click="searchHandler"
         >조회</button>
       </div>
     </div>
 
-    <div class="flex flex-1 flex-col gap-5 sm:gap-6" v-else>
+    <div class="flex flex-col flex-1 gap-5 sm:gap-6" v-else>
       <div class="flex flex-col gap-2 sm:gap-4">
-        <div class="text-base font-bold text-sm sm:text-lg">스토어 선택</div>
+        <div class="text-style-section-head">스토어 선택</div>
         <div class="flex flex-col w-80">
-          <Menu as="div" class="relative inline-block text-left w-full">
+          <Menu as="div" class="relative inline-block w-full text-left">
             <div>
-              <MenuButton class="inline-flex w-full justify-between rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
+              <MenuButton class="inline-flex justify-between w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100 dark:bg-gray-700 dark:text-gray-100 dark:border-gray-700">
                 {{ selectedStore.name }}
-                <ChevronDownIcon class="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
+                <ChevronDownIcon class="w-5 h-5 ml-2 -mr-1" aria-hidden="true" />
               </MenuButton>
             </div>
-            <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
-              <MenuItems class="absolute left-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none w-80">
+            <transition enter-active-class="transition duration-100 ease-out" enter-from-class="transform scale-95 opacity-0" enter-to-class="transform scale-100 opacity-100" leave-active-class="transition duration-75 ease-in" leave-from-class="transform scale-100 opacity-100" leave-to-class="transform scale-95 opacity-0">
+              <MenuItems class="absolute left-0 z-10 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none w-80">
                 <div class="py-1 ">
 
                   <template v-for="( t, i ) in storeList" :key="i">
@@ -102,12 +102,12 @@
         </div>
       </div>
       <div class="flex flex-col gap-2 sm:gap-4">
-        <div class="text-base font-bold text-sm sm:text-lg">엑셀 입력</div>
+        <div class="text-style-section-head">엑셀 입력</div>
         <div class="flex flex-col">
           <textarea 
             rows="5" 
             v-model="excelData" 
-            class="block w-full border border-solid py-2 px-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm outline-0 outline-none" 
+            class="block w-full px-2 py-2 border border-gray-300 border-solid rounded-md shadow-sm outline-none focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm outline-0 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-100" 
             placeholder="엑셀 전체를 복사해서 넣어주세요."
           />
         </div>
@@ -224,14 +224,14 @@
   <TransitionRoot as="template" :show="open">
     <Dialog as="div" class="relative z-10" @close="open = false">
       <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+        <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" />
       </TransitionChild>
 
       <div class="fixed inset-0 z-10 overflow-y-auto">
-        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+        <div class="flex items-end justify-center min-h-full p-4 text-center sm:items-center sm:p-0">
           <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200" leave-from="opacity-100 translate-y-0 sm:scale-100" leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-            <DialogPanel class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-              <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-8">
+            <DialogPanel class="relative overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:w-full sm:max-w-lg">
+              <div class="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-8">
                 <div class="sm:flex sm:items-start">
                   <div class="mt-3 text-center sm:mt-0 sm:text-left">
                     <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">조회 결과</DialogTitle>
@@ -251,8 +251,8 @@
                                   이유 : {{ t }}
                                 </template>
                               </span>
-                              <div class="opacity-0 w-0 h-0" :id="'person'+idx">
-                              <!-- <div class="opacity-0 invisible w-0 h-0" :id="'person'+idx"> -->
+                              <div class="w-0 h-0 opacity-0" :id="'person'+idx">
+                              <!-- <div class="invisible w-0 h-0 opacity-0" :id="'person'+idx"> -->
                                 안녕하세요 {{ item.name }} 고객님 :) <br />
                                 <!-- [{{ item.prod }}] 주문하신 쇼핑몰입니다~ <br /> -->
                                 브리크스토어입니다.<br />
@@ -271,7 +271,7 @@
                               <!-- <button class="btnNotify" @click="copyErrorMsgHandler( item.name, item.number, item.tel, item.prod, 'person'+idx )">안내문구복사</button> -->
                               <button 
                                 type="submit" 
-                                class="inline-flex justify-center rounded-md border border-transparent bg-red-500 py-1 px-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-red-800 focus:ring-offset-2"
+                                class="inline-flex justify-center px-2 py-1 text-sm font-medium text-white bg-red-500 border border-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-800 focus:ring-offset-2"
                                 @click="copyErrorMsgHandler( item.name, item.number, item.tel, item.prod, 'person'+idx )"
                               >안내문구복사</button>
                             </div>
@@ -285,15 +285,15 @@
                   </div>
                 </div>
               </div>
-              <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+              <div class="px-4 py-3 bg-gray-50 sm:flex sm:flex-row-reverse sm:px-6">
                 <!-- <button 
                   type="button" 
-                  class="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                  class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                   @click="copyHandler('#textWrap'); open = false;"
                 >복사</button> -->
                 <button 
                   type="button" 
-                  class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" 
+                  class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" 
                   @click="open = false" 
                 >확인</button>
               </div>
@@ -425,19 +425,14 @@
         if( setData[setData.length-1] == '' ) { setData.splice(-1,1); }
 
         if( state.selectedStore.value == 'NAVER' ) {
-
           idxName = columnName.indexOf( '수취인명' ) ;
           idxNumber = columnName.indexOf( '개인통관고유부호' ) ;
           idxTel = columnName.indexOf( '수취인연락처1' ) ;
           idxProdName = columnName.indexOf( '상품명' ) ;
-
-
         } else {
-
           idxName = columnName.indexOf( '수취인명' ) ;
           idxNumber = columnName.indexOf( '개인통관고유부호' ) ;
           idxTel = columnName.indexOf( '수취인연락처' ) ;
-
         }
 
         for( let i=0; i<setData.length; i++ ) {
@@ -496,6 +491,7 @@
             state.numberList = '' ; 
             state.telList = '' ; 
             state.prodList = '' ; 
+            state.excelData = '' ; 
             open.value = true ; 
           }
         }) ;

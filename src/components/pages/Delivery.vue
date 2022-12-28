@@ -9,7 +9,7 @@
 
     <div class="flex flex-col gap-5 sm:gap-6">
       <div class="flex flex-col gap-2 sm:gap-4">
-        <div class="text-base font-bold text-sm sm:text-lg">택배사 선택</div>
+        <div class="text-style-section-head">택배사 선택</div>
         <div class="flex flex-col w-80">
           <RadioGroup v-model="selectDeliveryComp" class="">
             <RadioGroupLabel class="sr-only">택배사를 선택하세요.</RadioGroupLabel>
@@ -21,10 +21,10 @@
                 :value="comp" 
                 v-slot="{ active, checked }"
               >
-                <div :class="[active ? 'ring-2 ring-indigo-500' : '', 'bg-white shadow-sm text-gray-900 cursor-pointer group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 ']">
+                <div :class="[active ? 'ring-2 ring-indigo-500 dark:ring-red-500' : '', 'bg-white dark:bg-gray-700 dark:border-gray-900 shadow-sm text-gray-900 dark:text-gray-50 cursor-pointer group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 ']">
                   <RadioGroupLabel as="span">{{ comp.name }}</RadioGroupLabel>
                   <span 
-                    :class="[active ? 'border' : 'border-2', checked ? 'border-indigo-500' : 'border-transparent', 'pointer-events-none absolute -inset-px rounded-md']" 
+                    :class="[active ? 'border' : 'border-2', checked ? 'border-indigo-500 dark:border-red-500' : 'border-transparent', 'pointer-events-none absolute -inset-px rounded-md']" 
                     aria-hidden="true" 
                   />
                 </div>
@@ -34,12 +34,12 @@
         </div>
       </div>
       <div class="flex flex-col gap-2 sm:gap-4">
-        <div class="text-base font-bold text-sm sm:text-lg">운송장 번호 입력</div>
+        <div class="text-style-section-head">운송장 번호 입력</div>
         <div class="flex flex-col">
           <textarea 
             rows="5" 
             v-model="originTrackList" 
-            class="block w-full border border-solid py-2 px-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm outline-0 outline-none" 
+            class="block w-full px-2 py-2 border border-gray-300 border-solid rounded-md shadow-sm outline-none focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm outline-0 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-100" 
             placeholder="예) 운송장번호를 여러개 입력 시 한줄에 한개씩&#10;123123123123123&#10;123123123123123&#10;123123123123123"
             @input="trackCheckHandler"
           />
@@ -52,33 +52,33 @@
 		<TransitionRoot as="template" :show="open">
 			<Dialog as="div" class="relative z-10" @close="open = false">
 				<TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
-					<div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+					<div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" />
 				</TransitionChild>
 
 				<div class="fixed inset-0 z-10 overflow-y-auto">
-					<div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+					<div class="flex items-end justify-center min-h-full p-4 text-center sm:items-center sm:p-0">
 						<TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200" leave-from="opacity-100 translate-y-0 sm:scale-100" leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-							<DialogPanel class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-								<div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-8">
+							<DialogPanel class="relative overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:w-full sm:max-w-lg">
+								<div class="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-8 dark:bg-gray-800">
 									<div class="sm:flex sm:items-start">
 										<div class="mt-3 text-center sm:mt-0 sm:text-left">
-											<DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">조회 결과</DialogTitle>
+											<DialogTitle as="h3" class="text-style-section-head">조회 결과</DialogTitle>
 											<div class="mt-6" id="textWrap">
 												
 												<!-- 결과 : 운송장 번호 여러 개 조회 시 -->
 												<div class="flex flex-col gap-2" v-if="deliveryResult.length > 0">
 													<ul class="flex flex-col gap-2">
-														<li v-for="(item, idx) in deliveryResult" :key="idx"> {{ item }} </li>
+														<li v-for="(item, idx) in deliveryResult" :key="idx" class="dark:text-gray-50"> {{ item }} </li>
 													</ul>
 												</div>
 
 												<!-- 결과 : 운송장 번호 한개 조회 시 -->
 												<div class="flex flex-col gap-2" v-else-if="single.status">
-													<div class="" v-if="single.status">
+													<div v-if="single.status" class="dark:text-gray-50">
 														현재 상태 : <strong>{{ single.status }}</strong>
 													</div>
 													<ul class="flex flex-col gap-2" v-if="single.progress.length > 0">
-														<li v-for="(item, idx) in single.progress" :key="idx">
+														<li v-for="(item, idx) in single.progress" :key="idx" class="dark:text-gray-50">
 															<span class="date">{{ item.timeString }}</span>
 															<span>{{ item.where }}</span>
 														</li>
@@ -94,15 +94,15 @@
 										</div>
 									</div>
 								</div>
-								<div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+								<div class="px-4 py-3 bg-gray-50 sm:flex sm:flex-row-reverse sm:px-6 dark:bg-gray-900">
 									<button 
                     type="button" 
-                    class="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                    class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                     @click="copyHandler('#textWrap'); open = false;"
                   >복사</button>
 									<button 
                     type="button" 
-                    class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" @click="open = false" ref="cancelButtonRef"
+                    class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" @click="open = false" ref="cancelButtonRef"
                   >확인</button>
 								</div>
 							</DialogPanel>
@@ -181,6 +181,10 @@
         selectedCompanyCode : '01' ,
         deliveryInfo : computed(() => store.state.deliveryInfo ) ,
 				compelete : false  ,
+
+        // test
+        trackListLength : null ,    // 입력한 운송장 수
+        resultListArr : null ,      // 입력한 수만큼 배열을 만들어서 결과값을 넣을 것
       }) ;
 
 			// 택배 API
@@ -215,7 +219,8 @@
       }
 
       const trackCheckHandler = () => {
-
+        
+        console.log( 'start -----------------------------' ) ; 
 				// 변수 초기화
         state.result = [] ; 
         state.deliveryResult = [] ;
@@ -232,7 +237,21 @@
           // 새로운 배열에 담는다. 기존 textarea에 트랙리스트를 계속 남겨두기 위함 , filter 는 빈값제거하기 위함
           state.trackList = state.originTrackList.split('\n').filter(Boolean) ; 
           if( state.trackList.length > 1 ) {  // 운송장 번호 1개 조회 시에는 과정까지 노출해주기 위해 분리 처리
-            checkTrackInfo() ;
+
+            state.trackListLength = state.trackList.length ; 
+            state.result = Array.from( { length : state.trackList.length }, ( t, i ) => '' ) ;
+            
+            // 운송장 여러 개 조회
+            getDeliveryInfo( state.trackList ).then( res => {
+              console.log( 'state.result : ', state.result ) ; 
+              state.deliveryResult = state.result ; 
+              state.alertText = '' ; 
+              state.loading = false ; 
+              open.value = true ; 
+              state.originTrackList = '' ;
+              return res.data ; 
+            })
+
           } else {
             checkTrackInfoSingle() ;
           }
@@ -265,6 +284,34 @@
           }
         }
       }
+
+      // async , await 
+      // promise
+      // infos.map( (param,idx) => {
+      //   return axios.get( DELIVERY_API+'&t_code='+selectDeliveryComp.value.code+'&t_invoice='+param )
+      //   .then( res  => {
+      //     let data = res.data ; 
+      //     data.complete ? state.result.push( data.lastDetail.timeString.split(' ')[0] ) : state.result.push( '배송중입니다.' ) ; 
+      //     results.push(data) ; 
+      //   }) 
+      // })
+
+      // 운송장 여러 개 조회 시
+      const getDeliveryInfo = infos => {
+        console.log( 'infos : ', infos ) ; 
+        const result = Promise.all(
+          infos.map( (param,idx) => {
+            return axios.get( DELIVERY_API+'&t_code='+selectDeliveryComp.value.code+'&t_invoice='+param )
+            .then( res  => {
+              let data = res.data ; 
+              data.complete ? state.result[idx] = data.lastDetail.timeString.split(' ')[0] : state.result[idx] = '배송중입니다.' ; 
+              return res.data ; 
+            }) 
+          })
+        );
+        return result ; 
+      }
+
 
       // 운송장 여러 개 조회 시
       const checkTrackInfo = () => {
@@ -330,7 +377,7 @@
         selectDeliveryComp ,
         trackCheckHandler ,
 				open ,
-        copyHandler
+        copyHandler ,
       } ;
 
     } ,

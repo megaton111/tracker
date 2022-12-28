@@ -3,18 +3,18 @@
   <div class="flex flex-col gap-5 sm:gap-6">
 
     <div class="flex flex-col gap-2 sm:gap-4" v-for="(siteGroup, idx) in sites" :key="idx">
-      <div class="text-base font-bold text-sm sm:text-lg">{{ siteGroup.category }}</div>
+      <div class="text-style-section-head">{{ siteGroup.category }}</div>
       <div class="flex flex-col">
-        <ul class="grid grid-cols-3 sm:grid-cols-6 w-full gap-2">
+        <ul class="grid w-full grid-cols-3 gap-2 sm:grid-cols-6">
           <li 
             v-for="(t,i) in siteGroup.list" 
             :key="i"
-            class="flex h-10 border border-gray-800 border-solid rounded-md"
+            class="flex h-10 border border-gray-800 border-solid rounded-md dark:border-gray-50"
           >
             <a 
               :href="t.url"
               target="_blank"
-              class="flex w-full h-full items-center justify-center text-gray-500 hover:text-gray-900"
+              class="flex items-center justify-center w-full h-full text-gray-500 hover:text-gray-900 dark:text-gray-50"
             >{{ t.name }}</a>
           </li>
         </ul>
@@ -26,7 +26,7 @@
 
 <script>
   import axios from 'axios';
-  import { reactive, toRefs, ref } from 'vue';
+  import { reactive, toRefs,   ref } from 'vue';
   import convert from 'xml-js' ; 
   // import { 
   //   Menu, 
@@ -85,7 +85,21 @@
           { 
             category : '업무' ,
             list : [
-              { name : 'NY로지스', url : '' } ,
+              { name : 'NY로지스', url : 'http://www.fbnylogis.co.kr/ny-login.html' } ,
+              // { name : '타배', url : '' } ,
+              // { name : '직구닷컴', url : '' } ,
+            ]
+          } ,
+          { 
+            category : '스토어' ,
+            list : [
+              { name : '스마트스토어', url : 'https://sell.smartstore.naver.com/' } ,
+              { name : '쿠팡', url : 'https://wing.coupang.com/' } ,
+              { name : '11번가', url : 'https://soffice.11st.co.kr/view/intro' } ,
+              { name : '인터파크', url : 'https://sellercenter.interpark.com/' } ,
+              { name : '롯데온', url : 'https://store.lotteon.com/cm/main/login_SO.wsp' } ,
+              { name : '티몬', url : 'https://spc.tmon.co.kr/member/login?return_url=%2F' } ,
+              { name : '위메프', url : 'https://wpartner.wemakeprice.com/login' } ,
               // { name : '타배', url : '' } ,
               // { name : '직구닷컴', url : '' } ,
             ]

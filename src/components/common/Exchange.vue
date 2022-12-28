@@ -1,9 +1,9 @@
 <template>
-  <ul class="sm:rounded-md bg-gray-50 p-2 pb-0 sm:pb-2">
+  <ul class="p-2 pb-0 sm:rounded-md bg-gray-50 sm:pb-2 dark:bg-gray-700">
     <li v-for="(item, idx) in listResult" :key="idx">
       <dl class="flex justify-between">
-        <dt class="text-gray-900 font-bold">{{ item.currSgn._text }} </dt>    
-        <dd>{{ item.fxrt._text }}</dd>
+        <dt class="font-bold text-gray-900 dark:text-gray-100">{{ item.currSgn._text }} </dt>    
+        <dd class="dark:text-gray-100">{{ item.fxrt._text }}</dd>
       </dl>
     </li>
   </ul>

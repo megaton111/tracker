@@ -15,7 +15,7 @@
         <div class="flex sm:w-28">
           <Menu as="div" class="relative inline-block text-left w-full">
             <div>
-              <MenuButton class="inline-flex w-full justify-between rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
+              <MenuButton class="inline-flex justify-between w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100 dark:bg-gray-700 dark:text-gray-100 dark:border-gray-700">
                 {{ selectedYear }}
                 <ChevronDownIcon class="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
               </MenuButton>

@@ -1,35 +1,62 @@
 <template>
-  <Disclosure as="nav" class="bg-gray-800" v-slot="{ open }">
-    <div class="mx-auto max-w-4xl px-2 sm:px-6 lg:px-8 lg:max-w-6xl">
-      <div class="relative flex h-16 items-center justify-between">
+  <Disclosure 
+    as="nav" 
+    class="bg-white border-b border-gray-500/30 dark:bg-gray-800 dark:border-gray-500" 
+    v-slot="{ open }"
+  >
+    <div class="max-w-4xl px-2 mx-auto sm:px-6 lg:px-8 lg:max-w-6xl">
+      <div class="relative flex items-center justify-between h-16 gap-6">
         <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
           <!-- Mobile menu button-->
-          <DisclosureButton class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+          <DisclosureButton class="inline-flex items-center justify-center p-2 text-gray-400 rounded-md hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
             <span class="sr-only">Open main menu</span>
-            <Bars3Icon v-if="!open" class="block h-6 w-6" aria-hidden="true" />
-            <XMarkIcon v-else class="block h-6 w-6" aria-hidden="true" />
+            <Bars3Icon v-if="!open" class="block w-6 h-6" aria-hidden="true" />
+            <XMarkIcon v-else class="block w-6 h-6" aria-hidden="true" />
           </DisclosureButton>
         </div>
-        <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-          <div class="flex flex-shrink-0 items-center">
-            <h1 class="font-bold text-red-400 text-lg"><router-link to="/">{{title}}</router-link></h1>
+        <div class="flex items-center  flex-1 sm:items-stretch sm:gap-10 justify-center sm:justify-between">
+          <div class="flex items-center flex-shrink-0">
+            <h1 class="text-2xl font-bold text-red-500"><router-link to="/">{{title}}</router-link></h1>
+            <!-- <h1 class="text-sm leading-6 font-semibold text-slate-700 dark:text-slate-200"><router-link to="/">{{title}}</router-link></h1> -->
           </div>
-          <div class="hidden sm:ml-6 sm:block">
+          <div class="hidden sm:ml-10 sm:block">
             <div class="flex space-x-4">
               <router-link 
                 v-for="(item,idx) in navigation" 
                 :key="idx" 
                 :to="item.href" 
-                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" :aria-current="item.current ? 'page' : undefined">{{ item.name }}</router-link>
-              <!-- <a v-for="item in navigation" :key="item.name" :href="item.href" :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'px-3 py-2 rounded-md text-sm font-medium']" :aria-current="item.current ? 'page' : undefined">{{ item.name }}</a> -->
+                class="px-2 py-2 text-base leading-6 font-semibold text-slate-700 dark:text-gray-50 bg-gray-white " 
+                :aria-current="item.current ? 'page' : undefined">{{ item.name }}</router-link>
             </div>
           </div>
         </div>
+
+        <!-- <div class="relative inline-block w-10 align-middle transition duration-200 ease-in select-none">
+            <input type="checkbox"
+              name="toggle"
+              id="toggle"
+              class="absolute block w-6 h-6 bg-white border-4 rounded-full appearance-none cursor-pointer toggle-checkbox"
+              @change="check($event)"
+            />
+            <label for="toggle" class="block h-6 overflow-hidden bg-gray-300 rounded-full cursor-pointer toggle-label"></label>
+        </div> -->
+
+        <div class="relative flex">
+          <button 
+            type="button" 
+            @click="toggleDarkEvt()"
+            class="flex justify-center p-2 text-gray-500 transition duration-150 ease-in-out bg-gray-100 border border-transparent rounded-md lg:bg-white lg:dark:bg-gray-900 dark:text-gray-200 dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-700 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50">
+            <svg v-if="modeDark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 transform -rotate-90"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+          
+        </div>
+
       </div>
     </div>
 
     <DisclosurePanel class="sm:hidden">
-      <div class="space-y-1 px-2 pt-2 pb-3">
+      <div class="px-2 pt-2 pb-3 space-y-1">
         <DisclosureButton v-for="item in navigation" :key="item.name" as="a" :href="item.href" :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'block px-3 py-2 rounded-md text-base font-medium']" :aria-current="item.current ? 'page' : undefined">{{ item.name }}</DisclosureButton>
       </div>
     </DisclosurePanel>
@@ -37,9 +64,10 @@
   
 </template>
 <script>
-  import { reactive, toRefs } from 'vue';
-  import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-  import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
+  import { reactive, toRefs, nextTick } from 'vue';
+  import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue' ;
+  import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline' ;
+  import { useDark, useToggle } from '@vueuse/core';
 
   export default {
     name : 'AppHeader' ,
@@ -86,6 +114,7 @@
         ] , 
 
         showMenu : false , 
+        modeDark : false , 
 
       }) ;
 
@@ -100,12 +129,40 @@
         window.open('https://www.tabae.co.kr/') ; 
         window.open('https://zicgoo.com/') ; 
       }
+      const toggleDarkEvt = () => {
+        document.documentElement.classList.toggle('dark') ;
+        state.modeDark = !state.modeDark ; 
+      }
+
+      const isDark = useDark();
+      const toggleDark = useToggle(isDark);
+
+
+      const check = (e) => {
+        nextTick(() => {
+          toggleDark() ;
+          console.log( 'isDark : ', isDark.value ) ; 
+        })
+      }
+
 
       return { 
         ...toRefs(state) ,
         toggleMenu ,
-        openOrderPage
+        openOrderPage ,
+        toggleDark ,
+        toggleDarkEvt , 
+        check
       } ;
     }
   }
 </script>
+<style lang="scss" scoped>
+.toggle-checkbox:checked {
+  right: 0;
+  border-color: #555555;
+}
+.toggle-checkbox:checked + .toggle-label {
+  background-color: #696969;
+}
+</style>

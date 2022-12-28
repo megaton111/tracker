@@ -8,13 +8,30 @@
 // @import "./layout/layout.scss";
 
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
-body {
-  font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif !important ;
-  font-size:14px ;
-  font-weight: 400;
-  color:rgba(0,0,0,.87) ; 
-}
+// body {
+//   font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif !important ;
+//   font-size:14px ;
+//   font-weight: 400;
+//   color:rgba(0,0,0,.87) ; 
+// }
+
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  
+  // 기본 세팅 스타일은 여기에 등록
+  html {
+    font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif !important ;
+    font-size:14px ;
+    font-weight: 400;
+    color:rgba(0,0,0,.87) ; 
+  }
+
+  // 컨텐츠 섹션 타이틀 스타일
+  .text-style-section-head {
+    @apply text-sm font-bold sm:text-lg dark:text-gray-50 ;
+  }
+}

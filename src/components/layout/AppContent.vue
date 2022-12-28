@@ -1,7 +1,7 @@
 <template>
 
-  <div class="flex flex-1">
-    <!-- <div class="flex-1 grid grid-cols-10 gap-4 items-start py-10 px-4 mx-auto max-w-4xl px-2 sm:px-6 lg:px-8 lg:max-w-6xl sm:">
+  <div class="flex flex-1 dark:bg-gray-800">
+    <!-- <div class="grid items-start flex-1 max-w-4xl grid-cols-10 gap-4 px-2 px-4 py-10 mx-auto sm:px-6 lg:px-8 lg:max-w-6xl sm:">
       <app-aside class="col-span-2 mx-auto max-w-[40rem] lg:mx-0 lg:max-w-none lg:flex-none"></app-aside>
       <div class="col-span-8 min-w-0 max-w-[40rem] lg:mt-0 lg:ml-0 lg:ml-16 lg:max-w-[50rem] lg:flex-auto prose-sm prose prose-slate prose-a:font-semibold prose-a:text-sky-500 hover:prose-a:text-sky-600">
         <router-view v-slot="{ Component }">
@@ -12,8 +12,8 @@
       </div>
     </div> -->
 
-    <div class="flex flex-1 flex-col gap-5 sm:gap-10 items-start py-5 sm:py-10 px-4 mx-auto max-w-4xl px-2 sm:px-6 lg:px-8 lg:max-w-6xl sm:flex-row">
-      <app-aside class="flex grow-0 shrink-0 w-full sm:w-52 gap-6 flex-col items-start mx-auto bg-gray-50 sm:bg-transparent p-3 sm:p-0 border border-gray-200 sm:border-0"></app-aside>
+    <div class="flex flex-col items-start flex-1 max-w-4xl gap-5 px-2 px-4 py-5 mx-auto sm:gap-10 sm:py-10 sm:px-6 lg:px-8 lg:max-w-6xl sm:flex-row ">
+      <app-aside class="flex flex-col items-start w-full gap-6 p-3 mx-auto border border-gray-200 grow-0 shrink-0 sm:w-52 bg-gray-50 sm:bg-transparent sm:p-0 sm:border-0"></app-aside>
       <div class="flex flex-col flex-1 min-w-0 w-full max-w-[40rem] lg:mt-0 lg:max-w-[50rem] hover:prose-a:text-sky-600">
         <router-view v-slot="{ Component }">
           <!-- <transition name="scale" mode="out-in"> -->

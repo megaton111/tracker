@@ -90,7 +90,8 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
-  linkActiveClass: "bg-gray-900 text-white",
+  // linkActiveClass: "bg-gray-900 text-white",
+  linkActiveClass : "text-gray-900 dark:text-gray-100", 
   linkExactActiveClass: "route-active"
 });
 
