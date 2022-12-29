@@ -14,10 +14,10 @@
             <XMarkIcon v-else class="block w-6 h-6" aria-hidden="true" />
           </DisclosureButton>
         </div>
-        <div class="flex items-center  flex-1 sm:items-stretch sm:gap-10 justify-center sm:justify-between">
+        <div class="flex items-center justify-center flex-1 sm:items-stretch sm:gap-10 sm:justify-between">
           <div class="flex items-center flex-shrink-0">
             <h1 class="text-2xl font-bold text-red-500"><router-link to="/">{{title}}</router-link></h1>
-            <!-- <h1 class="text-sm leading-6 font-semibold text-slate-700 dark:text-slate-200"><router-link to="/">{{title}}</router-link></h1> -->
+            <!-- <h1 class="text-sm font-semibold leading-6 text-slate-700 dark:text-slate-200"><router-link to="/">{{title}}</router-link></h1> -->
           </div>
           <div class="hidden sm:ml-10 sm:block">
             <div class="flex space-x-4">
@@ -25,7 +25,7 @@
                 v-for="(item,idx) in navigation" 
                 :key="idx" 
                 :to="item.href" 
-                class="px-2 py-2 text-base leading-6 font-semibold text-slate-700 dark:text-gray-50 bg-gray-white " 
+                class="px-2 py-2 text-base font-normal leading-6 text-slate-700 dark:text-gray-50 bg-gray-white " 
                 :aria-current="item.current ? 'page' : undefined">{{ item.name }}</router-link>
             </div>
           </div>
@@ -165,4 +165,7 @@
 .toggle-checkbox:checked + .toggle-label {
   background-color: #696969;
 }
+ .route-active {
+  font-weight: 700 !important ;
+ }
 </style>
