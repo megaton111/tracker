@@ -116,110 +116,6 @@
 
   </div>
   
-  <!-- <loading  v-if="loading" /> -->
-  <!-- <teleport to="#teleport-area" :disabled="disableTeleport">
-    <div class="popupWrap" v-if="showNotify">
-      <div class="popup">
-        <div class="top">개인통관고유번호 오류 안내</div>
-        <div class="content">
-          <div class="input">
-            <div class="item">
-              <span>구매한 상품명</span>
-            </div>
-          </div>
-          <div class="textWrap" id="textWrap">
-            안녕하세요 {{ person }} 고객님 :) <br />
-            [{{pprod}}] 주문하신 쇼핑몰입니다~ <br />
-            다름이 아니라 저희측 현지 배송업체 확인결과 주문하신 '개인통관부호'가 잘못된것으로 판단되어 재확인차 연락드립니다. 아래의 정보 확인부탁드리며, <br/>
-            개인통관부호는 수취인 이름과 휴대폰번호가 일치해야합니다. 정확한 정보를 답장으로 전달주시면 감사하겠습니다~<br /><br />
-
-            - 수취인 : [ {{ person }} ]<br />
-            - 개인통관부호 : [ {{ pnumber }} ]<br />
-            - 휴대폰번호 : [ {{ ptel }} ]<br />
-
-            개인통관부호는 수취인의 이름으로 발급된 [P+12자리 숫자] 번호여야 합니다! 감사합니다!<br />
-
-            개인통관부호는 아래의 링크에서 확인 / 발급이 가능하십니다.<br />
-            https://unipass.customs.go.kr/csp/persIndex.do
-          </div>
-        </div>
-        <div class="bottom">
-          <div class="btns">
-            <button type="button" @click="copyHandler">문구 복사</button>
-            <button type="button" @click="closePop">닫기</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </teleport> -->
-  <!-- <div class="sectionWrap personalCodeCheck" style="--sectionGap:20px">
-
-    <t-tab :items="tabItems" v-model="tabIdx"></t-tab>
-
-    <section class="enter" v-if="!tabIdx">
-
-      <div class="row fix" style="--gap:10px">
-        <div class="col" style="--gap-col:5px">
-          <div class="row fix">
-            <h1>수취인</h1>
-          </div>
-          <div class="row">
-            <t-textarea v-model="nameList" placeholder="예) 수취인명을 한줄에 한개씩&#10;홍길동&#10;홍길동&#10;홍길동"></t-textarea>
-          </div>
-        </div>
-        <div class="col" style="--gap-col:5px">
-          <div class="row fix">
-            <h1>개인통관고유번호</h1>
-          </div>
-          <div class="row">
-            <t-textarea v-model="numberList" placeholder="예) 한줄에 하나의 정보 입력&#10;123456789&#10;123456789&#10;123456789"></t-textarea>
-          </div>
-        </div>
-        <div class="col" style="--gap-col:5px">
-          <div class="row fix">
-            <h1>수취인 전화번호</h1>
-          </div>
-          <div class="row">
-            <t-textarea v-model="telList" placeholder="예) 한줄에 하나의 정보 입력&#10;010-1234-1234&#10;010-1234-1234&#10;010-1234-1234"></t-textarea>
-          </div>
-        </div>
-      </div>
-      
-      <div class="row fix"><button type="button" @click="searchHandler">조회</button></div>
-      
-    </section>
-
-    <section class="enter excel" v-else>
-
-      <div class="row">
-        <div class="col bx">
-          <div class="row">
-            <h1>스토어 선택</h1>
-          </div>
-          <div class="row">
-            <select name="" id="" v-model="store">
-              <option value="naver">스마트스토어</option>
-              <option value="tmon">티몬</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col bx">
-          <div class="row">
-            <h1>엑셀 입력</h1>
-          </div>
-          <div class="row">
-            <t-textarea v-model="excelData" placeholder="엑셀 전체를 복사해서 넣어주세요."></t-textarea>
-          </div>
-        </div>
-      </div>
-      
-    </section>
-
-  </div>  -->
-
   <!-- 팝업 -->
   <TransitionRoot as="template" :show="open">
     <Dialog as="div" class="relative z-10" @close="open = false">
@@ -230,7 +126,7 @@
       <div class="fixed inset-0 z-10 overflow-y-auto">
         <div class="flex items-end justify-center min-h-full p-4 text-center sm:items-center sm:p-0">
           <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200" leave-from="opacity-100 translate-y-0 sm:scale-100" leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-            <DialogPanel class="relative overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:w-full sm:max-w-lg">
+            <DialogPanel class="relative overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:w-full sm:max-w-2xl">
               <div class="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-8">
                 <div class="sm:flex sm:items-start">
                   <div class="mt-3 text-center sm:mt-0 sm:text-left">
@@ -382,6 +278,7 @@
           { name : '티몬', value : 'TMON' } ,
         ] ,
         selectedStore : { name : '네이버', value : 'NAVER' } ,
+        resultListArr : [] ,
       }) ;
 
       const open = ref(false) ;
@@ -442,8 +339,63 @@
           state.prod.push( setData[i][idxProdName] ) ; 
         }
 
-        checkCode() ; 
+        state.resultListArr = Array.from( { length : setData.length }, ( t, i ) => '' ) ;
 
+        checkPersonalCode( state.name ).then( res => {
+          state.resultList = state.resultListArr ; 
+          state.loading = false ; 
+          state.nameList = '' ; 
+          state.numberList = '' ; 
+          state.telList = '' ; 
+          state.prodList = '' ; 
+          state.excelData = '' ; 
+          open.value = true ; 
+          return res.data ; 
+        }) ; 
+
+        // checkCode() ; 
+
+      }
+
+      const checkPersonalCode = infos => {
+        const result = Promise.all(
+          infos.map( (param,idx) => {
+            return axios.get( `${URL}?crkyCn=o220p260j056x276q000c050u0&persEcm=${state.number[idx]}&pltxNm=${state.name[idx]}&cralTelno=${state.tel[idx]}` )
+            .then( res  => {
+              let xml = res.data
+              ,   json = convert.xml2json(xml, { compact : true } )
+              ,   jsonParse = JSON.parse( json )
+              ,   result = jsonParse.persEcmQryRtnVo.tCnt._text 
+              ,   errMsg = [] 
+              ; 
+
+              // 에러 메세지 처리 
+              if( result == 0 ) {
+                if ( Array.isArray( jsonParse.persEcmQryRtnVo.persEcmQryRtnErrInfoVo ) ) {
+                  // 문제가 2개 이상일 경우
+                  // errMsg = '통관번호, 전화번호 모두 불일치' ;
+                  errMsg = jsonParse.persEcmQryRtnVo.persEcmQryRtnErrInfoVo.map(t => t.errMsgCn._text) ;
+                } else {
+                  // 문제가 1개 일 경우
+                  errMsg.push(jsonParse.persEcmQryRtnVo.persEcmQryRtnErrInfoVo.errMsgCn._text );
+                }
+              }
+
+              state.resultListArr[idx] = {
+                name : state.name[idx] , 
+                number : state.number[idx] ,
+                tel : state.tel[idx] ,
+                prod : state.prod[idx] ,
+                check : result == 1 ? '일치' : '불일치' ,
+                errMsg : errMsg
+              }
+
+              return state.resultListArr ; 
+
+            }) 
+          })
+        );
+        return result ; 
       }
 
       const checkCode = () => {
@@ -554,7 +506,8 @@
         selectTab ,
         selectStore ,
         open ,
-        copyErrorMsgHandler
+        copyErrorMsgHandler ,
+        checkPersonalCode
       } ;
     } ,
   }

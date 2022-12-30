@@ -220,7 +220,6 @@
 
       const trackCheckHandler = () => {
         
-        console.log( 'start -----------------------------' ) ; 
 				// 변수 초기화
         state.result = [] ; 
         state.deliveryResult = [] ;
@@ -243,7 +242,6 @@
             
             // 운송장 여러 개 조회
             getDeliveryInfo( state.trackList ).then( res => {
-              console.log( 'state.result : ', state.result ) ; 
               state.deliveryResult = state.result ; 
               state.alertText = '' ; 
               state.loading = false ; 
@@ -298,7 +296,6 @@
 
       // 운송장 여러 개 조회 시
       const getDeliveryInfo = infos => {
-        console.log( 'infos : ', infos ) ; 
         const result = Promise.all(
           infos.map( (param,idx) => {
             return axios.get( DELIVERY_API+'&t_code='+selectDeliveryComp.value.code+'&t_invoice='+param )
