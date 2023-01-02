@@ -241,31 +241,15 @@
           { name : '티몬', value : 'TMON' } ,
         ] ,
         selectedStore : { name : '네이버', value : 'NAVER' } ,
+        resultListArr : [] ,
       }) ;
 
       const open = ref(false) ;
-
-      // 실행 안함
-      const searchHandler = () => {
-
-        state.resultList = [] ; 
-
-        if( state.name.length == state.number.length && state.name.length == state.tel.length ) {
-          state.loading = true ; 
-          state.resultList = [] ;
-          checkCode() ; 
-        } else {
-          alert( '입력한 이름, 번호 수량이 같아야합니다' ) ; 
-        }
-
-      } ;
 
       const searchExcelHandler = () => {
 
         state.resultList = [] ; 
         state.loading = true ; 
-
-        console.log( 'state.excelData : ', state.excelData ) ; 
 
         let setData = state.excelData.split( '\n' ).map( item => item.split('\t') )
         ,   columnName = setData.shift()
@@ -300,8 +284,63 @@
           // console.log( 'state.prod : ', state.prod ) ; 
         }
 
-        checkCode() ; 
+        state.resultListArr = Array.from( { length : setData.length }, ( t, i ) => '' ) ;
 
+        checkPersonalCode( state.name ).then( res => {
+          state.resultList = state.resultListArr ; 
+          state.loading = false ; 
+          state.nameList = '' ; 
+          state.numberList = '' ; 
+          state.telList = '' ; 
+          state.prodList = '' ; 
+          state.excelData = '' ; 
+          open.value = true ; 
+          return res.data ; 
+        }) ; 
+
+        // checkCode() ; 
+
+      }
+
+      const checkPersonalCode = infos => {
+        const result = Promise.all(
+          infos.map( (param,idx) => {
+            return axios.get( `${URL}?crkyCn=o220p260j056x276q000c050u0&persEcm=${state.number[idx]}&pltxNm=${state.name[idx]}&cralTelno=${state.tel[idx]}` )
+            .then( res  => {
+              let xml = res.data
+              ,   json = convert.xml2json(xml, { compact : true } )
+              ,   jsonParse = JSON.parse( json )
+              ,   result = jsonParse.persEcmQryRtnVo.tCnt._text 
+              ,   errMsg = [] 
+              ; 
+
+              // 에러 메세지 처리 
+              if( result == 0 ) {
+                if ( Array.isArray( jsonParse.persEcmQryRtnVo.persEcmQryRtnErrInfoVo ) ) {
+                  // 문제가 2개 이상일 경우
+                  // errMsg = '통관번호, 전화번호 모두 불일치' ;
+                  errMsg = jsonParse.persEcmQryRtnVo.persEcmQryRtnErrInfoVo.map(t => t.errMsgCn._text) ;
+                } else {
+                  // 문제가 1개 일 경우
+                  errMsg.push(jsonParse.persEcmQryRtnVo.persEcmQryRtnErrInfoVo.errMsgCn._text );
+                }
+              }
+
+              state.resultListArr[idx] = {
+                name : state.name[idx] , 
+                number : state.number[idx] ,
+                tel : state.tel[idx] ,
+                prod : state.prod[idx] ,
+                check : result == 1 ? '일치' : '불일치' ,
+                errMsg : errMsg
+              }
+
+              return state.resultListArr ; 
+
+            }) 
+          })
+        );
+        return result ; 
       }
 
       const checkCode = () => {
@@ -439,6 +478,11 @@
         state.excelData = '' ;
       }
 
+      const copyErrorMsgHandler = ( name , num, tel, prod, target ) => {
+        let textWrap = document.getElementById( target ) ; 
+        copyText( textWrap )  ;
+      }
+
       watch(
         [ () => state.excelData ], () => {
           if( state.excelData !== '' ) { 
@@ -451,7 +495,6 @@
       return { 
         ...toRefs(state) , 
         disableTeleport ,
-        searchHandler ,
         checkCode ,
         showNotifyPopup ,
         closePop ,
@@ -459,7 +502,9 @@
         searchExcelHandler ,
         selectStore ,
         open ,
-        copy
+        copy ,
+        copyErrorMsgHandler ,
+        checkPersonalCode
       } ;
     } ,
   }
