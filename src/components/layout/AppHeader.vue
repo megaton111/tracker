@@ -64,7 +64,7 @@
   
 </template>
 <script>
-  import { reactive, toRefs, nextTick } from 'vue';
+  import { reactive, toRefs, nextTick, onMounted } from 'vue';
   import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue' ;
   import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline' ;
   import { useDark, useToggle } from '@vueuse/core';
@@ -134,25 +134,29 @@
         state.modeDark = !state.modeDark ; 
       }
 
-      const isDark = useDark();
-      const toggleDark = useToggle(isDark);
+      // const isDark = useDark();
+      // const toggleDark = useToggle(isDark);
 
 
-      const check = (e) => {
-        nextTick(() => {
-          toggleDark() ;
-          console.log( 'isDark : ', isDark.value ) ; 
-        })
-      }
+      // const check = (e) => {
+      //   nextTick(() => {
+      //     toggleDark() ;
+      //     console.log( 'isDark : ', isDark.value ) ; 
+      //   })
+      // }
+
+      onMounted(() => {
+        console.log( 'modeDark : ', state.modeDark ) ; 
+      }) ;
 
 
       return { 
         ...toRefs(state) ,
         toggleMenu ,
         openOrderPage ,
-        toggleDark ,
+        // toggleDark ,
         toggleDarkEvt , 
-        check
+        // check
       } ;
     }
   }
