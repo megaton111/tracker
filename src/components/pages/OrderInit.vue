@@ -38,12 +38,7 @@
       <div class="flex flex-col gap-2 sm:gap-4">
         <div class="text-style-section-head">엑셀 입력</div>
         <div class="flex flex-col">
-          <textarea 
-            rows="5" 
-            v-model="excelData" 
-            class="block w-full px-2 py-2 border border-gray-300 border-solid rounded-md shadow-sm outline-none focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm outline-0 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-100" 
-            placeholder="엑셀 전체를 복사해서 넣어주세요."
-          />
+          <t-textarea v-model="excelData" placeholder="엑셀 전체를 복사해서 넣어주세요."></t-textarea>
         </div>
       </div>
 
