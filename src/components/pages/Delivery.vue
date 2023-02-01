@@ -36,13 +36,7 @@
       <div class="flex flex-col gap-2 sm:gap-4">
         <div class="text-style-section-head">운송장 번호 입력</div>
         <div class="flex flex-col">
-          <textarea 
-            rows="5" 
-            v-model="originTrackList" 
-            class="block w-full px-2 py-2 border border-gray-300 border-solid rounded-md shadow-sm outline-none focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm outline-0 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-100" 
-            placeholder="예) 운송장번호를 여러개 입력 시 한줄에 한개씩&#10;123123123123123&#10;123123123123123&#10;123123123123123"
-            @input="trackCheckHandler"
-          />
+          <t-textarea @input="trackCheckHandler" v-model="originTrackList" placeholder="예) 운송장번호를 여러개 입력 시 한줄에 한개씩&#10;123123123123123&#10;123123123123123&#10;123123123123123"></t-textarea>
         </div>
       </div>
 
@@ -221,7 +215,7 @@
       }
 
       const trackCheckHandler = () => {
-        
+
 				// 변수 초기화
         state.result = [] ; 
         state.deliveryResult = [] ;
