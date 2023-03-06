@@ -14,7 +14,7 @@
 
     <div class="flex flex-col items-start flex-1 max-w-4xl gap-5 px-2 px-4 py-5 mx-auto sm:gap-10 sm:py-10 sm:px-6 lg:px-8 lg:max-w-6xl sm:flex-row ">
       <app-aside class="flex flex-col items-start w-full gap-6 p-3 mx-auto border border-gray-200 grow-0 shrink-0 sm:w-52 bg-gray-50 sm:bg-transparent sm:p-0 sm:border-0 dark:bg-transparent"></app-aside>
-      <div class="flex flex-col flex-1 min-w-0 w-full max-w-[40rem] lg:mt-0 lg:max-w-[50rem] hover:prose-a:text-sky-600">
+      <div class="flex flex-col flex-1 min-w-0 w-full h-full max-w-[40rem] lg:mt-0 lg:max-w-[50rem] hover:prose-a:text-sky-600">
         <router-view v-slot="{ Component }">
           <!-- <transition name="scale" mode="out-in"> -->
             <component :is="Component" />

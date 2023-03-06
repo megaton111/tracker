@@ -16,6 +16,7 @@ import CostChange from './components/common/CostChange';
 import TelChange from './components/common/TelChange';
 import EngChange from './components/common/EngChange';
 import RelSite from './components/common/RelSite';
+import MarginRate from './components/common/MarginRate';
 
 const app = createApp(App);
 
@@ -32,6 +33,7 @@ app.component( "CostChange", CostChange ) ;
 app.component( "TelChange", TelChange ) ;
 app.component( "EngChange", EngChange ) ;
 app.component( "RelSite", RelSite ) ;
+app.component( "MarginRate", MarginRate ) ;
 
 app
   .use(store)

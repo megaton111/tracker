@@ -1,8 +1,10 @@
 <template>
-  <div class="textarea-wrap">
-    <template v-if="label"><label class="label" :for="unique">{{ label }}</label></template>
-    <textarea :placeholder="placeholder" v-model="text" :id="unique"></textarea>
-  </div>
+  <textarea 
+    rows="5" 
+    v-model="text" 
+    class="block w-full px-2 py-2 border border-gray-300 border-solid rounded-md shadow-sm outline-none focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm outline-0 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-100" 
+    :placeholder="placeholder"
+  />
 </template>
 <script>
   import { reactive, toRefs, watch } from 'vue';

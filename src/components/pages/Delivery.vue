@@ -36,13 +36,7 @@
       <div class="flex flex-col gap-2 sm:gap-4">
         <div class="text-style-section-head">운송장 번호 입력</div>
         <div class="flex flex-col">
-          <textarea 
-            rows="5" 
-            v-model="originTrackList" 
-            class="block w-full px-2 py-2 border border-gray-300 border-solid rounded-md shadow-sm outline-none focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm outline-0 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-100" 
-            placeholder="예) 운송장번호를 여러개 입력 시 한줄에 한개씩&#10;123123123123123&#10;123123123123123&#10;123123123123123"
-            @input="trackCheckHandler"
-          />
+          <t-textarea @input="trackCheckHandler" v-model="originTrackList" placeholder="예) 운송장번호를 여러개 입력 시 한줄에 한개씩&#10;123123123123123&#10;123123123123123&#10;123123123123123"></t-textarea>
         </div>
       </div>
 
@@ -121,7 +115,7 @@
 </template>
 
 <script>
-  import { reactive, toRefs, ref, computed, onMounted } from 'vue';
+  import { reactive, toRefs, ref, computed, onBeforeMount, onMounted } from 'vue';
   import { useStore } from "vuex";
   import axios from 'axios';
   import { copyText } from '@/utils';
@@ -159,7 +153,6 @@
 			TransitionRoot ,
     } ,
     setup () {
-
 
       const disableTeleport = ref(false);
       const store = useStore();
@@ -204,13 +197,16 @@
 			const open = ref(false) ;
 
       // 택배사 리스트 가져와서 select value item 형태로 변환 { Name : '', Code : '' } --> { name : '', value : '' }
-      axios.get( COMPANY_API ).then(res=>{
-        let arr = res.data.Company ; 
-        state.companyList = arr.map( item => {
-          return { name : item.Name, value : item.Code }
+
+      const getCompanyData = () => {
+        axios.get( COMPANY_API ).then(res=>{
+          let arr = res.data.Company ; 
+          state.companyList = arr.map( item => {
+            return { name : item.Name, value : item.Code }
+          }) ; 
+          return state.companyList ;
         }) ; 
-        return state.companyList ;
-      }) ; 
+      }
 
 			// 택배사 선택 : 셀렉트 박스 용
       const selectCompany = ( name, code ) => {
@@ -219,7 +215,7 @@
       }
 
       const trackCheckHandler = () => {
-        
+
 				// 변수 초기화
         state.result = [] ; 
         state.deliveryResult = [] ;
@@ -257,43 +253,6 @@
 
       }
 
-      // 입력한 정보 값 체크
-      const deliveryCheckHandler = () => {
-        
-        // 변수 초기화
-        state.result = [] ; 
-        state.deliveryResult = [] ;
-        state.single.status = null ;
-        state.single.progress = [] ; 
-
-        if( state.companyCode == '' ) {
-          state.alertText = '택배사를 선택하세요' ; 
-        } else if ( state.originTrackList == '' ) {
-          state.alertText = '운송장 번호를 입력하세요' ; 
-        } else {
-          state.loading = true ; 
-          
-          // 새로운 배열에 담는다. 기존 textarea에 트랙리스트를 계속 남겨두기 위함 , filter 는 빈값제거하기 위함
-          state.trackList = state.originTrackList.split('\n').filter(Boolean) ; 
-          if( state.trackList.length > 1 ) {  // 운송장 번호 1개 조회 시에는 과정까지 노출해주기 위해 분리 처리
-            checkTrackInfo() ;
-          } else {
-            checkTrackInfoSingle() ;
-          }
-        }
-      }
-
-      // async , await 
-      // promise
-      // infos.map( (param,idx) => {
-      //   return axios.get( DELIVERY_API+'&t_code='+selectDeliveryComp.value.code+'&t_invoice='+param )
-      //   .then( res  => {
-      //     let data = res.data ; 
-      //     data.complete ? state.result.push( data.lastDetail.timeString.split(' ')[0] ) : state.result.push( '배송중입니다.' ) ; 
-      //     results.push(data) ; 
-      //   }) 
-      // })
-
       // 운송장 여러 개 조회 시
       const getDeliveryInfo = infos => {
         const result = Promise.all(
@@ -301,31 +260,13 @@
             return axios.get( DELIVERY_API+'&t_code='+selectDeliveryComp.value.code+'&t_invoice='+param )
             .then( res  => {
               let data = res.data ; 
-              data.complete ? state.result[idx] = data.lastDetail.timeString.split(' ')[0] : state.result[idx] = '배송중입니다.' ; 
+              console.log( 'data : ', data ) ; 
+              data.complete ? state.result[idx] = data.lastDetail.timeString.split(' ')[0] : data.result == 'Y' ? state.result[idx] = '배송중입니다.' : state.result[idx] = '검색결과가 없습니다. 운송장번호와 택배사를 확인해주세요.' ; 
               return res.data ; 
             }) 
           })
         );
         return result ; 
-      }
-
-
-      // 운송장 여러 개 조회 시
-      const checkTrackInfo = () => {
-        axios.get( DELIVERY_API+'&t_code='+selectDeliveryComp.value.code+'&t_invoice='+state.trackList[0] )
-        .then(( res ) => {
-          state.trackList.shift() ; 
-          trackInfoSet( res ) ; 
-          if( state.trackList.length > 0 ) { 
-            checkTrackInfo() ; 
-          } else { 
-            state.deliveryResult = state.result ; 
-            state.alertText = '' ; 
-            state.loading = false ; 
-            open.value = true ; 
-            state.originTrackList = '' ;
-          }
-        }) ;
       }
 
       // 운송장 1개 조회 시
@@ -346,26 +287,17 @@
         })
       }
 
-      // 가져온 배송 정보 체크
-      const trackInfoSet = ( res ) => {
-        let data = res.data ; 
-        // 운송장 문제가 없는 경우 - 배송완료 or 배송중
-        if( data.result && data.result == 'Y' ) {
-          data.complete ? state.result.push( data.lastDetail.timeString.split(' ')[0] ) : state.result.push( '배송중입니다.' ) ; 
-        } else {
-          state.result.push( '검색결과가 없습니다. 운송장번호와 택배사를 확인해주세요.' ) ; 
-        }
-      }
-
       const copyHandler = ( target ) => {
         let copyTarget = document.querySelector( target ) ; 
         copyText( copyTarget )  ;
       } ;
 
+      onBeforeMount(async () => {
+        await getCompanyData();
+      });
+
       return { 
-        ...toRefs(state) , 
-        deliveryCheckHandler , 
-        checkTrackInfo , 
+        ...toRefs(state) ,  
         disableTeleport ,
         COMPANY_API , 
         DELIVERY_API ,

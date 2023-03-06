@@ -31,34 +31,19 @@
         <div class="flex flex-col flex-1 gap-2 sm:gap-4">
           <div class="text-style-section-head">수취인</div>
           <div class="flex flex-col">
-            <textarea 
-              rows="5" 
-              v-model="nameList" 
-              class="block w-full px-2 py-2 border border-gray-300 border-solid rounded-md shadow-sm outline-none focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm outline-0 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-100" 
-              placeholder="예) 수취인명을 한줄에 한개씩&#10;홍길동&#10;홍길동&#10;홍길동"
-            />
+            <t-textarea v-model="nameList" placeholder="예) 수취인명을 한줄에 한개씩&#10;홍길동&#10;홍길동&#10;홍길동"></t-textarea>
           </div>
         </div>
         <div class="flex flex-col flex-1 gap-2 sm:gap-4">
           <div class="text-style-section-head">개인통관고유번호</div>
           <div class="flex flex-col">
-            <textarea 
-              rows="5" 
-              v-model="numberList" 
-              class="block w-full px-2 py-2 border border-gray-300 border-solid rounded-md shadow-sm outline-none focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm outline-0 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-100" 
-              placeholder="예) 한줄에 하나의 정보 입력&#10;123456789&#10;123456789&#10;123456789"
-            />
+            <t-textarea v-model="numberList" placeholder="예) 한줄에 하나의 정보 입력&#10;123456789&#10;123456789&#10;123456789"></t-textarea>
           </div>
         </div>
         <div class="flex flex-col flex-1 gap-2 sm:gap-4">
           <div class="text-style-section-head">수취인 전화번호</div>
           <div class="flex flex-col">
-            <textarea 
-              rows="5" 
-              v-model="telList" 
-              class="block w-full px-2 py-2 border border-gray-300 border-solid rounded-md shadow-sm outline-none focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm outline-0 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-100" 
-              placeholder="예) 한줄에 하나의 정보 입력&#10;010-1234-1234&#10;010-1234-1234&#10;010-1234-1234"
-            />
+            <t-textarea v-model="telList" placeholder="예) 한줄에 하나의 정보 입력&#10;010-1234-1234&#10;010-1234-1234&#10;010-1234-1234"></t-textarea>
           </div>
         </div>
       </div>
@@ -104,12 +89,7 @@
       <div class="flex flex-col gap-2 sm:gap-4">
         <div class="text-style-section-head">엑셀 입력</div>
         <div class="flex flex-col">
-          <textarea 
-            rows="5" 
-            v-model="excelData" 
-            class="block w-full px-2 py-2 border border-gray-300 border-solid rounded-md shadow-sm outline-none focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm outline-0 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-100" 
-            placeholder="엑셀 전체를 복사해서 넣어주세요."
-          />
+          <t-textarea v-model="excelData" placeholder="엑셀 전체를 복사해서 넣어주세요."></t-textarea>
         </div>
       </div>
     </div>
@@ -459,16 +439,7 @@
       } ;
 
       const copyErrorMsgHandler = ( name , num, tel, prod, target ) => {
-        console.log( 'copyErrorMsgHandler in', target , '!!!!!!!!!!!' ) ; 
         let textWrap = document.getElementById( target ) ; 
-
-        // Copy the text inside the text field
-
-        // state.showNotify = true ; 
-        // state.person = name ; 
-        // state.pnumber = num ; 
-        // state.ptel = tel ; 
-        // state.pprod = prod ; 
         copyText( textWrap )  ;
       }
 
