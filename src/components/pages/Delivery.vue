@@ -1,6 +1,7 @@
 <template>
 
   <div class="flex flex-col gap-5 sm:gap-10">
+    
     <top-description>
       운송장 번호를 1개만 입력했을 경우에는 진행과정이 모두 보이며,<br />
       운송장 번호를 여러 개 입력했을 경우에는 배송완료일만 노출합니다.<br />
@@ -33,15 +34,19 @@
           </RadioGroup>
         </div>
       </div>
+
       <div class="flex flex-col gap-2 sm:gap-4">
         <div class="text-style-section-head">운송장 번호 입력</div>
         <div class="flex flex-col">
-          <t-textarea @input="trackCheckHandler" v-model="originTrackList" placeholder="예) 운송장번호를 여러개 입력 시 한줄에 한개씩&#10;123123123123123&#10;123123123123123&#10;123123123123123"></t-textarea>
+          <t-textarea 
+            @input="trackCheckHandler" 
+            v-model="originTrackList" 
+            placeholder="예) 운송장번호를 여러개 입력 시 한줄에 한개씩&#10;123123123123123&#10;123123123123123&#10;123123123123123"
+          ></t-textarea>
         </div>
       </div>
 
     </div>
-
 
 		<TransitionRoot as="template" :show="open">
 			<Dialog as="div" class="relative z-10" @close="open = false">
@@ -92,11 +97,13 @@
 									<button 
                     type="button" 
                     class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-                    @click="copyHandler('#textWrap'); open = false;"
+                    @click="copyHandler('#textWrap');"
                   >복사</button>
 									<button 
                     type="button" 
-                    class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" @click="open = false" ref="cancelButtonRef"
+                    class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" 
+                    @click="confirmHandler" 
+                    ref="cancelButtonRef"
                   >확인</button>
 								</div>
 							</DialogPanel>
@@ -290,7 +297,12 @@
       const copyHandler = ( target ) => {
         let copyTarget = document.querySelector( target ) ; 
         copyText( copyTarget )  ;
+        open.value = false ; 
       } ;
+
+      const confirmHandler = () => {
+        open.value = false ; 
+      }
 
       onBeforeMount(async () => {
         await getCompanyData();
@@ -307,6 +319,7 @@
         trackCheckHandler ,
 				open ,
         copyHandler ,
+        confirmHandler
       } ;
 
     } ,

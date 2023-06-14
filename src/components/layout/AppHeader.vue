@@ -84,10 +84,10 @@
       const state = reactive({
         navigation : [
           { name: '통합 처리', href: '/OrderInit', current: true },
-          { name: '개인통관고유부호 일치확인', href: '/PersonalCustomsCode', current: false },
-          { name: '엑셀 변환', href: '/ExcelConverter', current: false },
           { name: '배송 조회', href: '/Delivery', current: false },
           { name: '통관 조회', href: '/Unipass', current: false },
+          { name: '개인통관고유부호 일치확인', href: '/PersonalCustomsCode', current: false },
+          { name: '엑셀 변환', href: '/ExcelConverter', current: false },
           { name: '관련사이트', href: '/SiteList', current: false },
         ],
         // menus : [
@@ -99,10 +99,10 @@
         // ] , 
         menus : [
           { url : '/OrderInit', title : '주문 작업(통관번호+엑셀변환)'} , 
-          { url : '/PersonalCustomsCode', title : '개인통관고유부호 일치확인'} , 
-          { url : '/ExcelConverter', title : '주문 엑셀 변환' } ,
           { url : '/Delivery', title : '배송 조회' } , 
           { url : '/Unipass', title : '통관 조회' } ,
+          { url : '/PersonalCustomsCode', title : '개인통관고유부호 일치확인'} , 
+          { url : '/ExcelConverter', title : '주문 엑셀 변환' } ,
         ] , 
         menus2 : [
           { url : '/CalculatePrice', title : '스마트스토어 수수료 계산' } , 
