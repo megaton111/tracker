@@ -25,7 +25,7 @@
                 v-for="(item,idx) in navigation" 
                 :key="idx" 
                 :to="item.href" 
-                class="px-2 py-2 text-base font-normal leading-6 text-slate-700 dark:text-gray-50 bg-gray-white " 
+                class="px-2 py-2 text-base font-normal leading-6 text-slate-700 dark:text-gray-50 bg-gray-white whitespace-nowrap" 
                 :aria-current="item.current ? 'page' : undefined">{{ item.name }}</router-link>
             </div>
           </div>
@@ -88,15 +88,9 @@
           { name: '통관 조회', href: '/Unipass', current: false },
           { name: '개인통관고유부호 일치확인', href: '/PersonalCustomsCode', current: false },
           { name: '엑셀 변환', href: '/ExcelConverter', current: false },
+          { name: '마진계산기', href: '/ProfitCalculator', current: false },
           { name: '관련사이트', href: '/SiteList', current: false },
         ],
-        // menus : [
-        //   { url : '/OrderInit', title : '주문 작업(통관번호+엑셀변환)'} , 
-        //   { url : '/PersonalCustomsCode', title : '개인통관고유부호 일치확인'} , 
-        //   { url : '/ExcelConverter', title : '주문 엑셀 변환' } ,
-        //   { url : '/Delivery', title : '배송 조회' } , 
-        //   { url : '/Unipass', title : '통관 조회' } ,
-        // ] , 
         menus : [
           { url : '/OrderInit', title : '주문 작업(통관번호+엑셀변환)'} , 
           { url : '/Delivery', title : '배송 조회' } , 

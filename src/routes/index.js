@@ -12,6 +12,7 @@ import OrderInit from "@/components/pages/OrderInit.vue" ;
 import ExchangeInfo from "@/components/pages/ExchangeInfo.vue" ;
 import KeywordSeller from "@/components/pages/KeywordSeller.vue" ;
 import SiteList from "@/components/pages/SiteList.vue" ;
+import ProfitCalculator from "@/components/pages/ProfitCalculator.vue" ;
 
 const routes = [
   {
@@ -65,11 +66,11 @@ const routes = [
     name: "ExcelConverter",
     component: ExcelConverter,
   },
-  // {
-  //   path: "/SimpleFunction",
-  //   name: "SimpleFunction",
-  //   component: SimpleFunction,
-  // },
+  {
+    path: "/ProfitCalculator",
+    name: "ProfitCalculator",
+    component: ProfitCalculator,
+  },
   {
     path: "/ExchangeInfo",
     name: "ExchangeInfo",

@@ -10,9 +10,9 @@
       <tel-change />
     </content-box>
 
-    <content-box title="마진율 계산" class="flex-1 ">
+    <!-- <content-box title="마진율 계산" class="flex-1 ">
       <margin-rate />
-    </content-box>
+    </content-box> -->
 
     <!-- <content-box title="배송대행 사이트" class="flex-1 bg-white">
       <rel-site 
