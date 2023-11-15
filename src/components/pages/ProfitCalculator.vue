@@ -6,7 +6,7 @@
     </top-description>
 
 
-    <div class="flex flex-col gap-4 sm:gap-6">
+    <div class="flex flex-col gap-4 sm:gap-6 w-[100px]">
       
       <div class="flex flex-col gap-2 sm:gap-4">
         <div class="flex gap-2">
@@ -44,7 +44,6 @@
         <div class="flex gap-2 pb-2 border-b">
           <div class="flex items-center"><div class="text-style-section-head">마진</div></div>
           <div class="flex items-center justify-end flex-1"><span class="text-2xl font-bold text-blue-600 dark:text-yellow-200">{{ result.profitPrice }}원</span></div>
-          <!-- <div class="flex items-center justify-end flex-1"><span class="text-2xl font-bold text-blue-600">{{ profitPriceResult }}원</span></div> -->
         </div>
       </div>
 
@@ -83,11 +82,11 @@
           deliveryCharge :  '3000' ,
         } ,
         result : {
-          deliveryCommission : computed(() => state.calculator.deliveryCharge * 0.033) , 
-          saleCommission : computed(() => Math.floor( state.calculator.salePrice * state.calculator.commissionPercent / 100 ) ) , 
-          surtax : computed(() => Math.floor( (state.calculator.salePrice/1.1*0.1) - (state.calculator.buyPrice/1.1*0.1) )) ,
+          deliveryCommission : computed(() => (state.calculator.deliveryCharge * 0.033).toLocaleString() ) , 
+          saleCommission : computed(() => Math.floor( state.calculator.salePrice * state.calculator.commissionPercent / 100 ).toLocaleString() ) , 
+          surtax : computed(() => Math.floor( (state.calculator.salePrice/1.1*0.1) - (state.calculator.buyPrice/1.1*0.1) ).toLocaleString() ) ,
           profitPercent : computed(() => Math.floor( state.result.profitPrice / state.calculator.salePrice * 100 ) ) ,
-          profitPrice : computed(() => Math.floor( state.calculator.salePrice - state.calculator.buyPrice - state.result.saleCommission - state.result.deliveryCommission - state.result.surtax ) ) ,
+          profitPrice : computed(() => Math.floor( state.calculator.salePrice - state.calculator.buyPrice - parseInt(state.result.saleCommission) - parseInt(state.result.deliveryCommission) - parseInt(state.result.surtax) ).toLocaleString() ) ,
         }
       }) ;
 
@@ -95,14 +94,9 @@
         return !isFinite( state.result.profitPercent ) ? '0' : state.result.profitPercent;
       }) ;
 
-      const profitPriceResult = computed(() => {
-        return '123123123213123' ;
-      }) ;
-
       return { 
         ...toRefs(state) ,
         profitPercentResult ,
-        profitPriceResult ,
       } ;
     } ,
 
