@@ -11,15 +11,15 @@
       <div class="flex flex-col gap-2 sm:gap-4">
         <div class="flex gap-2">
           <div class="flex items-center"><div class="text-style-section-head">도매가</div></div>
-          <div class="flex flex-1"><t-input type="text" v-model="calculator.buyPrice"></t-input></div>
+          <div class="flex w-48"><t-input type="text" v-model="calculator.buyPrice"></t-input></div>
           <div class="flex items-center"><div class="text-style-section-head">판매가</div></div>
-          <div class="flex flex-1"><t-input type="text" v-model="calculator.salePrice"></t-input></div>
+          <div class="flex w-48"><t-input type="text" v-model="calculator.salePrice"></t-input></div>
         </div>
         <div class="flex gap-2 pb-4 border-b border-gray-300 sm:pb-6">
           <div class="flex items-center"><div class="text-style-section-head">수수료</div></div>
-          <div class="flex flex-1"><t-input type="text" v-model="calculator.commissionPercent"></t-input></div>
+          <div class="flex w-48"><t-input type="text" v-model="calculator.commissionPercent"></t-input></div>
           <div class="flex items-center"><div class="text-style-section-head">배송비</div></div>
-          <div class="flex flex-1"><t-input type="text" v-model="calculator.deliveryCharge"></t-input></div>
+          <div class="flex w-48"><t-input type="text" v-model="calculator.deliveryCharge"></t-input></div>
         </div>
       </div>
 
@@ -85,12 +85,14 @@
           deliveryCommission : computed(() => (state.calculator.deliveryCharge * 0.033).toLocaleString() ) , 
           saleCommission : computed(() => Math.floor( state.calculator.salePrice * state.calculator.commissionPercent / 100 ).toLocaleString() ) , 
           surtax : computed(() => Math.floor( (state.calculator.salePrice/1.1*0.1) - (state.calculator.buyPrice/1.1*0.1) ).toLocaleString() ) ,
+          profitPrice : computed(() => Math.floor( state.calculator.salePrice - state.calculator.buyPrice - parseInt(state.result.saleCommission) - parseInt(state.result.deliveryCommission) - parseInt(state.result.surtax)  ) ) ,
           profitPercent : computed(() => Math.floor( state.result.profitPrice / state.calculator.salePrice * 100 ) ) ,
-          profitPrice : computed(() => Math.floor( state.calculator.salePrice - state.calculator.buyPrice - parseInt(state.result.saleCommission) - parseInt(state.result.deliveryCommission) - parseInt(state.result.surtax) ).toLocaleString() ) ,
         }
       }) ;
 
       const profitPercentResult = computed(() => {
+        // return state.result.profitPercent ; 
+        // console.log('-------->',state.result.profitPercent) ; 
         return !isFinite( state.result.profitPercent ) ? '0' : state.result.profitPercent;
       }) ;
 
