@@ -11,15 +11,23 @@
       <div class="flex flex-col gap-2 sm:gap-4">
         <div class="flex gap-2">
           <div class="flex items-center"><div class="text-style-section-head">도매가</div></div>
-          <div class="flex w-48"><t-input type="text" v-model="calculator.buyPrice"></t-input></div>
+          <div class="flex flex-1"><t-input type="text" v-model="calculator.buyPrice"></t-input></div>
+        </div>
+        <div class="flex gap-2">
           <div class="flex items-center"><div class="text-style-section-head">판매가</div></div>
-          <div class="flex w-48"><t-input type="text" v-model="calculator.salePrice"></t-input></div>
+          <div class="flex flex-1"><t-input type="text" v-model="calculator.salePrice"></t-input></div>
+        </div>
+        <div class="flex gap-2">
+          <div class="flex items-center"><div class="text-style-section-head">배송비</div></div>
+          <div class="flex flex-1"><t-input type="text" v-model="calculator.deliveryCharge"></t-input></div>
         </div>
         <div class="flex gap-2 pb-4 border-b border-gray-300 sm:pb-6">
-          <div class="flex items-center"><div class="text-style-section-head">수수료</div></div>
-          <div class="flex w-48"><t-input type="text" v-model="calculator.commissionPercent"></t-input></div>
-          <div class="flex items-center"><div class="text-style-section-head">배송비</div></div>
-          <div class="flex w-48"><t-input type="text" v-model="calculator.deliveryCharge"></t-input></div>
+          <div class="flex items-center"><div class="text-style-section-head">마켓 수수료</div></div>
+          <div class="flex flex-1"><t-input type="text" v-model="calculator.commissionPercent"></t-input></div>
+        </div>
+        <div class="flex gap-2 pb-4 border-b border-gray-300 sm:pb-6">
+          <div class="flex items-center"><div class="text-style-section-head">총 판매가</div></div>
+          <div class="flex items-center justify-end flex-1"><span class="dark:text-gray-50 font-bold text-2xl">{{ result.totalSalePrice == 'NaN' ? '0' : result.totalSalePrice }}원</span></div>
         </div>
       </div>
 
@@ -82,6 +90,7 @@
           deliveryCharge :  '3000' ,
         } ,
         result : {
+          totalSalePrice : computed(() => (parseInt(state.calculator.salePrice) + parseInt( state.calculator.deliveryCharge )).toLocaleString() ) ,
           deliveryCommission : computed(() => (state.calculator.deliveryCharge * 0.033).toLocaleString() ) , 
           saleCommission : computed(() => Math.floor( state.calculator.salePrice * state.calculator.commissionPercent / 100 ).toLocaleString() ) , 
           surtax : computed(() => Math.floor( (state.calculator.salePrice/1.1*0.1) - (state.calculator.buyPrice/1.1*0.1) ).toLocaleString() ) ,
@@ -91,14 +100,17 @@
       }) ;
 
       const profitPercentResult = computed(() => {
-        // return state.result.profitPercent ; 
-        // console.log('-------->',state.result.profitPercent) ; 
         return !isFinite( state.result.profitPercent ) ? '0' : state.result.profitPercent;
+      }) ;
+
+      const totalSalePriceResult = computed(() => {
+        return !isNaN( state.result.totalSalePrice ) ? '0' : state.result.totalSalePrice;
       }) ;
 
       return { 
         ...toRefs(state) ,
         profitPercentResult ,
+        totalSalePriceResult
       } ;
     } ,
 
