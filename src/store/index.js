@@ -4,7 +4,7 @@ export default createStore({
   strict: false,
   state: {
     deliveryInfo : {
-      APIKEY : 'V0VMbL8xtakhdyEHKTq8XQ' ,
+      APIKEY : 'wfzMlwvV1QkExu3f6zU7bg' ,
     } ,
     exchangeInfo : {
       APIKEY : 'h230q242y019c270i090x040r0' ,
