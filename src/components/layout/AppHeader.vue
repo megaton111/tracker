@@ -88,7 +88,8 @@
           { name: '통관 조회', href: '/Unipass', current: false },
           { name: '개인통관고유부호 일치확인', href: '/PersonalCustomsCode', current: false },
           { name: '엑셀 변환', href: '/ExcelConverter', current: false },
-          { name: '마진계산기', href: '/ProfitCalculator', current: false },
+          // { name: '마진계산기', href: '/ProfitCalculator', current: false },
+          { name: '계산기', href: '/calculator', current: false },
           { name: '관련사이트', href: '/SiteList', current: false },
         ],
         menus : [

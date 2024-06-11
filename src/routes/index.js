@@ -13,6 +13,7 @@ import ExchangeInfo from "@/components/pages/ExchangeInfo.vue" ;
 import KeywordSeller from "@/components/pages/KeywordSeller.vue" ;
 import SiteList from "@/components/pages/SiteList.vue" ;
 import ProfitCalculator from "@/components/pages/ProfitCalculator.vue" ;
+import calculator from "@/components/pages/calculator.vue" ;
 
 const routes = [
   {
@@ -70,6 +71,11 @@ const routes = [
     path: "/ProfitCalculator",
     name: "ProfitCalculator",
     component: ProfitCalculator,
+  },
+  {
+    path: "/calculator",
+    name: "calculator",
+    component: calculator,
   },
   {
     path: "/ExchangeInfo",
